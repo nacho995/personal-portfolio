@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './index.css'
-import Header from './components/header'
-import BackgroundGradient from './components/BackgroundGradient'
-import Name from './components/name'
+import BackgroundGradient from './components/Home/BackgroundGradient'
+
+import Name from './components/Home/name'
+import Header from './components/Home/header'
 
 function App() {
   return (
