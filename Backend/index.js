@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -21,8 +22,13 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Conectado a MongoDB'))
   .catch((error) => console.error('Error conectando a MongoDB:', error));
 
-// Rutas
+// Rutas API
 app.use('/ratings', require('./routes/ratingRoutes'));
+
+// Manejar rutas del frontend en producción
+app.get('*', (req, res) => {
+  res.status(404).json({ message: 'API endpoint not found' });
+});
 
 // Puerto
 const PORT = process.env.PORT || 3000;
