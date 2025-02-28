@@ -5,8 +5,15 @@ require('dotenv').config();
 
 const app = express();
 
+// Configuración de CORS
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  optionsSuccessStatus: 200,
+  credentials: true
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Conectar a MongoDB
@@ -21,4 +28,5 @@ app.use('/ratings', require('./routes/ratingRoutes'));
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log('CORS habilitado para:', process.env.FRONTEND_URL);
 }); 
