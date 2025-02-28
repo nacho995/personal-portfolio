@@ -1,6 +1,24 @@
 import { createContext, useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 
-const ThemeContext = createContext();
+const ThemeContext = createContext({
+  theme: 'purple',
+  toggleTheme: () => {},
+  themeColors: {
+    purple: {
+      primary: 'from-purple-500',
+      secondary: 'to-blue-500',
+      accent: 'bg-purple-500',
+      glow: 'rgba(147, 51, 234, 0.1)',
+    },
+    blue: {
+      primary: 'from-[#40A0E0]',
+      secondary: 'to-[#2980B9]',
+      accent: 'bg-[#40A0E0]',
+      glow: 'rgba(64, 160, 224, 0.1)',
+    },
+  }
+});
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('purple');
@@ -31,6 +49,14 @@ export function ThemeProvider({ children }) {
   );
 }
 
+ThemeProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 export function useTheme() {
-  return useContext(ThemeContext);
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
 } 
