@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -37,6 +37,9 @@ export default {
       backgroundImage: {
         'grid-white': 'radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)'
       },
+      backdropBlur: {
+        'xl': '20px',
+      }
     },
   },
   plugins: [],
