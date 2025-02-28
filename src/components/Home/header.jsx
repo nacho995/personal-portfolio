@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { useTheme } from '../../context/ThemeContext'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { theme, toggleTheme } = useTheme()
 
   return (
     <header className="fixed top-0 w-full z-50">
@@ -37,14 +39,48 @@ const Header = () => {
               </div>
             </div>
             
-            {/* Portfolio texto - ajustado el tamaño */}
-            <div className="hidden md:flex absolute left-1/2 -translate-x-1/2">
+            {/* Portfolio texto con botón de tema */}
+            <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6">
               <Link 
                 to="/" 
                 className="text-2xl lg:text-3xl font-bold text-white/90 hover:text-white transition-colors duration-300 tracking-wide"
               >
                 Portfolio
               </Link>
+
+              {/* Botón de tema mejorado */}
+              <button
+                onClick={toggleTheme}
+                className="relative group flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
+              >
+                {/* Efecto de fondo */}
+                <div 
+                  className="absolute inset-0 rounded-xl opacity-25 group-hover:opacity-100 transition-all duration-300 blur-md"
+                  style={{
+                    background: `radial-gradient(circle, ${theme === 'purple' ? '#40A0E0' : '#9333EA'} 0%, transparent 70%)`
+                  }}
+                />
+                
+                {/* Contenido del botón */}
+                <div className="relative flex items-center gap-3">
+                  {/* Icono del tema */}
+                  <div className="relative">
+                    <div 
+                      className={`w-6 h-6 rounded-full ${
+                        theme === 'purple' 
+                          ? 'bg-gradient-to-br from-purple-400 to-purple-600' 
+                          : 'bg-gradient-to-br from-[#40A0E0] to-[#2980B9]'
+                      } transition-all duration-300 shadow-lg`}
+                    />
+                    <div className="absolute inset-0 bg-white/20 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300" />
+                  </div>
+                  
+                  {/* Texto del tema */}
+                  <span className="text-sm font-medium text-white/90 group-hover:text-white transition-colors duration-300">
+                    {theme === 'purple' ? 'Purple' : 'Blue'} Theme
+                  </span>
+                </div>
+              </button>
             </div>
 
             {/* Botón menú móvil */}

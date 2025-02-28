@@ -121,7 +121,7 @@ export default function AboutMe() {
             <div className="grid grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3">
               {/* Botón de LinkedIn */}
               <a 
-                href="https://www.linkedin.com/in/tu-perfil" 
+                href="https://www.linkedin.com/in/ignacio-dalesio-lopez/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="group flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-[#0A66C2]/20 hover:bg-[#0A66C2]/30 transition-all duration-300"

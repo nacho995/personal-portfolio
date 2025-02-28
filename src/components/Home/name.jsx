@@ -10,7 +10,7 @@ const Name = () => {
             
             {/* Imagen */}
             <img 
-              src="/portfolioBg.jpg" 
+              src="/yo.png" 
               alt="Nacho Dalesio" 
               className="relative w-full h-full object-cover border-2 border-white/50 transform hover:scale-105 transition-transform duration-300 animate-border-wave"
             />
@@ -67,7 +67,7 @@ const Name = () => {
           {/* Botón de CV con efectos */}
           <div className="flex justify-center lg:justify-start">
             <a 
-              href="/path-to-your-cv.pdf" 
+              href="/Ignacio-Dalesio-CV.pdf" 
               target="_blank"
               rel="noopener noreferrer" 
               className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20
