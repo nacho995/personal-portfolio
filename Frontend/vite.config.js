@@ -13,10 +13,16 @@ export default defineConfig({
         manualChunks: undefined,
       },
     },
+    outDir: 'dist',
   },
   preview: {
     port: 5173
   },
   base: '/',
-  publicDir: 'public'
+  publicDir: 'public',
+  resolve: {
+    alias: {
+      '@': '/src'
+    }
+  }
 })
