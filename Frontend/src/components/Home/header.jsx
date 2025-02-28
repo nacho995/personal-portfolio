@@ -40,18 +40,20 @@ const Header = () => {
             </div>
             
             {/* Portfolio texto con botón de tema */}
-            <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6">
+            <div className="hidden md:flex items-center gap-6">
               <Link 
                 to="/" 
                 className="text-2xl lg:text-3xl font-bold text-white/90 hover:text-white transition-colors duration-300 tracking-wide"
               >
                 Portfolio
               </Link>
+            </div>
 
-              {/* Botón de tema mejorado */}
+            {/* Botón de tema mejorado - Movido a la derecha */}
+            <div className="flex items-center">
               <button
                 onClick={toggleTheme}
-                className="relative group flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
+                className="relative group flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
               >
                 {/* Efecto de fondo */}
                 <div 
@@ -62,11 +64,11 @@ const Header = () => {
                 />
                 
                 {/* Contenido del botón */}
-                <div className="relative flex items-center gap-3">
+                <div className="relative flex items-center gap-2 sm:gap-3">
                   {/* Icono del tema */}
                   <div className="relative">
                     <div 
-                      className={`w-6 h-6 rounded-full ${
+                      className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full ${
                         theme === 'purple' 
                           ? 'bg-gradient-to-br from-purple-400 to-purple-600' 
                           : 'bg-gradient-to-br from-[#40A0E0] to-[#2980B9]'
@@ -76,8 +78,8 @@ const Header = () => {
                   </div>
                   
                   {/* Texto del tema */}
-                  <span className="text-sm font-medium text-white/90 group-hover:text-white transition-colors duration-300">
-                    {theme === 'purple' ? 'Purple' : 'Blue'} Theme
+                  <span className="text-xs sm:text-sm font-medium text-white/90 group-hover:text-white transition-colors duration-300">
+                    {theme === 'purple' ? 'Purple' : 'Blue'}
                   </span>
                 </div>
               </button>
