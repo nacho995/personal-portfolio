@@ -27,7 +27,7 @@ export default function AboutMe() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] transition-colors duration-300 backdrop-blur-md shadow-lg"
+              className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-black/10 border border-white/10 hover:bg-black/20 transition-colors duration-300 backdrop-blur-md shadow-lg"
             >
               <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
                 <span className="text-xl sm:text-2xl">🎓</span>
@@ -45,7 +45,7 @@ export default function AboutMe() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] transition-colors duration-300 backdrop-blur-md shadow-lg"
+              className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-black/10 border border-white/10 hover:bg-black/20 transition-colors duration-300 backdrop-blur-md shadow-lg"
             >
               <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
                 <span className="text-xl sm:text-2xl">💻</span>
@@ -63,7 +63,7 @@ export default function AboutMe() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-500/15 via-transparent to-blue-500/15 border border-white/[0.08] hover:from-purple-500/25 hover:to-blue-500/25 transition-all duration-300 group backdrop-blur-md shadow-lg"
+              className="relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-black/10 border border-white/10 hover:from-purple-500/25 hover:to-blue-500/25 transition-all duration-300 group backdrop-blur-md shadow-lg"
             >
               <div className="absolute -inset-[1px] bg-gradient-to-r from-purple-500/30 to-blue-500/30 rounded-xl sm:rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative">
@@ -72,7 +72,7 @@ export default function AboutMe() {
                   <h2 className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-purple-300 to-white bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
                     DevLet
                   </h2>
-                  <span className="px-2 py-1 text-xs font-medium bg-white/15 rounded-full text-white/90 ml-auto sm:ml-0 backdrop-blur-sm">
+                  <span className="px-2 py-1 text-xs font-medium bg-black/10 rounded-full text-white/90 ml-auto sm:ml-0 backdrop-blur-sm">
                     En Desarrollo
                   </span>
                 </div>
@@ -96,7 +96,7 @@ export default function AboutMe() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] transition-colors duration-300 backdrop-blur-md shadow-lg"
+              className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-black/10 border border-white/10 hover:bg-black/20 transition-colors duration-300 backdrop-blur-md shadow-lg"
             >
               <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
                 <span className="text-xl sm:text-2xl">🎯</span>
@@ -114,7 +114,7 @@ export default function AboutMe() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="w-full lg:w-64 p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/[0.04] border border-white/[0.08] lg:sticky lg:top-4 backdrop-blur-md shadow-lg"
+            className="w-full lg:w-64 p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-black/10 border border-white/10 lg:sticky lg:top-4 backdrop-blur-md shadow-lg"
           >
             <h3 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">¡Conectemos!</h3>
             <div className="grid grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3">
