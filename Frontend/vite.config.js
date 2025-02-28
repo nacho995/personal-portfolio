@@ -6,7 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    historyApiFallback: true
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/proyectos/, to: '/index.html' },
+        { from: /./, to: '/index.html' }
+      ]
+    }
   },
   build: {
     rollupOptions: {
@@ -18,7 +23,12 @@ export default defineConfig({
   },
   preview: {
     port: 5173,
-    historyApiFallback: true
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/proyectos/, to: '/index.html' },
+        { from: /./, to: '/index.html' }
+      ]
+    }
   },
   base: '/',
   publicDir: 'public',
