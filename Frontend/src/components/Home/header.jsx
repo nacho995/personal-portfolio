@@ -20,7 +20,7 @@ const Header = () => {
                   <img 
                     src="/LogoDevLetSinFondo.png" 
                     alt="Logo" 
-                    className="w-12 h-12 sm:w-14 sm:h-14 object-contain transform group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
+                    className="w-12 h-12 sm:w-14 sm:h-14 object-contain transform group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] animate-bubble"
                   />
                 </div>
               </div>
@@ -34,7 +34,7 @@ const Header = () => {
                 <img 
                   src="/code1.png" 
                   alt="Code" 
-                  className="h-12 sm:h-14 w-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
+                  className="animate-float mt-2 h-12 sm:h-14 w-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
                 />
               </div>
             </div>
