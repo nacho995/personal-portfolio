@@ -1,0 +1,6 @@
+{
+  "/*": {
+    "Cache-Control": "no-cache",
+    "X-Frame-Options": "DENY"
+  }
+} 
