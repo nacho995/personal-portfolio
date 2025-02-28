@@ -4,6 +4,7 @@
   "description": "Backend para sistema de valoraciones",
   "main": "index.js",
   "scripts": {
+    "build": "echo 'No build step needed'",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
