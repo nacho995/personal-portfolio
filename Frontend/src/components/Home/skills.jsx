@@ -29,7 +29,7 @@ export default function Skills() {
   return (
     <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
       {/* Contenedor principal con efecto de cristal mejorado */}
-      <div className="relative backdrop-blur-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.04] border border-white/15 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(0,0,0,0.4)] overflow-hidden">
+      <div className="relative backdrop-blur-2xl bg-black/10 border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(0,0,0,0.3)] overflow-hidden">
         {/* Efectos de fondo mejorados */}
         <div className={`absolute inset-0 bg-gradient-to-br ${styles.gradient}`} />
         <div className={`absolute -top-32 -right-32 w-48 sm:w-64 h-48 sm:h-64 ${styles.blur.primary} rounded-full blur-3xl animate-pulse-slow`} />

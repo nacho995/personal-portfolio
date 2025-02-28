@@ -1,39 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { getRatingStars, postStars } from '../../service/api';
-import { useTheme } from '../../context/ThemeContext';
 
 export default function Projects() {
-  const { theme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tempRating, setTempRating] = useState(0);
   const [rating, setRating] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState(0);
   const projectId = 'goza-madrid';
-
-  const getThemeStyles = () => ({
-    gradient: theme === 'purple' 
-      ? 'from-purple-500/15 via-transparent to-blue-500/15'
-      : 'from-[#40A0E0]/15 via-transparent to-[#2980B9]/15',
-    glow: theme === 'purple'
-      ? 'from-purple-500/30 to-blue-500/30'
-      : 'from-[#40A0E0]/30 to-[#2980B9]/30',
-    button: theme === 'purple'
-      ? 'from-purple-500/80 to-blue-500/80 hover:from-purple-500 hover:to-blue-500'
-      : 'from-[#40A0E0]/80 to-[#2980B9]/80 hover:from-[#40A0E0] hover:to-[#2980B9]',
-    blur: theme === 'purple'
-      ? {
-          primary: 'bg-purple-500/20',
-          secondary: 'bg-blue-500/20'
-        }
-      : {
-          primary: 'bg-[#40A0E0]/20',
-          secondary: 'bg-[#2980B9]/20'
-        }
-  });
-
-  const styles = getThemeStyles();
 
   // Cargar ratings desde la API al iniciar
   useEffect(() => {
@@ -80,30 +55,30 @@ export default function Projects() {
 
   return (
     <div className="relative w-full mt-[5vh] max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
-      <div className="relative backdrop-blur-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.04] border border-white/15 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(0,0,0,0.4)] overflow-hidden">
-        {/* Efectos de fondo mejorados */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${styles.gradient}`} />
-        <div className={`absolute -top-32 -right-32 w-48 sm:w-64 h-48 sm:h-64 ${styles.blur.primary} rounded-full blur-3xl animate-pulse-slow`} />
-        <div className={`absolute -bottom-32 -left-32 w-48 sm:w-64 h-48 sm:h-64 ${styles.blur.secondary} rounded-full blur-3xl animate-pulse-slow`} />
+      <div className="relative backdrop-blur-2xl bg-black/10 border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(0,0,0,0.3)] overflow-hidden">
+        {/* Efectos de fondo */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5" />
+        <div className="absolute -top-32 -right-32 w-48 sm:w-64 h-48 sm:h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute -bottom-32 -left-32 w-48 sm:w-64 h-48 sm:h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow" />
 
-        {/* Título mejorado */}
+        {/* Título */}
         <div className="relative mb-8 sm:mb-16 text-center">
-          <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-white/90 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+          <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white/90 to-white/70 tracking-tight">
             Mis Proyectos
           </h1>
-          <div className="mt-2 h-1 w-24 sm:w-32 mx-auto bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+          <div className="mt-2 h-1 w-24 sm:w-32 mx-auto bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
         </div>
 
         {/* Contenido */}
         <div className="relative space-y-8">
           {/* Card del Proyecto y GitHub Link */}
           <div className="grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-6">
-            {/* Card del Proyecto mejorada */}
+            {/* Card del Proyecto */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="group relative bg-white/[0.04] border border-white/[0.08] rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-500 backdrop-blur-md"
+              className="group relative bg-white/[0.03] border border-white/[0.05] rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-500"
             >
               {/* Preview Image */}
               <div className="relative aspect-video overflow-hidden">
@@ -230,19 +205,19 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* Botones mejorados */}
+                {/* Botones */}
                 <div className="flex flex-wrap gap-4">
                   <a 
                     href="https://goza-madrid-qbw9.onrender.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-2 bg-white/[0.08] hover:bg-white/[0.12] text-white/90 rounded-xl transition-all duration-300 backdrop-blur-sm"
+                    className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white/90 rounded-xl transition-all duration-300"
                   >
                     Visitar Sitio
                   </a>
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className={`px-6 py-2 bg-gradient-to-r ${styles.button} text-white rounded-xl transition-all duration-300`}
+                    className="px-6 py-2 bg-gradient-to-r from-purple-500/80 to-blue-500/80 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl transition-all duration-300"
                   >
                     Vista Previa
                   </button>
@@ -250,7 +225,7 @@ export default function Projects() {
               </div>
             </motion.div>
 
-            {/* GitHub Card mejorada */}
+            {/* GitHub Card */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -261,11 +236,11 @@ export default function Projects() {
                 href="https://github.com/nacho995/nextjs-gozamadrid"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center p-6 bg-white/[0.04] border border-white/[0.08] rounded-2xl hover:border-white/20 transition-all duration-500 backdrop-blur-md"
+                className="group flex flex-col items-center p-6 bg-white/[0.03] border border-white/[0.05] rounded-2xl hover:border-white/20 transition-all duration-500"
               >
-                {/* GitHub Icon mejorado */}
+                {/* GitHub Icon */}
                 <div className="relative p-4 mb-4">
-                  <div className={`absolute inset-0 bg-gradient-to-r ${styles.glow} rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <svg 
                     className="w-12 h-12 text-white/90 relative group-hover:scale-110 transition-transform duration-500" 
                     viewBox="0 0 24 24" 
@@ -274,6 +249,7 @@ export default function Projects() {
                     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                   </svg>
                 </div>
+                {/* Text */}
                 <span className="text-sm font-medium text-white/90 text-center group-hover:text-white transition-colors duration-300">
                   Ver código en GitHub
                 </span>
@@ -283,10 +259,10 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* Modal mejorado */}
+      {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
-          <div className="relative w-full max-w-7xl bg-gradient-to-br from-white/[0.08] to-white/[0.04] border border-white/15 rounded-2xl shadow-2xl backdrop-blur-xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="relative w-full max-w-7xl bg-gradient-to-br from-white/[0.07] to-white/[0.03] border border-white/10 rounded-2xl shadow-2xl">
             {/* Header del Modal */}
             <div className="flex items-center justify-between p-4 border-b border-white/10">
               <div className="flex items-center gap-4">
