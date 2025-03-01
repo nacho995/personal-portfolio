@@ -10,7 +10,7 @@ const Name = () => {
             
             {/* Imagen con mejor contraste */}
             <img 
-              src="/yo.png" 
+              src="/yo.jpeg" 
               alt="Nacho Dalesio" 
               className="relative w-full h-full object-cover border-2 border-white/50 transform hover:scale-105 transition-transform duration-300 animate-border-wave shadow-lg shadow-black/50"
             />
