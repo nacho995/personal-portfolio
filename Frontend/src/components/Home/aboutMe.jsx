@@ -3,7 +3,7 @@ import { FaLinkedin } from 'react-icons/fa';
 
 export default function AboutMe() {
   return (
-    <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+    <section id="about-me" className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
       {/* Contenedor principal - Mejorado para dark mode */}
       <div className="relative backdrop-blur-2xl bg-black/10 border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(0,0,0,0.3)] overflow-hidden">
         {/* Efectos de fondo mejorados */}
@@ -103,8 +103,10 @@ export default function AboutMe() {
                 Objetivos Profesionales
               </h2>
               <p className="text-sm sm:text-base text-white/80 leading-relaxed">
-                Mi meta es encontrar una oportunidad laboral que me permita crecer profesionalmente, 
-                colaborando con expertos del sector y contribuyendo a proyectos desafiantes.
+                Mi meta es encontrar una oportunidad laboral que me permita colaborar con expertos del sector, contribuyendo a proyectos desafiantes. Estoy 
+                comprometido a aportar mis conocimientos y habilidades para impulsar los objetivos 
+                empresariales, manteniendo una actitud proactiva y enfocada en la mejora continua 
+                de los procesos y resultados del equipo.
               </p>
             </motion.div>
           </div>
@@ -149,6 +151,6 @@ export default function AboutMe() {
           </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
