@@ -1,6 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 
+// Definimos un estilo global para las animaciones
+// Esto se insertará una sola vez en el componente
+const createGlobalStyles = () => {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = `
+    @keyframes scroll-right {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    @keyframes scroll-left {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+  `;
+  return styleElement;
+};
+
 const Signs = () => {
   const { theme } = useTheme();
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1500);
@@ -13,6 +31,19 @@ const Signs = () => {
     { text: "APRENDIZAJE CONTINUO Y ADAPTABILIDAD", direction: 'left', speed: 0.7 },
     { text: "COMPROMISO CON LA CALIDAD Y RESULTADOS", direction: 'right', speed: 0.8 }
   ];
+
+  // Agregar las animaciones CSS al documento una sola vez
+  useEffect(() => {
+    const styleElement = createGlobalStyles();
+    document.head.appendChild(styleElement);
+    
+    return () => {
+      // Limpiar al desmontar
+      if (document.head.contains(styleElement)) {
+        document.head.removeChild(styleElement);
+      }
+    };
+  }, []);
 
   // Usar colores sólidos y brillantes para el tema azul en lugar de gradientes
   const getTextStyle = (index) => {
@@ -121,19 +152,6 @@ const Signs = () => {
       {/* Efecto de brillo en los bordes */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-      
-      {/* Definir las animaciones CSS */}
-      <style jsx>{`
-        @keyframes scroll-right {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        
-        @keyframes scroll-left {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
-      `}</style>
     </div>
   );
 };
