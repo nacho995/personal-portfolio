@@ -6,45 +6,45 @@ const BackgroundGradient = () => {
   const { theme } = useTheme();
   const { scrollYProgress } = useScroll();
   
-  // Hacer el scroll más suave reduciendo la velocidad del progreso
-  const smoothProgress = useTransform(scrollYProgress, [0, 1], [0, 0.3]);
+  // Aumentamos la velocidad incrementando el valor máximo de transformación (de 0.3 a 0.8)
+  const smoothProgress = useTransform(scrollYProgress, [0, 1], [0, 0.8]);
   
-  // Transformaciones para cada elemento - Modificadas para evitar superposiciones
+  // Transformaciones para cada elemento - Valores ampliados para mayor velocidad
   
   // React - Esquina superior derecha, luego desaparece por arriba
-  const reactY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -80, -200, -300, -500, -700]);
-  const reactX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, 50, 100, 150, 200, 250]);
-  const reactRotate = useTransform(smoothProgress, [0, 1], [0, 360]);
+  const reactY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -160, -400, -600, -800, -1000]);
+  const reactX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, 100, 200, 300, 400, 500]);
+  const reactRotate = useTransform(smoothProgress, [0, 1], [0, 720]); // Aumentado a 720 grados
   
   // Comillas - Desde central derecha, moviéndose hacia la izquierda y arriba
-  const bracketY1 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -50, -100, -200, -300, -400]);
-  const bracketX1 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -80, -160, -240, -320, -400]);
-  const bracketRotate1 = useTransform(smoothProgress, [0, 1], [10, -180]);
+  const bracketY1 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -100, -200, -400, -600, -800]);
+  const bracketX1 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -160, -320, -480, -640, -800]);
+  const bracketRotate1 = useTransform(smoothProgress, [0, 1], [10, -360]); // Aumentado a -360 grados
   
   // JavaScript - Desde abajo a la derecha, subiendo y desplazándose a la izquierda
-  const jsY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 150, 100, 0, -100, -200]);
-  const jsX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 150, 100, 0, -100, -200]);
-  const jsRotate = useTransform(smoothProgress, [0, 1], [-15, 180]);
+  const jsY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 100, 0, -200, -400, -600]);
+  const jsX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 100, 0, -200, -400, -600]);
+  const jsRotate = useTransform(smoothProgress, [0, 1], [-15, 360]); // Aumentado a 360 grados
   
   // Tags HTML - Aparecen en el centro y bajan
-  const bracketY2 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-400, -200, 0, 200, 400, 600]);
-  const bracketX2 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, 50, 100, 150, 200, 250]);
-  const bracketRotate2 = useTransform(smoothProgress, [0, 1], [15, -180]);
+  const bracketY2 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-400, -200, 0, 300, 600, 900]);
+  const bracketX2 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, 100, 200, 300, 400, 500]);
+  const bracketRotate2 = useTransform(smoothProgress, [0, 1], [15, -360]); // Aumentado a -360 grados
   
   // Node.js - Ajustado para ser más visible desde el inicio
-  const nodeY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 100, 0, -100, -200, -300]);
-  const nodeX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-200, -150, -100, -50, 0, 50]);
-  const nodeRotate = useTransform(smoothProgress, [0, 1], [-15, 180]);
+  const nodeY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 100, 0, -200, -400, -600]);
+  const nodeX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-200, -150, -100, -50, 100, 250]);
+  const nodeRotate = useTransform(smoothProgress, [0, 1], [-15, 360]); // Aumentado a 360 grados
 
   // Llaves - Desde la izquierda, moviéndose hacia la derecha y bajando
-  const bracaletsY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-200, 0, 200, 400, 600, 800]);
-  const bracaletsX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-300, -200, -100, 0, 100, 200]);
-  const bracaletsRotate = useTransform(smoothProgress, [0, 1], [-15, 180]);
+  const bracaletsY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-200, 0, 200, 500, 800, 1100]);
+  const bracaletsX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-300, -200, -100, 100, 300, 500]);
+  const bracaletsRotate = useTransform(smoothProgress, [0, 1], [-15, 360]); // Aumentado a 360 grados
 
   // Corchetes - Ajustados para ser más visibles desde el inicio
-  const bracketsY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [150, 100, 50, 0, -50, -100]);
-  const bracketsX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-100, -80, -60, -40, -20, 0]);
-  const bracketsRotate = useTransform(smoothProgress, [0, 1], [0, 180]);
+  const bracketsY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [150, 75, 0, -100, -200, -300]);
+  const bracketsX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-100, -50, 0, 50, 100, 150]);
+  const bracketsRotate = useTransform(smoothProgress, [0, 1], [0, 360]); // Aumentado a 360 grados
 
   return (
     <div className="fixed inset-0 -z-10 h-full w-full bg-[#13111C]">

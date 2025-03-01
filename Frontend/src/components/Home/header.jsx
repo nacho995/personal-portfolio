@@ -43,12 +43,18 @@ export const Header = () => {
 
   const getResponsiveRadius = (baseRadius) => {
     if (window.innerWidth < 640) return baseRadius * 0.4;
+    if (window.innerWidth < 768) return baseRadius * 0.5;
     if (window.innerWidth < 1024) return baseRadius * 0.6;
     return baseRadius;
   };
 
-  // Ajusta 'startAngle' y 'radius' según necesites que el texto se vea
-  // más adentro o afuera, o empiece en un ángulo distinto
+  const getTextRadius = (baseSize) => {
+    if (window.innerWidth < 640) return baseSize - 40;
+    if (window.innerWidth < 768) return baseSize - 50;
+    if (window.innerWidth < 1024) return baseSize - 60;
+    return baseSize - 70;
+  };
+
   const menuItems = [
     [
       { 
@@ -101,7 +107,7 @@ export const Header = () => {
         color: theme === 'purple' 
           ? 'from-purple-800/90 via-purple-700/95 to-purple-500' 
           : 'from-[#1e5c8d]/90 via-[#2980B9] to-[#40A0E0]',
-        radius: getResponsiveRadius(850),
+        radius: getResponsiveRadius(880),
         startAngle: 190
       }
     ],
@@ -110,7 +116,7 @@ export const Header = () => {
         text: 'CERRAR MENU', 
         path: '#', 
         color: 'from-black/90 via-black/95 to-black',
-        radius: getResponsiveRadius(950),
+        radius: getResponsiveRadius(1050),
         startAngle: 195,
         isCloseButton: true
       }
@@ -180,35 +186,48 @@ export const Header = () => {
                   <div className="absolute inset-0 w-full h-full z-0">
                     {item[0].text.split('').map((letter, letterIndex) => {
                       const totalLetters = item[0].text.length
+                      
                       const menuConfig = {
                         'HOME': {
                           arcLength: 55,
-                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 40 : 70),
+                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 
+                                  window.innerWidth < 768 ? 45 : 
+                                  window.innerWidth < 1024 ? 50 : 60),
                           startAngleOffset: -30
                         },
                         'PERFIL': {
                           arcLength: 40,
-                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 60),
+                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 
+                                  window.innerWidth < 768 ? 45 : 
+                                  window.innerWidth < 1024 ? 50 : 60),
                           startAngleOffset: -30
                         },
                         'PROYECTOS': {
                           arcLength: 40,
-                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 60),
+                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 
+                                  window.innerWidth < 768 ? 45 : 
+                                  window.innerWidth < 1024 ? 50 : 60),
                           startAngleOffset: -30
                         },
                         'GITHUB': {
                           arcLength: 35,
-                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 60),
+                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 
+                                  window.innerWidth < 768 ? 45 : 
+                                  window.innerWidth < 1024 ? 50 : 60),
                           startAngleOffset: -30
                         },
                         'LINKEDIN': {
                           arcLength: 40,
-                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 60),
+                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 
+                                  window.innerWidth < 768 ? 45 : 
+                                  window.innerWidth < 1024 ? 50 : 60),
                           startAngleOffset: -30
                         },
                         'CERRAR MENU': {
                           arcLength: 65,
-                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 60),
+                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 
+                                  window.innerWidth < 768 ? 45 : 
+                                  window.innerWidth < 1024 ? 50 : 60),
                           startAngleOffset: -30
                         }
                       }
@@ -252,55 +271,24 @@ export const Header = () => {
       <nav className={`bg-gradient-to-b from-black/95 via-black/85 to-transparent backdrop-blur-lg border-b border-white/15 transition-all duration-300 ${isMenuOpen ? 'pb-0' : ''} relative z-[60]`}>
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 sm:h-24 lg:h-28">
-            {/* Logo y branding */}
-            <div className="flex flex-col sm:flex-row items-center gap-6 relative mt-[10vh] sm:mt-0">
-              <div className="flex flex-col sm:flex-row items-center gap-6 mt-8 sm:mt-0">
-                {/* Logo con botón de tema debajo en móvil */}
-                <div className="flex flex-col items-center sm:flex-row sm:items-start gap-4 sm:gap-6">
-                  <div className="relative group">
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/80 to-blue-500/80 rounded-full opacity-75 group-hover:opacity-100 blur-lg group-hover:blur-xl transition-all duration-500"></div>
-                    <div className="relative flex items-center justify-center w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] bg-black/60 rounded-full border border-white/15 overflow-hidden group-hover:border-white/30 transition-colors duration-500 backdrop-blur-sm">
-                      <img 
-                        src="/LogoDevLetSinFondo.png" 
-                        alt="Logo" 
-                        className="w-12 h-12 sm:w-14 sm:h-14 object-contain transform group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] animate-bubble"
-                      />
-                    </div>
-                  </div>
-                  
-                  {/* Botón de tema - solo visible en móvil debajo del logo */}
-                  <div className="flex sm:hidden items-center relative">
-                    <button
-                      onClick={toggleTheme}
-                      className="relative group flex items-center gap-1 px-2 py-1.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md"
-                    >
-                      <div 
-                        className="absolute inset-0 rounded-xl opacity-30 group-hover:opacity-100 transition-all duration-300 blur-md"
-                        style={{
-                          background: `radial-gradient(circle, ${theme === 'purple' ? '#40A0E0' : '#9333EA'} 0%, transparent 70%)`
-                        }}
-                      />
-                      <div className="relative flex items-center gap-2">
-                        <div className="z-[1000] relative">
-                          <div 
-                            className={`z-[1000] w-5 h-5 rounded-full ${
-                              theme === 'purple' 
-                                ? 'bg-gradient-to-br from-purple-300 to-purple-500' 
-                                : 'bg-gradient-to-br from-[#40A0E0] to-[#2980B9]'
-                            } transition-all duration-300 shadow-lg shadow-black/30`}
-                          />
-                          <div className="absolute inset-0 bg-white/25 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300" />
-                        </div>
-                        <span className="text-xs font-medium text-white/95 group-hover:text-white transition-colors duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                          {theme === 'purple' ? 'Purple' : 'Blue'}
-                        </span>
-                      </div>
-                    </button>
+            {/* Sección izquierda: Logo, separador, code1.png y botón de tema (este último solo en ≥768px) */}
+            <div className="flex flex-row items-center relative">
+              {/* Logo, separador y code1.png */}
+              <div className="flex flex-row items-center gap-4">
+                {/* Logo */}
+                <div className="relative group">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/80 to-blue-500/80 rounded-full opacity-75 group-hover:opacity-100 blur-lg group-hover:blur-xl transition-all duration-500"></div>
+                  <div className="relative flex items-center justify-center w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] bg-black/60 rounded-full border border-white/15 overflow-hidden group-hover:border-white/30 transition-colors duration-500 backdrop-blur-sm">
+                    <img 
+                      src="/LogoDevLetSinFondo.png" 
+                      alt="Dev Logo" 
+                      className="h-12 sm:h-14 w-auto object-contain"
+                    />
                   </div>
                 </div>
-
-                {/* Separador vertical - visible solo en desktop */}
-                <div className="hidden sm:block h-10 w-px bg-gradient-to-b from-transparent via-white/25 to-transparent"></div>
+                
+                {/* Separador vertical */}
+                <div className="h-10 w-px bg-gradient-to-b from-transparent via-white/25 to-transparent"></div>
                 
                 {/* Imagen code1.png */}
                 <div className="relative group overflow-hidden rounded-lg">
@@ -308,17 +296,15 @@ export const Header = () => {
                   <img 
                     src="/code1.png" 
                     alt="Code" 
-                    className="animate-float mt-2 h-12 sm:h-14 w-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
+                    className="mt-[3vh] animate-float h-11 sm:h-14 w-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
                   />
                 </div>
-              </div>
-
-              {/* Botón de tema - visible solo en tablet/desktop */}
-              <div className="hidden sm:flex items-center mt-0 ml-4 relative">
-                <div className="relative z-[1000] pointer-events-auto">
+                
+                {/* Botón de tema - visible a partir de 768px, al lado de las imágenes */}
+                <div className="hidden md:flex items-center relative ml-4">
                   <button
                     onClick={toggleTheme}
-                    className="relative group flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md"
+                    className="relative group flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md"
                   >
                     <div 
                       className="absolute inset-0 rounded-xl opacity-30 group-hover:opacity-100 transition-all duration-300 blur-md"
@@ -326,10 +312,10 @@ export const Header = () => {
                         background: `radial-gradient(circle, ${theme === 'purple' ? '#40A0E0' : '#9333EA'} 0%, transparent 70%)`
                       }}
                     />
-                    <div className="relative flex items-center gap-3">
+                    <div className="relative flex items-center gap-2">
                       <div className="z-[1000] relative">
                         <div 
-                          className={`z-[1000] w-6 h-6 rounded-full ${
+                          className={`z-[1000] w-5 h-5 rounded-full ${
                             theme === 'purple' 
                               ? 'bg-gradient-to-br from-purple-300 to-purple-500' 
                               : 'bg-gradient-to-br from-[#40A0E0] to-[#2980B9]'
@@ -337,17 +323,47 @@ export const Header = () => {
                         />
                         <div className="absolute inset-0 bg-white/25 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300" />
                       </div>
-                      <span className="text-sm font-medium text-white/95 group-hover:text-white transition-colors duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+                      <span className="text-xs font-medium text-white/95 group-hover:text-white transition-colors duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
                         {theme === 'purple' ? 'Purple' : 'Blue'}
                       </span>
                     </div>
                   </button>
                 </div>
               </div>
+              
+              {/* Botón de tema - solo visible en móvil (<768px) */}
+              <div className="flex md:hidden items-center mt-2 absolute top-full left-0">
+                <button
+                  onClick={toggleTheme}
+                  className="relative group flex items-center gap-1 px-2 py-1.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md"
+                >
+                  <div 
+                    className="absolute inset-0 rounded-xl opacity-30 group-hover:opacity-100 transition-all duration-300 blur-md"
+                    style={{
+                      background: `radial-gradient(circle, ${theme === 'purple' ? '#40A0E0' : '#9333EA'} 0%, transparent 70%)`
+                    }}
+                  />
+                  <div className="relative flex items-center gap-2">
+                    <div className="z-[1000] relative">
+                      <div 
+                        className={`z-[1000] w-5 h-5 rounded-full ${
+                          theme === 'purple' 
+                            ? 'bg-gradient-to-br from-purple-300 to-purple-500' 
+                            : 'bg-gradient-to-br from-[#40A0E0] to-[#2980B9]'
+                        } transition-all duration-300 shadow-lg shadow-black/30`}
+                      />
+                      <div className="absolute inset-0 bg-white/25 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300" />
+                    </div>
+                    <span className="text-xs font-medium text-white/95 group-hover:text-white transition-colors duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+                      {theme === 'purple' ? 'Purple' : 'Blue'}
+                    </span>
+                  </div>
+                </button>
+              </div>
             </div>
             
-            {/* Texto "Portfolio" */}
-            <div className="hidden md:flex items-center gap-6">
+            {/* Sección central: Texto "Portfolio" */}
+            <div className="md:flex items-center gap-6 hidden">
               <Link 
                 to="/" 
                 className="text-2xl lg:text-3xl font-bold text-white/95 hover:text-white transition-colors duration-300 tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
@@ -356,7 +372,7 @@ export const Header = () => {
               </Link>
             </div>
 
-            {/* Botón menú */}
+            {/* Sección derecha: Botón del menú */}
             <div className="flex items-center relative z-[75]">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
