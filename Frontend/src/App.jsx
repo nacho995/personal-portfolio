@@ -7,6 +7,7 @@ import Skills from './components/Home/skills'
 import AboutMe from './components/Home/aboutMe'
 import Projects from './components/Proyectos/Projects'
 import { ThemeProvider } from './context/ThemeContext'
+import Signs from './components/Home/Signs'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
               <>
                 <Name />
                 <AboutMe />
+                <Signs />
                 <Skills />
               </>
             } />

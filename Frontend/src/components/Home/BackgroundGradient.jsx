@@ -84,7 +84,7 @@ const BackgroundGradient = () => {
             ? 'bg-gradient-to-r from-purple-300 to-blue-300 drop-shadow-[0_0_20px_rgba(168,85,247,0.5)] [text-shadow:3px_3px_6px_rgba(168,85,247,0.5)]'
             : 'bg-gradient-to-r from-[#40A0E0] to-[#89CFF0] drop-shadow-[0_0_20px_rgba(64,160,224,0.5)] [text-shadow:3px_3px_6px_rgba(64,160,224,0.5)]'
         } backdrop-blur-sm`}>
-          {'</>'}
+          ''
         </span>
       </motion.div>
 
