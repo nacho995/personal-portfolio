@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const ThemeContext = createContext({
@@ -21,7 +21,14 @@ const ThemeContext = createContext({
 });
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('purple');
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme || 'purple';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme(theme === 'purple' ? 'blue' : 'purple');

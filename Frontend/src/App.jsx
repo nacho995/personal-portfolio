@@ -8,6 +8,7 @@ import AboutMe from './components/Home/aboutMe'
 import Projects from './components/Proyectos/Projects'
 import { ThemeProvider } from './context/ThemeContext'
 import Signs from './components/Home/Signs'
+import WordpressProjects from './components/Proyectos/WordpressProjects'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/proyectos" element={
               <>
               <Projects />
+              <WordpressProjects />
               </>
             } />
           </Routes>

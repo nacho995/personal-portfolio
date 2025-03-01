@@ -9,34 +9,41 @@ const BackgroundGradient = () => {
   // Hacer el scroll más suave reduciendo la velocidad del progreso
   const smoothProgress = useTransform(scrollYProgress, [0, 1], [0, 0.3]);
   
-  // Transformaciones para cada elemento
-  const reactY = useTransform(smoothProgress, [0, 0.2, 0.5, 0.8, 1], [0, -100, 50, -100, 0]);
-  const reactX = useTransform(smoothProgress, [0, 0.2, 0.5, 0.8, 1], [0, 100, -100, 100, 0]);
+  // Transformaciones para cada elemento - Modificadas para evitar superposiciones
+  
+  // React - Esquina superior derecha, luego desaparece por arriba
+  const reactY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -80, -200, -300, -500, -700]);
+  const reactX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, 50, 100, 150, 200, 250]);
   const reactRotate = useTransform(smoothProgress, [0, 1], [0, 360]);
   
-  const bracketY1 = useTransform(smoothProgress, [0, 0.3, 0.6, 1], [0, 150, -150, 0]);
-  const bracketX1 = useTransform(smoothProgress, [0, 0.3, 0.6, 1], [0, -100, 100, 0]);
+  // Comillas - Desde central derecha, moviéndose hacia la izquierda y arriba
+  const bracketY1 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -50, -100, -200, -300, -400]);
+  const bracketX1 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -80, -160, -240, -320, -400]);
   const bracketRotate1 = useTransform(smoothProgress, [0, 1], [10, -180]);
   
-  const jsY = useTransform(smoothProgress, [0, 0.2, 0.5, 0.8, 1], [0, 150, -200, 150, 0]);
-  const jsX = useTransform(smoothProgress, [0, 0.2, 0.5, 0.8, 1], [0, -200, 150, -200, 0]);
+  // JavaScript - Desde abajo a la derecha, subiendo y desplazándose a la izquierda
+  const jsY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 150, 100, 0, -100, -200]);
+  const jsX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 150, 100, 0, -100, -200]);
   const jsRotate = useTransform(smoothProgress, [0, 1], [-15, 180]);
   
-  const bracketY2 = useTransform(smoothProgress, [0, 0.3, 0.6, 0.9, 1], [0, -150, 100, -150, 0]);
-  const bracketX2 = useTransform(smoothProgress, [0, 0.3, 0.6, 0.9, 1], [0, 100, -150, 100, 0]);
+  // Tags HTML - Aparecen en el centro y bajan
+  const bracketY2 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-400, -200, 0, 200, 400, 600]);
+  const bracketX2 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, 50, 100, 150, 200, 250]);
   const bracketRotate2 = useTransform(smoothProgress, [0, 1], [15, -180]);
   
-  const nodeY = useTransform(smoothProgress, [0, 0.25, 0.5, 0.75, 1], [0, 150, -100, 150, 0]);
-  const nodeX = useTransform(smoothProgress, [0, 0.25, 0.5, 0.75, 1], [0, -200, 150, -200, 0]);
+  // Node.js - Ajustado para ser más visible desde el inicio
+  const nodeY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 100, 0, -100, -200, -300]);
+  const nodeX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-200, -150, -100, -50, 0, 50]);
   const nodeRotate = useTransform(smoothProgress, [0, 1], [-15, 180]);
 
-  const bracaletsY = useTransform(smoothProgress, [0, 0.25, 0.5, 0.75, 1], [0, 150, -100, 150, 0]);
-  const bracaletsX = useTransform(smoothProgress, [0, 0.2, 0.5, 0.8, 1], [0, 100, -150, 100, 0]);
+  // Llaves - Desde la izquierda, moviéndose hacia la derecha y bajando
+  const bracaletsY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-200, 0, 200, 400, 600, 800]);
+  const bracaletsX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-300, -200, -100, 0, 100, 200]);
   const bracaletsRotate = useTransform(smoothProgress, [0, 1], [-15, 180]);
 
-  // Nuevo elemento brackets
-  const bracketsY = useTransform(smoothProgress, [0, 0.25, 0.5, 0.75, 1], [0, -100, 100, -100, 0]);
-  const bracketsX = useTransform(smoothProgress, [0, 0.25, 0.5, 0.75, 1], [0, 100, -100, 100, 0]);
+  // Corchetes - Ajustados para ser más visibles desde el inicio
+  const bracketsY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [150, 100, 50, 0, -50, -100]);
+  const bracketsX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-100, -80, -60, -40, -20, 0]);
   const bracketsRotate = useTransform(smoothProgress, [0, 1], [0, 180]);
 
   return (
@@ -128,9 +135,9 @@ const BackgroundGradient = () => {
         </span>
       </motion.div>
 
-      {/* Node.js */}
+      {/* Node.js - Posición inicial ajustada para ser más visible */}
       <motion.div 
-        className="absolute right-[20%] sm:right-[30%] lg:right-[45%] top-[75%] sm:top-[65%] lg:top-[55%] select-none transform-gpu"
+        className="absolute right-[20%] sm:right-[30%] lg:right-[40%] top-[55%] sm:top-[50%] lg:top-[45%] select-none transform-gpu"
         style={{ 
           y: nodeY,
           x: nodeX,
@@ -147,15 +154,17 @@ const BackgroundGradient = () => {
           Node.js
         </span>
       </motion.div>
+      
+      {/* Llaves */}
       <motion.div
-      className="absolute left-[15%] sm:left-[20%] lg:left-[25%] top-[35%] sm:top-[40%] lg:top-[45%] select-none transform-gpu"
-      style={{
-        y: bracaletsY,
-        x: bracaletsX,
-        rotate: bracaletsRotate,
-      }}
-      transition={{ duration: 0.5 }}
-      initial={false}
+        className="absolute left-[15%] sm:left-[20%] lg:left-[25%] top-[35%] sm:top-[40%] lg:top-[45%] select-none transform-gpu"
+        style={{
+          y: bracaletsY,
+          x: bracaletsX,
+          rotate: bracaletsRotate,
+        }}
+        transition={{ duration: 0.5 }}
+        initial={false}
       >
         <span className={`text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-mono text-transparent bg-clip-text ${
           theme === 'purple'
@@ -165,9 +174,10 @@ const BackgroundGradient = () => {
           { '{}' }
         </span>
       </motion.div>
-      {/* Nuevo elemento brackets */}
+      
+      {/* Corchetes - Posición inicial ajustada para ser más visibles */}
       <motion.div
-        className="absolute left-[35%] sm:left-[40%] lg:left-[45%] top-[65%] sm:top-[70%] lg:top-[75%] select-none transform-gpu"
+        className="absolute left-[35%] sm:left-[40%] lg:left-[45%] top-[50%] sm:top-[55%] lg:top-[60%] select-none transform-gpu"
         style={{
           y: bracketsY,
           x: bracketsX,
@@ -209,8 +219,6 @@ const BackgroundGradient = () => {
       
       {/* Overlay gradiente sutil mejorado */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#13111C]/60 via-transparent to-transparent backdrop-blur-[1px]" />
-
-      
     </div>
   )
 }

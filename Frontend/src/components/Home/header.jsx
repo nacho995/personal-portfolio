@@ -74,12 +74,23 @@ export const Header = () => {
     ],
     [
       { 
+        text: 'PROYECTOS', 
+        path: '/proyectos', 
+        color: theme === 'purple' 
+          ? 'from-purple-700/80 via-purple-500/90 to-purple-300/95' 
+          : 'from-[#2575AF]/80 via-[#3085C0]/90 to-[#60C0F0]/95',
+        radius: getResponsiveRadius(600),
+        startAngle: 180
+      }
+    ],
+    [
+      { 
         text: 'GITHUB', 
         path: 'https://github.com/nacho995', 
         color: theme === 'purple' 
           ? 'from-purple-700/90 via-purple-600/95 to-purple-400' 
           : 'from-[#2171A5]/90 via-[#3590D0] to-[#50B0F0]',
-        radius: getResponsiveRadius(600),
+        radius: getResponsiveRadius(750),
         startAngle: 180
       }
     ],
@@ -90,7 +101,7 @@ export const Header = () => {
         color: theme === 'purple' 
           ? 'from-purple-800/90 via-purple-700/95 to-purple-500' 
           : 'from-[#1e5c8d]/90 via-[#2980B9] to-[#40A0E0]',
-        radius: getResponsiveRadius(750),
+        radius: getResponsiveRadius(850),
         startAngle: 190
       }
     ],
@@ -99,7 +110,7 @@ export const Header = () => {
         text: 'CERRAR MENU', 
         path: '#', 
         color: 'from-black/90 via-black/95 to-black',
-        radius: getResponsiveRadius(900),
+        radius: getResponsiveRadius(950),
         startAngle: 195,
         isCloseButton: true
       }
@@ -176,6 +187,11 @@ export const Header = () => {
                           startAngleOffset: -30
                         },
                         'PERFIL': {
+                          arcLength: 40,
+                          radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 60),
+                          startAngleOffset: -30
+                        },
+                        'PROYECTOS': {
                           arcLength: 40,
                           radius: (item[0].radius / 2) - (window.innerWidth < 640 ? 35 : 60),
                           startAngleOffset: -30
