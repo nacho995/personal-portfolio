@@ -57,7 +57,7 @@ const Signs = () => {
         'from-purple-700 to-pink-500'
       ];
       return {
-        className: `bg-gradient-to-r ${purpleColors[index % purpleColors.length]} bg-clip-text text-transparent`,
+        className: `bg-gradient-to-r ${purpleColors[index ]} bg-clip-text text-transparent`,
         style: { textShadow: '0 0 20px rgba(255,255,255,0.2)' }
       };
     } else {
@@ -73,7 +73,7 @@ const Signs = () => {
         className: '',
         style: { 
           color: blueColors[index % blueColors.length],
-          textShadow: `0 0 15px ${blueColors[index % blueColors.length]}80`,
+          textShadow: `0 0 15px ${blueColors[index]}80`,
         }
       };
     }

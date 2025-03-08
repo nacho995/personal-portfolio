@@ -37,7 +37,7 @@ export const Header = () => {
       scale: 1,
       originX: 1,
       originY: 0,
-      transition: { delay: custom * 0.1, duration: 0.3, ease: 'easeOut' }
+      transition: { delay: custom * 0.1, duration: 0.3, ease: 'easeIn' }
     })
   }
 
@@ -46,13 +46,6 @@ export const Header = () => {
     if (window.innerWidth < 768) return baseRadius * 0.5;
     if (window.innerWidth < 1024) return baseRadius * 0.6;
     return baseRadius;
-  };
-
-  const getTextRadius = (baseSize) => {
-    if (window.innerWidth < 640) return baseSize - 40;
-    if (window.innerWidth < 768) return baseSize - 50;
-    if (window.innerWidth < 1024) return baseSize - 60;
-    return baseSize - 70;
   };
 
   const menuItems = [
