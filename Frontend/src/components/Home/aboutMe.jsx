@@ -58,7 +58,7 @@ export default function AboutMe() {
               </p>
             </motion.div>
 
-            {/* DevLet sección mejorada */}
+            {/* CodLet sección mejorada */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -70,14 +70,14 @@ export default function AboutMe() {
                 <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <span className="text-xl sm:text-2xl">⚡</span>
                   <h2 className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-purple-300 to-white bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                    DevLet
+                    CodLet
                   </h2>
                   <span className="px-2 py-1 text-xs font-medium bg-black/10 rounded-full text-white/90 ml-auto sm:ml-0 backdrop-blur-sm">
                     En Desarrollo
                   </span>
                 </div>
                 <p className="text-sm sm:text-base text-white/80 leading-relaxed">
-                  Actualmente estoy desarrollando <span className="text-white font-medium">DevLet</span>, 
+                  Actualmente estoy desarrollando <span className="text-white font-medium">CodLet</span>, 
                   una marca personal enfocada en el desarrollo web integral. Este proyecto combina soluciones 
                   tanto en <span className="text-white font-medium">WordPress</span> como en desarrollo personalizado 
                   con <span className="text-white font-medium">programación moderna</span>, ofreciendo 
