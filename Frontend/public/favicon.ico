@@ -1,1 +1,6 @@
- 
+Este archivo debería ser un .ico real.
+Para convertir el SVG a ICO:
+1. Abre el SVG en un navegador
+2. Haz una captura de pantalla
+3. Usa una herramienta online como https://favicon.io/favicon-converter/ para convertir la imagen a .ico
+4. Reemplaza este archivo con el .ico generado 

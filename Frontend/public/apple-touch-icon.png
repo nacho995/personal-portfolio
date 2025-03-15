@@ -1,1 +1,6 @@
- 
+Este archivo debería ser un .png real.
+Para crear el apple-touch-icon.png:
+1. Abre el SVG en un navegador
+2. Haz una captura de pantalla
+3. Redimensiona la imagen a 180x180 píxeles
+4. Guarda como PNG y reemplaza este archivo 
