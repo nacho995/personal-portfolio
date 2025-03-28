@@ -24,7 +24,6 @@ const IframeNavButton = ({ action, icon, label }) => (
 );
 
 export default function Projects() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [tempRatings, setTempRatings] = useState({
     'goza-madrid': 0,
     'codlet': 0
@@ -41,10 +40,6 @@ export default function Projects() {
     'goza-madrid': 0,
     'codlet': 0
   });
-  const [currentPreview, setCurrentPreview] = useState('');
-  const [currentSiteName, setCurrentSiteName] = useState('');
-  const [isIframeLoading, setIsIframeLoading] = useState(true);
-  const [iframeError, setIframeError] = useState(false);
 
   // Objeto con los proyectos para facilitar el mantenimiento
   const projects = {
@@ -155,54 +150,10 @@ export default function Projects() {
     }
   }, [tempRatings, ratings]);
 
-  const openPreview = useCallback((url, siteName) => {
-    const formattedUrl = url.startsWith('http') ? url : `https://${url}`;
-    
-    setCurrentPreview(formattedUrl);
-    setCurrentSiteName(siteName);
-    setIsModalOpen(true);
-    setIsIframeLoading(true);
-    setIframeError(false);
-    
-    // Timeout para detectar problemas de carga
-    setTimeout(() => {
-      if (isIframeLoading) {
-        setIsIframeLoading(false);
-      }
-    }, 5000);
-  }, [isIframeLoading]);
-
-  const handleIframeAction = useCallback((action) => {
-    const iframe = document.querySelector('#preview-iframe');
-    
-    if (iframe) {
-      try {
-        switch (action) {
-          case 'back':
-            // @ts-ignore - Ignorar error de tipo
-            iframe.contentWindow?.history.back();
-            break;
-          case 'forward':
-            // @ts-ignore - Ignorar error de tipo
-            iframe.contentWindow?.history.forward();
-            break;
-          case 'reload':
-            // @ts-ignore - Ignorar error de tipo
-            iframe.src = iframe.src;
-            setIsIframeLoading(true);
-            break;
-          case 'open':
-            window.open(currentPreview, '_blank', 'noopener,noreferrer');
-            break;
-          default:
-            break;
-        }
-      } catch (error) {
-        console.error('Error al ejecutar acción en iframe:', error);
-        window.open(currentPreview, '_blank', 'noopener,noreferrer');
-      }
-    }
-  }, [currentPreview]);
+  const openPreview = useCallback((url) => {
+    // Abrir directamente en una nueva pestaña en lugar de usar un iframe
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }, []);
 
   // Componente de tarjeta de proyecto para reducir duplicación
   const ProjectCard = ({ project, delay = 0 }) => (
@@ -227,12 +178,11 @@ export default function Projects() {
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-xl sm:text-2xl font-bold text-white/90">{project.title}</h3>
           
-          {/* Añadir enlace a GitHub */}
+          {/* Enlace a GitHub con icono */}
           <a 
-            href={
-              project.id === 'codlet' 
-                ? "https://github.com/nacho995/DevLet" 
-                : "https://github.com/nacho995/nextjs-gozamadrid"
+            href={project.id === 'codlet' 
+              ? "https://github.com/nacho995/DevLet" 
+              : "https://github.com/nacho995/nextjs-gozamadrid"
             }
             target="_blank"
             rel="noopener noreferrer"
@@ -367,12 +317,14 @@ export default function Projects() {
           >
             Visitar Sitio
           </a>
-          <button
-            onClick={() => openPreview(project.url, project.siteName)}
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-6 py-2 bg-gradient-to-r from-purple-500/80 to-blue-500/80 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl transition-all duration-300"
           >
             Vista Previa
-          </button>
+          </a>
         </div>
       </div>
     </motion.div>
@@ -433,113 +385,6 @@ export default function Projects() {
           </motion.div>
         </div>
       </div>
-
-      {/* Modal de Preview */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="relative w-full max-w-7xl h-[90vh] bg-gradient-to-br from-white/[0.07] to-white/[0.03] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-            {/* Header del Modal */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10">
-              <div className="flex items-center gap-4">
-                <button 
-                  onClick={() => setIsModalOpen(false)}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <svg className="w-6 h-6 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                </div>
-                <div className="ml-2 text-white/90">
-                  {currentSiteName}
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <IframeNavButton 
-                  action={() => handleIframeAction('back')}
-                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />}
-                  label="Atrás"
-                />
-                <IframeNavButton 
-                  action={() => handleIframeAction('forward')}
-                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />}
-                  label="Adelante"
-                />
-                <IframeNavButton 
-                  action={() => handleIframeAction('reload')}
-                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />}
-                  label="Recargar"
-                />
-                <IframeNavButton 
-                  action={() => handleIframeAction('open')}
-                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />}
-                  label="Abrir en nueva pestaña"
-                />
-              </div>
-            </div>
-
-            {/* Contenido del Modal */}
-            <div className="relative h-[80vh] overflow-hidden bg-white w-full">
-              {/* Indicador de carga */}
-              {isIframeLoading && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/5 backdrop-blur-sm z-10">
-                  <div className="w-12 h-12 border-4 border-t-purple-500 border-white/20 rounded-full animate-spin mb-4"></div>
-                  <p className="text-white/80 text-sm">Cargando vista previa...</p>
-                </div>
-              )}
-              
-              {/* Mensaje de error opcional */}
-              {iframeError && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm z-10">
-                  <svg className="w-16 h-16 text-red-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                  <p className="text-white/90 text-base font-medium mb-2">No se pudo cargar la vista previa</p>
-                  <p className="text-white/70 text-sm mb-4">Este sitio no permite ser mostrado en un iframe por restricciones de seguridad.</p>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => window.open(currentPreview, '_blank', 'noopener,noreferrer')}
-                      className="px-6 py-2.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white font-medium"
-                    >
-                      Abrir en nueva pestaña
-                    </button>
-                    <button
-                      onClick={() => setIsModalOpen(false)}
-                      className="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-lg"
-                    >
-                      Cerrar
-                    </button>
-                  </div>
-                </div>
-              )}
-              
-              <iframe
-                id="preview-iframe"
-                src="about:blank" // Se actualizará después de montar el modal
-                className="w-full h-full"
-                title="Vista previa"
-                referrerPolicy="no-referrer"
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                style={{border: 'none'}}
-                onLoad={() => {
-                  // Solo desactivar la carga si el iframe tiene contenido real
-                  if (document.querySelector('#preview-iframe')?.getAttribute('src') !== 'about:blank') {
-                    setIsIframeLoading(false);
-                  }
-                }}
-                onError={() => {
-                  setIsIframeLoading(false);
-                  setIframeError(true);
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
