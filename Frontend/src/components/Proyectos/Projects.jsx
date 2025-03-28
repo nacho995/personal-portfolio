@@ -180,30 +180,6 @@ export default function Projects() {
             onTempRatingChange={(stars) => handleTempRating(stars, 'goza-madrid')}
             onSubmitRating={() => handleSubmitRating('goza-madrid')}
           />
-
-          {/* GitHub Card - Versión modificada */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <a 
-              href="https://github.com/nacho995"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center p-5 bg-white/[0.03] border border-white/[0.05] rounded-2xl hover:border-white/20 transition-all duration-500 w-fit"
-            >
-              {/* GitHub Icon */}
-              <img 
-                src="/github.png" 
-                alt="GitHub" 
-                className="w-10 h-10 mr-4 transition-transform duration-500 group-hover:scale-110"
-              />
-              <span className="text-sm font-medium text-white/90 group-hover:text-white transition-colors duration-300">
-                Ver código en GitHub
-              </span>
-            </a>
-          </motion.div>
         </div>
       </div>
     </div>
