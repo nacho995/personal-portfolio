@@ -36,7 +36,8 @@ export default function Projects() {
       description: "Plataforma profesional de servicios de desarrollo web, con diseño moderno y enfoque en la experiencia de usuario. Incluye sistema de solicitud de proyectos, portafolio interactivo y panel de administración.",
       image: "/Codlet.png",
       url: "https://www.joycodlet.com",
-      siteName: "joycodlet.com"
+      siteName: "joycodlet.com",
+      githubUrl: "https://github.com/nacho995/DevLet"
     },
     gozaMadrid: {
       id: 'goza-madrid',
@@ -44,7 +45,8 @@ export default function Projects() {
       description: "Plataforma inmobiliaria especializada en Madrid, con sistema de búsqueda avanzada de propiedades, gestión de citas y panel administrativo para gestión de propiedades.",
       image: "/gozamadridpreview.png",
       url: "https://realestategozamadrid.com/",
-      siteName: "realestategozamadrid.com"
+      siteName: "realestategozamadrid.com",
+      githubUrl: "https://github.com/nacho995/nextjs-gozamadrid"
     }
   };
 
@@ -160,12 +162,9 @@ export default function Projects() {
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-xl sm:text-2xl font-bold text-white/90">{project.title}</h3>
           
-          {/* Enlace a GitHub con icono - Asegurarse de que sea visible para ambos proyectos */}
+          {/* Enlace a GitHub con icono - Utilizando la URL del objeto proyecto */}
           <a 
-            href={project.id === 'codlet' 
-              ? "https://github.com/nacho995/DevLet" 
-              : "https://github.com/nacho995/nextjs-gozamadrid"
-            }
+            href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300"
