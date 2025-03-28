@@ -11,10 +11,11 @@ const TechTag = ({ name, color, children }) => (
 );
 
 // Componente de botón de navegación para el iframe
-const IframeNavButton = ({ action, icon }) => (
+const IframeNavButton = ({ action, icon, label }) => (
   <button 
     onClick={action}
     className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+    aria-label={label}
   >
     <svg className="w-5 h-5 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       {icon}
@@ -63,26 +64,37 @@ export default function Projects() {
     }
   };
 
-  // Cargar ratings desde la API al iniciar
+  // Cargar ratings desde la API al iniciar - Mejorando para separar correctamente las valoraciones
   useEffect(() => {
     const fetchRatings = async () => {
       try {
-        // Cargar ratings para Goza Madrid
+        // Cargar ratings para cada proyecto de forma separada
         const gozaData = await getRatingStars('goza-madrid');
-        // Cargar ratings para CodLet
         const codletData = await getRatingStars('codlet');
         
+        console.log('Datos cargados para Goza Madrid:', gozaData);
+        console.log('Datos cargados para CodLet:', codletData);
+        
+        // Actualizar los estados con los datos correctos para cada proyecto
         setAverageRatings({
-          'goza-madrid': gozaData.averageRating,
-          'codlet': codletData.averageRating
+          'goza-madrid': gozaData.averageRating || 0,
+          'codlet': codletData.averageRating || 0
         });
+        
         setTotalRatings({
-          'goza-madrid': gozaData.totalRatings,
-          'codlet': codletData.totalRatings
+          'goza-madrid': gozaData.totalRatings || 0,
+          'codlet': codletData.totalRatings || 0
         });
+        
         setRatings({
-          'goza-madrid': gozaData.rating,
-          'codlet': codletData.rating
+          'goza-madrid': gozaData.userRating || 0,
+          'codlet': codletData.userRating || 0
+        });
+        
+        // Inicializar los ratings temporales con los valores actuales
+        setTempRatings({
+          'goza-madrid': gozaData.userRating || 0,
+          'codlet': codletData.userRating || 0
         });
       } catch (error) {
         console.error('Error al cargar valoraciones:', error);
@@ -99,59 +111,95 @@ export default function Projects() {
     }));
   }, []);
 
+  // Mejorar el handleSubmitRating para asegurar que las valoraciones se guarden por proyecto
   const handleSubmitRating = useCallback(async (projectId) => {
-    if (tempRatings[projectId] === 0) return;
+    // Evitar enviar valoraciones cuando no hay cambios
+    if (tempRatings[projectId] === 0 || tempRatings[projectId] === ratings[projectId]) {
+      return;
+    }
 
     try {
+      console.log(`Enviando valoración para ${projectId}: ${tempRatings[projectId]} estrellas`);
+      
+      // Asegurarse de pasar el ID del proyecto correcto
       const response = await postStars(tempRatings[projectId], projectId);
       
-      // Actualizar estado con la respuesta del servidor
-      setRatings(prev => ({
-        ...prev,
-        [projectId]: response.rating
-      }));
-      setTotalRatings(prev => ({
-        ...prev,
-        [projectId]: response.totalRatings
-      }));
-      setAverageRatings(prev => ({
-        ...prev,
-        [projectId]: response.averageRating
-      }));
-      setTempRatings(prev => ({
-        ...prev,
-        [projectId]: 0
-      }));
+      if (response && response.success) {
+        console.log(`Valoración guardada con éxito para ${projectId}:`, response);
+        
+        // Actualizar solo la valoración del proyecto actual
+        setRatings(prev => ({
+          ...prev,
+          [projectId]: tempRatings[projectId]
+        }));
+        
+        // Actualizar el total de valoraciones y el promedio solo para este proyecto
+        setTotalRatings(prev => ({
+          ...prev,
+          [projectId]: response.totalRatings || prev[projectId]
+        }));
+        
+        setAverageRatings(prev => ({
+          ...prev,
+          [projectId]: response.averageRating || prev[projectId]
+        }));
+      } else {
+        console.error(`Error en la respuesta al valorar ${projectId}:`, response);
+        alert(`No se pudo guardar la valoración para ${projectId}. Por favor, intenta de nuevo.`);
+      }
     } catch (error) {
-      console.error('Error al enviar valoración:', error);
-      alert('No se pudo guardar la valoración. Por favor, intenta de nuevo.');
+      console.error(`Error al enviar valoración para ${projectId}:`, error);
+      alert(`Error al guardar la valoración para ${projectId}. Por favor, intenta de nuevo.`);
     }
-  }, [tempRatings]);
+  }, [tempRatings, ratings]);
 
   const openPreview = useCallback((url, siteName) => {
-    setCurrentPreview(url);
+    // Asegurar que la URL tenga formato correcto
+    const formattedUrl = url.startsWith('http') ? url : `https://${url}`;
+    
+    setCurrentPreview(formattedUrl);
     setCurrentSiteName(siteName);
     setIsModalOpen(true);
+    
+    // Pequeño retraso para asegurar que el modal esté listo
+    setTimeout(() => {
+      // Casteo explícito a HTMLIFrameElement
+      const iframe = /** @type {HTMLIFrameElement} */ (document.querySelector('#preview-iframe'));
+      if (iframe) {
+        iframe.src = formattedUrl;
+      }
+    }, 100);
   }, []);
 
   const handleIframeAction = useCallback((action) => {
-    const iframe = document.querySelector('#preview-iframe');
-    if (iframe instanceof HTMLIFrameElement) {
-      switch (action) {
-        case 'back':
-          iframe.contentWindow?.history.back();
-          break;
-        case 'forward':
-          iframe.contentWindow?.history.forward();
-          break;
-        case 'reload':
-          iframe.src = iframe.src;
-          break;
-        default:
-          break;
+    // Casteo explícito a HTMLIFrameElement
+    const iframeEl = /** @type {HTMLIFrameElement} */ (document.querySelector('#preview-iframe'));
+    if (iframeEl) {
+      try {
+        switch (action) {
+          case 'back':
+            iframeEl.contentWindow?.history.back();
+            break;
+          case 'forward':
+            iframeEl.contentWindow?.history.forward();
+            break;
+          case 'reload':
+            iframeEl.src = iframeEl.src;
+            break;
+          case 'open':
+            window.open(currentPreview, '_blank', 'noopener,noreferrer');
+            break;
+          default:
+            break;
+        }
+      } catch (error) {
+        console.error('Error al ejecutar acción en iframe:', error);
+        if (action === 'open' || action === 'reload') {
+          window.open(currentPreview, '_blank', 'noopener,noreferrer');
+        }
       }
     }
-  }, []);
+  }, [currentPreview]);
 
   // Componente de tarjeta de proyecto para reducir duplicación
   const ProjectCard = ({ project, delay = 0 }) => (
@@ -183,39 +231,41 @@ export default function Projects() {
           {project.title.includes("CodLet") ? (
             <>
               <span className="px-3 py-1 text-xs sm:text-sm bg-[#61DAFB]/20 text-[#61DAFB] rounded-full flex items-center gap-1.5">
-                <img src="/react.png" alt="React icon" className="w-3.5 h-3.5" />
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z" />
+                </svg>
                 <span>React</span>
               </span>
               <span className="px-3 py-1 text-xs sm:text-sm bg-[#38BDF8]/20 text-[#38BDF8] rounded-full flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 54 33" fill="currentColor">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M27 0c-7.2 0-11.7 3.6-13.5 10.8 2.7-3.6 5.85-4.95 9.45-4.05 2.054.513 3.522 2.004 5.147 3.653C30.744 13.09 33.808 16.2 40.5 16.2c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C36.756 3.11 33.692 0 27 0zM13.5 16.2C6.3 16.2 1.8 19.8 0 27c2.7-3.6 5.85-4.95 9.45-4.05 2.054.514 3.522 2.004 5.147 3.653C17.244 29.29 20.308 32.4 27 32.4c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C23.256 19.31 20.192 16.2 13.5 16.2z"/>
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z" />
                 </svg>
                 <span>TailwindCSS</span>
               </span>
               <span className="px-3 py-1 text-xs sm:text-sm bg-[#68A063]/20 text-[#68A063] rounded-full flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z"/>
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z" />
                 </svg>
                 <span>Node.js</span>
               </span>
             </>
           ) : (
             <>
-              <span className="px-3 py-1 text-xs sm:text-sm bg-white/10 text-white/70 rounded-full flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M11.572 0c-.176 0-.31.001-.358.007a19.76 19.76 0 0 0-.364.033C7.443.346 4.25 2.185 2.228 5.012a11.875 11.875 0 0 0-2.119 5.243c-.096.659-.108.854-.108 1.747s.012 1.089.108 1.748c.652 4.506 3.86 8.292 8.209 9.695.779.25 1.6.422 2.534.525.363.04 1.935.04 2.299 0 1.611-.178 2.977-.577 4.323-1.264.207-.106.247-.134.219-.158-.02-.013-.9-1.193-1.955-2.62l-1.919-2.592-2.404-3.558a338.739 338.739 0 0 0-2.422-3.556c-.009-.002-.018 1.579-.023 3.51-.007 3.38-.01 3.515-.052 3.595a.426.426 0 0 1-.206.214c-.075.037-.14.044-.495.044H7.81l-.108-.068a.438.438 0 0 1-.157-.171l-.05-.106.006-4.703.007-4.705.072-.092a.645.645 0 0 1 .174-.143c.096-.047.134-.051.54-.051.478 0 .558.018.682.154.035.038 1.337 1.999 2.895 4.361a10760.433 10760.433 0 0 0 4.735 7.17l1.9 2.879.096-.063a12.317 12.317 0 0 0 2.466-2.163 11.944 11.944 0 0 0 2.824-6.134c.096-.66.108-.854.108-1.748 0-.893-.012-1.088-.108-1.747-.652-4.506-3.859-8.292-8.208-9.695a12.597 12.597 0 0 0-2.499-.523A33.119 33.119 0 0 0 11.573 0zm4.069 7.217c.347 0 .408.005.486.047a.473.473 0 0 1 .237.277c.018.06.023 1.365.018 4.304l-.006 4.218-.744-1.14-.746-1.14v-3.066c0-1.982.01-3.097.023-3.15a.478.478 0 0 1 .233-.296c.096-.05.13-.054.5-.054z"/>
+              <span className="px-3 py-1 text-xs sm:text-sm bg-white/10 text-white/90 rounded-full flex items-center gap-1.5">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.5725 0c-.1763 0-.3098.0013-.3584.0067-.0516.0053-.2159.021-.3636.0328-3.4088.3073-6.6017 2.1463-8.624 4.9728C1.1004 6.584.3802 8.3666.1082 10.255c-.0962.659-.108.8537-.108 1.7474s.012 1.0884.108 1.7476c.652 4.506 3.8591 8.2919 8.2087 9.6945.7789.2511 1.6.4223 2.5337.5255.3636.04 1.9354.04 2.299 0 1.6117-.1783 2.9772-.577 4.3237-1.2643.2065-.1056.2464-.1337.2183-.1573-.0188-.0139-.8987-1.1938-1.9543-2.62l-1.919-2.592-2.4047-3.5583c-1.3231-1.9564-2.4128-3.556-2.422-3.556-.0094-.0026-.0187 1.5787-.0235 3.509-.0067 3.3802-.0093 3.5162-.0516 3.596-.061.115-.108.1618-.2064.2134-.075.0374-.1408.0445-.495.0445h-.406l-.1078-.068a.4383.4383 0 01-.1572-.1712l-.0493-.1056.0053-4.703.0067-4.7054.0726-.0915c.0376-.0493.1174-.1125.1736-.143.0962-.0493.1338-.054.5396-.054h.4361l.1042.0567c.0567.035.1174.0915.1432.143l.0493.0985L9.16 9.3302c.0094.0492.0661.3814.1268.7349.061.3532.1235.7131.1383.7975.0188.1091.0329.1369.0781.1792.0614.0565.1042.0674.2591.0674h.1844l.0746-.0248c.0427-.0139.1174-.0567.1736-.0956.0985-.0674.1042-.0726.4763-.4827.2136-.233 1.0722-1.1673 1.9116-2.0763C14.2857 5.9721 16.4219 3.556 16.6896 3.2644 16.7163 3.2347 16.7521 3.2182 16.7694 3.2262c.0253.0139.4657.6458 1.1353 1.6361.6554.9461 1.7578 2.5356 2.4504 3.5316l1.2536 1.8105.0413.3053c.0242.1658.0598.5514.0829.8435.0316.3694.0414.6901.035 1.1552-.1711 9.2594-8.4973 16.3239-17.7351 14.9906C-1.6644 25.3031-6.5641 18.7681-6.0874 9.5287c.3724-7.1752 5.9416-13.0312 12.8591-13.4876 1.3443-.0881 2.7797.0427 4.0417.3639.4918.1253.9642.2634 1.021.2979.0445.0266.0507.017.0177-.0228-.0177-.0228-1.4748-1.6708-1.6675-1.8736C10.3573.4111 9.6513 0 9.5023 0c-.0148 0-.0822.0139-.1634.0305-.6223.1338-1.3443.3829-2.113.7304-.6697.3041-1.1507.5779-2.1675 1.2397C3.5024 3.1569 2.344 4.1284 1.5164 4.9437.8254 5.6358.3512 6.157.1783 6.3769L0 6.595l.4511.612c.4247.5794.5921.8214.6697.974.035.0776.0428.0582.094-.208.1972-1.0393.6513-2.5031 1.1904-3.8157l.3172-.774.2845-.2082c.9736-.7208 2.0195-1.3526 3.1537-1.9016.5695-.275 1.6487-.7148 2.176-.8887.863-.2819 2.0299-.5432 2.9676-.6628.4983-.0643 2.0039-.0832 2.5581-.032 1.6487.1523 3.0312.5175 4.476 1.1838 1.3779.6368 2.6255 1.5017 3.7288 2.5869a13.1753 13.1753 0 012.2238 2.8001c.3124.5337.7578 1.4497.995 2.0413.2374.5993.5094 1.4923.6513 2.1453.1178.5414.2725 1.5923.3323 2.2644.0229.2541.0229 1.8623 0 2.1164-.0871 1.0038-.1972 1.6802-.4127 2.5452-.1417.5716-.3206 1.1783-.5411 1.8385-.1177.352-.2135.6488-.2135.6651 0 .0164.4361.0295.9736.0295h.9769l.0429-.2242c.0241-.1242.0724-.3881.1096-.5929.1807-.9877.2581-1.7807.2725-2.7757.0067-.3347.0053-.719-.0027-.8537-.0134-.2498-.0546-.7897-.0905-1.1912-.1484-1.6513-.5223-3.3052-1.0855-4.8092-.7537-2.0139-1.782-3.7913-3.1326-5.4466-2.7208-3.3344-6.3637-5.468-10.4478-6.1151-.7272-.1152-1.2818-.1643-2.1922-.1985-.4385-.017-.6303-.0173-.726 0z" />
                 </svg>
                 <span>Next.js</span>
               </span>
-              <span className="px-3 py-1 text-xs sm:text-sm bg-white/10 text-white/70 rounded-full flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 54 33" fill="currentColor">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M27 0c-7.2 0-11.7 3.6-13.5 10.8 2.7-3.6 5.85-4.95 9.45-4.05 2.054.513 3.522 2.004 5.147 3.653C30.744 13.09 33.808 16.2 40.5 16.2c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C36.756 3.11 33.692 0 27 0zM13.5 16.2C6.3 16.2 1.8 19.8 0 27c2.7-3.6 5.85-4.95 9.45-4.05 2.054.514 3.522 2.004 5.147 3.653C17.244 29.29 20.308 32.4 27 32.4c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C23.256 19.31 20.192 16.2 13.5 16.2z"/>
+              <span className="px-3 py-1 text-xs sm:text-sm bg-[#38BDF8]/20 text-[#38BDF8] rounded-full flex items-center gap-1.5">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z" />
                 </svg>
                 <span>TailwindCSS</span>
               </span>
-              <span className="px-3 py-1 text-xs sm:text-sm bg-white/10 text-white/70 rounded-full flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z"/>
+              <span className="px-3 py-1 text-xs sm:text-sm bg-[#68A063]/20 text-[#68A063] rounded-full flex items-center gap-1.5">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z" />
                 </svg>
                 <span>Node.js</span>
               </span>
@@ -269,11 +319,11 @@ export default function Projects() {
               </button>
             </div>
             
-            {/* Mostrar promedio */}
+            {/* Mostrar promedio - Versión mejorada */}
             <div className="flex items-center gap-2 text-white/80">
               <span className="font-medium text-sm">
                 {averageRatings[project.id] > 0 
-                  ? `${averageRatings[project.id]} / 5`
+                  ? `${parseFloat(averageRatings[project.id]).toFixed(1)} / 5`
                   : "Sin valoraciones"
                 }
               </span>
@@ -352,7 +402,7 @@ export default function Projects() {
                   viewBox="0 0 24 24" 
                   fill="currentColor"
                 >
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.4223-1.106.765-1.695.345-.585.975-1.305 1.29-2.28 1.875-2.97 1.29-1.2 2.64-1.8 3.96-1.8 1.32 0 2.64.6 3.96 1.8 2.97 1.2 1.2 1.8 2.4 1.8 3.6 0 1.2-.6 2.4-1.8 3.6-3.006 1.2-1.2 1.8-2.4 1.8-3.6 0-1.2-.6-2.4-1.8-3.6-3.006z"/>
                 </svg>
               </div>
               <span className="text-sm font-medium text-white/90 text-center group-hover:text-white transition-colors duration-300">
@@ -383,20 +433,43 @@ export default function Projects() {
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
                 </div>
+                <div className="ml-2 text-white/90">
+                  {currentSiteName}
+                </div>
               </div>
               <div className="flex items-center gap-2">
-                <button className="px-4 py-1.5 text-sm text-white/90 hover:bg-white/10 rounded-lg transition-colors">
-                  Previsualización
-                </button>
+                <IframeNavButton 
+                  action={() => handleIframeAction('back')}
+                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />}
+                  label="Atrás"
+                />
+                <IframeNavButton 
+                  action={() => handleIframeAction('forward')}
+                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />}
+                  label="Adelante"
+                />
+                <IframeNavButton 
+                  action={() => handleIframeAction('reload')}
+                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />}
+                  label="Recargar"
+                />
+                <IframeNavButton 
+                  action={() => handleIframeAction('open')}
+                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />}
+                  label="Abrir en nueva pestaña"
+                />
               </div>
             </div>
 
             {/* Contenido del Modal */}
             <div className="h-[80vh] overflow-hidden bg-white w-full">
               <iframe
-                src={currentPreview}
+                id="preview-iframe"
+                src="about:blank" // Iniciar con una página en blanco
                 className="w-full h-full"
-                title="Preview"
+                title="Vista previa"
+                referrerPolicy="no-referrer"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                 style={{border: 'none'}}
               />
             </div>
