@@ -160,7 +160,7 @@ export default function Projects() {
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-xl sm:text-2xl font-bold text-white/90">{project.title}</h3>
           
-          {/* Enlace a GitHub con icono */}
+          {/* Enlace a GitHub con icono - Asegurarse de que sea visible para ambos proyectos */}
           <a 
             href={project.id === 'codlet' 
               ? "https://github.com/nacho995/DevLet" 
