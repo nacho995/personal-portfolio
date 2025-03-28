@@ -3,14 +3,11 @@ import { motion } from 'framer-motion';
 import { getRatingStars, postStars } from '../../service/api';
 
 export default function WordpressProjects() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [tempRating, setTempRating] = useState(0);
   const [rating, setRating] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState(0);
   const projectId = 'wordpress-inmobiliaria';
-  const [isIframeLoading, setIsIframeLoading] = useState(true);
-  const [iframeError, setIframeError] = useState(false);
 
   // Cargar ratings desde la API al iniciar
   useEffect(() => {
@@ -53,63 +50,6 @@ export default function WordpressProjects() {
       // Opcional: Mostrar mensaje de error al usuario
       alert('No se pudo guardar la valoración. Por favor, intenta de nuevo.');
     }
-  };
-
-  const handleIframeAction = (action) => {
-    const iframe = document.querySelector('#preview-iframe');
-    
-    if (iframe) {
-      try {
-        switch (action) {
-          case 'back':
-            // @ts-ignore - Ignorar error de tipo
-            iframe.contentWindow?.history.back();
-            break;
-          case 'forward':
-            // @ts-ignore - Ignorar error de tipo
-            iframe.contentWindow?.history.forward();
-            break;
-          case 'reload':
-            // @ts-ignore - Ignorar error de tipo
-            iframe.src = iframe.src;
-            setIsIframeLoading(true);
-            break;
-          case 'open':
-            window.open('https://wordpress-1430059-5339263.cloudwaysapps.com', '_blank', 'noopener,noreferrer');
-            break;
-          default:
-            break;
-        }
-      } catch (error) {
-        console.error('Error al ejecutar acción en iframe:', error);
-        window.open('https://wordpress-1430059-5339263.cloudwaysapps.com', '_blank', 'noopener,noreferrer');
-      }
-    }
-  };
-
-  const IframeNavButton = ({ action, icon, label }) => (
-    <button 
-      onClick={action}
-      className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-      aria-label={label}
-    >
-      <svg className="w-5 h-5 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        {icon}
-      </svg>
-    </button>
-  );
-
-  const openPreviewModal = () => {
-    setIsModalOpen(true);
-    setIsIframeLoading(true);
-    setIframeError(false);
-    
-    // Establecer un timeout para detectar problemas de carga
-    setTimeout(() => {
-      if (isIframeLoading) {
-        setIsIframeLoading(false);
-      }
-    }, 5000);
   };
 
   return (
@@ -188,8 +128,6 @@ export default function WordpressProjects() {
 
                 {/* Contenedor flex para GitHub link y Rating */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-4">
-                  
-
                   {/* Sistema de Rating con botón de confirmación */}
                   <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 p-3 rounded-xl bg-black/20 backdrop-blur-sm">
                     <div className="flex items-center gap-3">
@@ -253,7 +191,7 @@ export default function WordpressProjects() {
                 </div>
 
                 {/* Botones */}
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-4 mt-6">
                   <a 
                     href="https://wordpress-1430059-5339263.cloudwaysapps.com"
                     target="_blank"
@@ -262,99 +200,12 @@ export default function WordpressProjects() {
                   >
                     Visitar Sitio
                   </a>
-                  <button
-                    onClick={openPreviewModal}
-                    className="px-6 py-2 bg-gradient-to-r from-purple-500/80 to-blue-500/80 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl transition-all duration-300"
-                  >
-                    Vista Previa
-                  </button>
                 </div>
               </div>
             </motion.div>
-
-            
           </div>
         </div>
       </div>
-
-      {/* Modal mejorado */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="relative w-full max-w-7xl h-[90vh] bg-gradient-to-br from-white/[0.07] to-white/[0.03] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-            {/* Header del Modal */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10">
-              <div className="flex items-center gap-4">
-                <button 
-                  onClick={() => setIsModalOpen(false)}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <svg className="w-6 h-6 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                </div>
-                <div className="ml-2 text-white/90">
-                  Inmobiliaria WordPress
-                </div>
-              </div>
-              
-              {/* Botones de navegación */}
-              <div className="flex items-center gap-2">
-                <IframeNavButton 
-                  action={() => handleIframeAction('back')}
-                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />}
-                  label="Atrás"
-                />
-                <IframeNavButton 
-                  action={() => handleIframeAction('forward')}
-                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />}
-                  label="Adelante"
-                />
-                <IframeNavButton 
-                  action={() => handleIframeAction('reload')}
-                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />}
-                  label="Recargar"
-                />
-                <IframeNavButton 
-                  action={() => handleIframeAction('open')}
-                  icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />}
-                  label="Abrir en nueva pestaña"
-                />
-              </div>
-            </div>
-
-            {/* Contenido del Modal */}
-            <div className="relative h-[80vh] overflow-hidden bg-white w-full">
-              {/* Indicador de carga */}
-              {isIframeLoading && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/5 backdrop-blur-sm z-10">
-                  <div className="w-12 h-12 border-4 border-t-purple-500 border-white/20 rounded-full animate-spin mb-4"></div>
-                  <p className="text-white/80 text-sm">Cargando vista previa...</p>
-                </div>
-              )}
-              
-              <iframe
-                id="preview-iframe"
-                src="https://wordpress-1430059-5339263.cloudwaysapps.com"
-                className="w-full h-full"
-                title="WordPress Portfolio Preview"
-                referrerPolicy="no-referrer"
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                style={{border: 'none'}}
-                onLoad={() => setIsIframeLoading(false)}
-                onError={() => {
-                  setIsIframeLoading(false);
-                  setIframeError(true);
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 } 

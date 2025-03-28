@@ -10,19 +10,6 @@ const TechTag = ({ name, color, children }) => (
   </span>
 );
 
-// Componente de botón de navegación para el iframe
-const IframeNavButton = ({ action, icon, label }) => (
-  <button 
-    onClick={action}
-    className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-    aria-label={label}
-  >
-    <svg className="w-5 h-5 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      {icon}
-    </svg>
-  </button>
-);
-
 export default function Projects() {
   const [tempRatings, setTempRatings] = useState({
     'goza-madrid': 0,
@@ -149,11 +136,6 @@ export default function Projects() {
       alert(`Error al guardar la valoración para ${projectId}. Por favor, intenta de nuevo.`);
     }
   }, [tempRatings, ratings]);
-
-  const openPreview = useCallback((url) => {
-    // Abrir directamente en una nueva pestaña en lugar de usar un iframe
-    window.open(url, '_blank', 'noopener,noreferrer');
-  }, []);
 
   // Componente de tarjeta de proyecto para reducir duplicación
   const ProjectCard = ({ project, delay = 0 }) => (
@@ -317,14 +299,6 @@ export default function Projects() {
           >
             Visitar Sitio
           </a>
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-2 bg-gradient-to-r from-purple-500/80 to-blue-500/80 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl transition-all duration-300"
-          >
-            Vista Previa
-          </a>
         </div>
       </div>
     </motion.div>
@@ -354,31 +328,25 @@ export default function Projects() {
           {/* Card del Proyecto Goza Madrid */}
           <ProjectCard project={projects.gozaMadrid} delay={0.3} />
 
-          {/* GitHub Card */}
+          {/* GitHub Card - Versión modificada */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:w-64 h-fit"
           >
             <a 
-              href="https://github.com/nacho995/DevLet"
+              href="https://github.com/nacho995"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center p-6 bg-white/[0.03] border border-white/[0.05] rounded-2xl hover:border-white/20 transition-all duration-500"
+              className="group flex items-center p-5 bg-white/[0.03] border border-white/[0.05] rounded-2xl hover:border-white/20 transition-all duration-500 w-fit"
             >
               {/* GitHub Icon */}
-              <div className="relative p-4 mb-4">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <svg 
-                  className="w-12 h-12 text-white/90 relative group-hover:scale-110 transition-transform duration-500" 
-                  viewBox="0 0 24 24" 
-                  fill="currentColor"
-                >
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.4223-1.106.765-1.695.345-.585.975-1.305 1.29-2.28 1.875-2.97 1.29-1.2 2.64-1.8 3.96-1.8 1.32 0 2.64.6 3.96 1.8 2.97 1.2 1.2 1.8 2.4 1.8 3.6 0 1.2-.6 2.4-1.8 3.6-3.006 1.2-1.2 1.8-2.4 1.8-3.6 0-1.2-.6-2.4-1.8-3.6-3.006z"/>
-                </svg>
-              </div>
-              <span className="text-sm font-medium text-white/90 text-center group-hover:text-white transition-colors duration-300">
+              <img 
+                src="/github.png" 
+                alt="GitHub" 
+                className="w-10 h-10 mr-4 transition-transform duration-500 group-hover:scale-110"
+              />
+              <span className="text-sm font-medium text-white/90 group-hover:text-white transition-colors duration-300">
                 Ver código en GitHub
               </span>
             </a>
