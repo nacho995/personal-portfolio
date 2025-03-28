@@ -43,6 +43,8 @@ export default function Projects() {
   });
   const [currentPreview, setCurrentPreview] = useState('');
   const [currentSiteName, setCurrentSiteName] = useState('');
+  const [isIframeLoading, setIsIframeLoading] = useState(true);
+  const [iframeError, setIframeError] = useState(false);
 
   // Objeto con los proyectos para facilitar el mantenimiento
   const projects = {
@@ -154,37 +156,40 @@ export default function Projects() {
   }, [tempRatings, ratings]);
 
   const openPreview = useCallback((url, siteName) => {
-    // Asegurar que la URL tenga formato correcto
     const formattedUrl = url.startsWith('http') ? url : `https://${url}`;
     
     setCurrentPreview(formattedUrl);
     setCurrentSiteName(siteName);
     setIsModalOpen(true);
+    setIsIframeLoading(true);
+    setIframeError(false);
     
-    // Pequeño retraso para asegurar que el modal esté listo
+    // Timeout para detectar problemas de carga
     setTimeout(() => {
-      // Casteo explícito a HTMLIFrameElement
-      const iframe = /** @type {HTMLIFrameElement} */ (document.querySelector('#preview-iframe'));
-      if (iframe) {
-        iframe.src = formattedUrl;
+      if (isIframeLoading) {
+        setIsIframeLoading(false);
       }
-    }, 100);
-  }, []);
+    }, 5000);
+  }, [isIframeLoading]);
 
   const handleIframeAction = useCallback((action) => {
-    // Casteo explícito a HTMLIFrameElement
-    const iframeEl = /** @type {HTMLIFrameElement} */ (document.querySelector('#preview-iframe'));
-    if (iframeEl) {
+    const iframe = document.querySelector('#preview-iframe');
+    
+    if (iframe) {
       try {
         switch (action) {
           case 'back':
-            iframeEl.contentWindow?.history.back();
+            // @ts-ignore - Ignorar error de tipo
+            iframe.contentWindow?.history.back();
             break;
           case 'forward':
-            iframeEl.contentWindow?.history.forward();
+            // @ts-ignore - Ignorar error de tipo
+            iframe.contentWindow?.history.forward();
             break;
           case 'reload':
-            iframeEl.src = iframeEl.src;
+            // @ts-ignore - Ignorar error de tipo
+            iframe.src = iframe.src;
+            setIsIframeLoading(true);
             break;
           case 'open':
             window.open(currentPreview, '_blank', 'noopener,noreferrer');
@@ -194,9 +199,7 @@ export default function Projects() {
         }
       } catch (error) {
         console.error('Error al ejecutar acción en iframe:', error);
-        if (action === 'open' || action === 'reload') {
-          window.open(currentPreview, '_blank', 'noopener,noreferrer');
-        }
+        window.open(currentPreview, '_blank', 'noopener,noreferrer');
       }
     }
   }, [currentPreview]);
@@ -221,7 +224,25 @@ export default function Projects() {
 
       {/* Contenido de la card */}
       <div className="p-6 sm:p-8">
-        <h3 className="text-xl sm:text-2xl font-bold text-white/90 mb-3">{project.title}</h3>
+        <div className="flex justify-between items-start mb-3">
+          <h3 className="text-xl sm:text-2xl font-bold text-white/90">{project.title}</h3>
+          
+          {/* Añadir enlace a GitHub */}
+          <a 
+            href={
+              project.id === 'codlet' 
+                ? "https://github.com/nacho995/DevLet" 
+                : "https://github.com/nacho995/nextjs-gozamadrid"
+            }
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300"
+            title="Ver código en GitHub"
+          >
+            <img src="/github.png" alt="GitHub" className="w-5 h-5" />
+          </a>
+        </div>
+        
         <p className="text-white/70 text-sm sm:text-base mb-6">
           {project.description}
         </p>
@@ -462,15 +483,58 @@ export default function Projects() {
             </div>
 
             {/* Contenido del Modal */}
-            <div className="h-[80vh] overflow-hidden bg-white w-full">
+            <div className="relative h-[80vh] overflow-hidden bg-white w-full">
+              {/* Indicador de carga */}
+              {isIframeLoading && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/5 backdrop-blur-sm z-10">
+                  <div className="w-12 h-12 border-4 border-t-purple-500 border-white/20 rounded-full animate-spin mb-4"></div>
+                  <p className="text-white/80 text-sm">Cargando vista previa...</p>
+                </div>
+              )}
+              
+              {/* Mensaje de error opcional */}
+              {iframeError && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm z-10">
+                  <svg className="w-16 h-16 text-red-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <p className="text-white/90 text-base font-medium mb-2">No se pudo cargar la vista previa</p>
+                  <p className="text-white/70 text-sm mb-4">Este sitio no permite ser mostrado en un iframe por restricciones de seguridad.</p>
+                  <div className="flex gap-4">
+                    <button
+                      onClick={() => window.open(currentPreview, '_blank', 'noopener,noreferrer')}
+                      className="px-6 py-2.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg text-white font-medium"
+                    >
+                      Abrir en nueva pestaña
+                    </button>
+                    <button
+                      onClick={() => setIsModalOpen(false)}
+                      className="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-lg"
+                    >
+                      Cerrar
+                    </button>
+                  </div>
+                </div>
+              )}
+              
               <iframe
                 id="preview-iframe"
-                src="about:blank" // Iniciar con una página en blanco
+                src="about:blank" // Se actualizará después de montar el modal
                 className="w-full h-full"
                 title="Vista previa"
                 referrerPolicy="no-referrer"
                 sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                 style={{border: 'none'}}
+                onLoad={() => {
+                  // Solo desactivar la carga si el iframe tiene contenido real
+                  if (document.querySelector('#preview-iframe')?.getAttribute('src') !== 'about:blank') {
+                    setIsIframeLoading(false);
+                  }
+                }}
+                onError={() => {
+                  setIsIframeLoading(false);
+                  setIframeError(true);
+                }}
               />
             </div>
           </div>
