@@ -162,9 +162,12 @@ export default function Projects() {
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-xl sm:text-2xl font-bold text-white/90">{project.title}</h3>
           
-          {/* Enlace a GitHub con icono - Utilizando la URL del objeto proyecto */}
+          {/* Enlace a GitHub - Solución directa y efectiva */}
           <a 
-            href={project.githubUrl}
+            href={project.title.includes("CodLet") 
+              ? "https://github.com/nacho995/DevLet" 
+              : "https://github.com/nacho995/nextjs-gozamadrid"
+            }
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300"
