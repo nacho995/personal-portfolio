@@ -193,7 +193,7 @@ export default function WordpressProjects() {
                 {/* Botones */}
                 <div className="flex flex-wrap gap-4 mt-6">
                   <a 
-                    href="https://wordpress-1430059-5339263.cloudwaysapps.com"
+                    href="https://wordpress.realestategozamadrid.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white/90 rounded-xl transition-all duration-300"
