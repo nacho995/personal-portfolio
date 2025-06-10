@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { getRatingStars, postStars } from '../../service/api';
 import CodLetProject from './CodLetProject';
 import GozaMadridProject from './GozaMadridProject';
+import HaciendaSanCarlosProject from './HaciendaSanCarlosProject.jsx';
 
 // Componente para los Tags de tecnologías
 const TechTag = ({ name, color, children }) => (
@@ -15,19 +16,23 @@ const TechTag = ({ name, color, children }) => (
 export default function Projects() {
   const [tempRatings, setTempRatings] = useState({
     'goza-madrid': 0,
-    'codlet': 0
+    'codlet': 0,
+    'hacienda-san-carlos': 0
   });
   const [ratings, setRatings] = useState({
     'goza-madrid': 0,
-    'codlet': 0
+    'codlet': 0,
+    'hacienda-san-carlos': 0
   });
   const [averageRatings, setAverageRatings] = useState({
     'goza-madrid': 0,
-    'codlet': 0
+    'codlet': 0,
+    'hacienda-san-carlos': 0
   });
   const [totalRatings, setTotalRatings] = useState({
     'goza-madrid': 0,
-    'codlet': 0
+    'codlet': 0,
+    'hacienda-san-carlos': 0
   });
 
   // Objeto con los proyectos para facilitar el mantenimiento
@@ -49,6 +54,15 @@ export default function Projects() {
       url: "https://realestategozamadrid.com/",
       siteName: "realestategozamadrid.com",
       githubUrl: "https://github.com/nacho995/nextjs-gozamadrid"
+    },
+    haciendaSanCarlos: {
+      id: 'hacienda-san-carlos',
+      title: "Hacienda San Carlos Borromeo",
+      description: "Sitio web para Hacienda San Carlos Borromeo, una hacienda histórica para bodas y eventos en México. Incluye secciones para eventos, galería, hotel, servicios y contacto. Diseño elegante y responsivo.",
+      image: "/hdasancarlos.png",
+      url: "https://www.hdasancarlosborromeo.com/",
+      siteName: "hdasancarlosborromeo.com",
+      githubUrl: "https://github.com/nacho995/hacienda" // No GitHub URL provided by the user
     }
   };
 
@@ -59,30 +73,36 @@ export default function Projects() {
         // Cargar ratings para cada proyecto de forma separada
         const gozaData = await getRatingStars('goza-madrid');
         const codletData = await getRatingStars('codlet');
+        const haciendaData = await getRatingStars('hacienda-san-carlos');
         
         console.log('Datos cargados para Goza Madrid:', gozaData);
         console.log('Datos cargados para CodLet:', codletData);
+        console.log('Datos cargados para Hacienda San Carlos:', haciendaData);
         
         // Actualizar los estados con los datos correctos para cada proyecto
         setAverageRatings({
           'goza-madrid': gozaData.averageRating || 0,
-          'codlet': codletData.averageRating || 0
+          'codlet': codletData.averageRating || 0,
+          'hacienda-san-carlos': haciendaData.averageRating || 0
         });
         
         setTotalRatings({
           'goza-madrid': gozaData.totalRatings || 0,
-          'codlet': codletData.totalRatings || 0
+          'codlet': codletData.totalRatings || 0,
+          'hacienda-san-carlos': haciendaData.totalRatings || 0
         });
         
         setRatings({
           'goza-madrid': gozaData.userRating || 0,
-          'codlet': codletData.userRating || 0
+          'codlet': codletData.userRating || 0,
+          'hacienda-san-carlos': haciendaData.userRating || 0
         });
         
         // Inicializar los ratings temporales con los valores actuales
         setTempRatings({
           'goza-madrid': gozaData.userRating || 0,
-          'codlet': codletData.userRating || 0
+          'codlet': codletData.userRating || 0,
+          'hacienda-san-carlos': haciendaData.userRating || 0
         });
       } catch (error) {
         console.error('Error al cargar valoraciones:', error);
@@ -179,6 +199,17 @@ export default function Projects() {
             totalRatings={totalRatings['goza-madrid']}
             onTempRatingChange={(stars) => handleTempRating(stars, 'goza-madrid')}
             onSubmitRating={() => handleSubmitRating('goza-madrid')}
+          />
+
+          {/* Hacienda San Carlos Project */}
+          <HaciendaSanCarlosProject 
+            project={projects.haciendaSanCarlos} 
+            tempRating={tempRatings['hacienda-san-carlos']} 
+            rating={ratings['hacienda-san-carlos']}
+            averageRating={averageRatings['hacienda-san-carlos']}
+            totalRatings={totalRatings['hacienda-san-carlos']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'hacienda-san-carlos')}
+            onSubmitRating={() => handleSubmitRating('hacienda-san-carlos')}
           />
         </div>
       </div>
