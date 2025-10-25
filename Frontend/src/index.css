@@ -2,3 +2,210 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Variables CSS para consistencia y mantenibilidad */
+:root {
+  --color-bg-primary: #13111C;
+  --color-purple-primary: #a855f7;
+  --color-purple-secondary: #9333ea;
+  --color-blue-primary: #40A0E0;
+  --color-blue-secondary: #2980B9;
+  --transition-fast: 150ms;
+  --transition-base: 300ms;
+  --transition-slow: 500ms;
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Optimizaciones de rendimiento global */
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-[#13111C] text-white;
+    overscroll-behavior: none;
+  }
+
+  /* Mejora de rendimiento para animaciones */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  /* Optimización de imágenes */
+  img {
+    content-visibility: auto;
+  }
+}
+
+/* Componentes reutilizables */
+@layer components {
+  /* Glassmorphism mejorado */
+  .glass-effect {
+    @apply backdrop-blur-2xl bg-black/10 border border-white/10;
+  }
+
+  .glass-effect-hover {
+    @apply hover:bg-black/20 hover:border-white/20 transition-all duration-300;
+  }
+
+  /* Botones con estados de focus mejorados */
+  .btn-focus {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50;
+  }
+
+  /* Text gradients reutilizables */
+  .text-gradient-white {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-white/90;
+  }
+
+  /* Sombras consistentes */
+  .shadow-glow {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .shadow-glow-purple {
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+  }
+
+  .shadow-glow-blue {
+    box-shadow: 0 0 25px rgba(64, 160, 224, 0.3);
+  }
+}
+
+/* Utilidades personalizadas */
+@layer utilities {
+  /* Animaciones suaves */
+  .animate-smooth {
+    transition: all var(--transition-base) var(--ease-smooth);
+  }
+
+  .animate-bounce-in {
+    transition: all var(--transition-base) var(--ease-bounce);
+  }
+
+  /* Reducir movimiento para accesibilidad */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Mejoras de contraste para accesibilidad */
+  @media (prefers-contrast: high) {
+    .text-white\/80 {
+      @apply text-white;
+    }
+    .text-white\/90 {
+      @apply text-white;
+    }
+  }
+
+  /* Modo oscuro forzado */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+    }
+  }
+
+  /* Ocultar scrollbar pero mantener funcionalidad */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Truncate mejorado */
+  .truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .truncate-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Animaciones personalizadas mejoradas */
+@keyframes border-wave {
+  0%, 100% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+  50% {
+    border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Loading skeleton */
+.skeleton {
+  @apply animate-pulse bg-white/10 rounded;
+}
+
+/* Mejora de selección de texto */
+::selection {
+  background-color: rgba(168, 85, 247, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: rgba(168, 85, 247, 0.3);
+  color: white;
+}

@@ -1,7 +1,6 @@
 import { useTheme } from '../../context/ThemeContext';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-
 const BackgroundGradient = () => {
   const { theme } = useTheme();
   const { scrollYProgress } = useScroll();
@@ -47,17 +46,23 @@ const BackgroundGradient = () => {
   const bracketsRotate = useTransform(smoothProgress, [0, 1], [0, 360]); // Aumentado a 360 grados
 
   return (
-    <div className="fixed inset-0 -z-10 h-full w-full bg-[#13111C]">
-      {/* Gradiente de fondo base mejorado */}
+    <div className="fixed inset-0 -z-10 h-full w-full bg-[#0a0a0f]">
+      {/* Gradiente de fondo base mejorado con colores profesionales */}
       <div className={`absolute inset-0 bg-gradient-to-br ${
         theme === 'purple' 
-          ? 'from-purple-800/40 via-[#13111C]/60 to-blue-900/40'
-          : 'from-[#40A0E0]/40 via-[#13111C]/60 to-[#2980B9]/40'
+          ? 'from-[#1a0b2e]/80 via-[#0a0a0f]/60 to-[#16213e]/80'
+          : 'from-[#0f2027]/80 via-[#0a0a0f]/60 to-[#203a43]/80'
+      }`} />
+      {/* Capa de profundidad adicional */}
+      <div className={`absolute inset-0 bg-gradient-to-t ${
+        theme === 'purple'
+          ? 'from-[#2d1b69]/20 via-transparent to-transparent'
+          : 'from-[#1e3a5f]/20 via-transparent to-transparent'
       }`} />
       
       {/* React */}
       <motion.div 
-        className="absolute right-[10%] sm:right-[15%] lg:right-[20%] top-[15%] sm:top-[20%] lg:top-[25%] select-none transform-gpu"
+        className="absolute right-[10%] sm:right-[15%] lg:right-[20%] top-[15%] sm:top-[20%] lg:top-[25%] select-none transform-gpu will-change-transform"
         style={{ 
           y: reactY,
           x: reactX,
@@ -68,8 +73,8 @@ const BackgroundGradient = () => {
       >
         <span className={`text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-transparent bg-clip-text ${
           theme === 'purple'
-            ? 'bg-gradient-to-r from-purple-400 to-purple-200 drop-shadow-[0_0_20px_rgba(168,85,247,0.5)] [text-shadow:3px_3px_6px_rgba(168,85,247,0.5)]'
-            : 'bg-gradient-to-r from-[#40A0E0] to-[#89CFF0] drop-shadow-[0_0_20px_rgba(64,160,224,0.5)] [text-shadow:3px_3px_6px_rgba(64,160,224,0.5)]'
+            ? 'bg-gradient-to-r from-[#a78bfa] via-[#c084fc] to-[#e9d5ff] drop-shadow-[0_0_30px_rgba(167,139,250,0.6)] [text-shadow:3px_3px_10px_rgba(167,139,250,0.8)]'
+            : 'bg-gradient-to-r from-[#60a5fa] via-[#93c5fd] to-[#dbeafe] drop-shadow-[0_0_30px_rgba(96,165,250,0.6)] [text-shadow:3px_3px_10px_rgba(96,165,250,0.8)]'
         } tracking-wider backdrop-blur-sm`}>
           React
         </span>
@@ -77,7 +82,7 @@ const BackgroundGradient = () => {
 
       {/* Bracket 1 */}
       <motion.div 
-        className="absolute right-[40%] sm:right-[35%] lg:right-[30%] top-[30%] sm:top-[35%] lg:top-[40%] select-none transform-gpu"
+        className="absolute right-[40%] sm:right-[35%] lg:right-[30%] top-[30%] sm:top-[35%] lg:top-[40%] select-none transform-gpu will-change-transform"
         style={{ 
           y: bracketY1,
           x: bracketX1,
@@ -88,16 +93,16 @@ const BackgroundGradient = () => {
       >
         <span className={`text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-mono text-transparent bg-clip-text ${
           theme === 'purple'
-            ? 'bg-gradient-to-r from-purple-300 to-blue-300 drop-shadow-[0_0_20px_rgba(168,85,247,0.5)] [text-shadow:3px_3px_6px_rgba(168,85,247,0.5)]'
-            : 'bg-gradient-to-r from-[#40A0E0] to-[#89CFF0] drop-shadow-[0_0_20px_rgba(64,160,224,0.5)] [text-shadow:3px_3px_6px_rgba(64,160,224,0.5)]'
+            ? 'bg-gradient-to-r from-[#c084fc] via-[#e9d5ff] to-[#a78bfa] drop-shadow-[0_0_30px_rgba(192,132,252,0.6)] [text-shadow:3px_3px_10px_rgba(192,132,252,0.8)]'
+            : 'bg-gradient-to-r from-[#93c5fd] via-[#dbeafe] to-[#60a5fa] drop-shadow-[0_0_30px_rgba(147,197,253,0.6)] [text-shadow:3px_3px_10px_rgba(147,197,253,0.8)]'
         } backdrop-blur-sm`}>
-          ''
+          &apos;&apos;
         </span>
       </motion.div>
 
       {/* JavaScript */}
       <motion.div 
-        className="absolute right-[15%] sm:right-[20%] lg:right-[25%] top-[45%] sm:top-[50%] lg:top-[55%] select-none transform-gpu"
+        className="absolute right-[15%] sm:right-[20%] lg:right-[25%] top-[45%] sm:top-[50%] lg:top-[55%] select-none transform-gpu will-change-transform"
         style={{ 
           y: jsY,
           x: jsX,
@@ -108,8 +113,8 @@ const BackgroundGradient = () => {
       >
         <span className={`text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-transparent bg-clip-text ${
           theme === 'purple'
-            ? 'bg-gradient-to-r from-purple-400 to-purple-200 drop-shadow-[0_0_20px_rgba(168,85,247,0.5)] [text-shadow:3px_3px_6px_rgba(168,85,247,0.5)]'
-            : 'bg-gradient-to-r from-[#40A0E0] to-[#89CFF0] drop-shadow-[0_0_20px_rgba(64,160,224,0.5)] [text-shadow:3px_3px_6px_rgba(64,160,224,0.5)]'
+            ? 'bg-gradient-to-r from-[#a78bfa] via-[#c084fc] to-[#e9d5ff] drop-shadow-[0_0_30px_rgba(167,139,250,0.6)] [text-shadow:3px_3px_10px_rgba(167,139,250,0.8)]'
+            : 'bg-gradient-to-r from-[#60a5fa] via-[#93c5fd] to-[#dbeafe] drop-shadow-[0_0_30px_rgba(96,165,250,0.6)] [text-shadow:3px_3px_10px_rgba(96,165,250,0.8)]'
         } tracking-wider backdrop-blur-sm`}>
           JavaScript
         </span>
@@ -117,7 +122,7 @@ const BackgroundGradient = () => {
 
       {/* Bracket 2 */}
       <motion.div 
-        className="absolute right-[45%] sm:right-[40%] lg:right-[35%] top-[60%] sm:top-[65%] lg:top-[70%] select-none transform-gpu"
+        className="absolute right-[45%] sm:right-[40%] lg:right-[35%] top-[60%] sm:top-[65%] lg:top-[70%] select-none transform-gpu will-change-transform"
         style={{ 
           y: bracketY2,
           x: bracketX2,
@@ -128,8 +133,8 @@ const BackgroundGradient = () => {
       >
         <span className={`text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-mono text-transparent bg-clip-text ${
           theme === 'purple'
-            ? 'bg-gradient-to-r from-purple-300 to-blue-300 drop-shadow-[0_0_20px_rgba(168,85,247,0.5)] [text-shadow:3px_3px_6px_rgba(168,85,247,0.5)]'
-            : 'bg-gradient-to-r from-[#40A0E0] to-[#89CFF0] drop-shadow-[0_0_20px_rgba(64,160,224,0.5)] [text-shadow:3px_3px_6px_rgba(64,160,224,0.5)]'
+            ? 'bg-gradient-to-r from-[#c084fc] via-[#e9d5ff] to-[#a78bfa] drop-shadow-[0_0_30px_rgba(192,132,252,0.6)] [text-shadow:3px_3px_10px_rgba(192,132,252,0.8)]'
+            : 'bg-gradient-to-r from-[#93c5fd] via-[#dbeafe] to-[#60a5fa] drop-shadow-[0_0_30px_rgba(147,197,253,0.6)] [text-shadow:3px_3px_10px_rgba(147,197,253,0.8)]'
         } backdrop-blur-sm`}>
           {'</>'}
         </span>
@@ -137,7 +142,7 @@ const BackgroundGradient = () => {
 
       {/* Node.js - Posición inicial ajustada para ser más visible */}
       <motion.div 
-        className="absolute right-[20%] sm:right-[30%] lg:right-[40%] top-[55%] sm:top-[50%] lg:top-[45%] select-none transform-gpu"
+        className="absolute right-[20%] sm:right-[30%] lg:right-[40%] top-[55%] sm:top-[50%] lg:top-[45%] select-none transform-gpu will-change-transform"
         style={{ 
           y: nodeY,
           x: nodeX,
@@ -148,8 +153,8 @@ const BackgroundGradient = () => {
       >
         <span className={`text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-transparent bg-clip-text ${
           theme === 'purple'
-            ? 'bg-gradient-to-r from-purple-400 to-purple-200 drop-shadow-[0_0_20px_rgba(168,85,247,0.5)] [text-shadow:3px_3px_6px_rgba(168,85,247,0.5)]'
-            : 'bg-gradient-to-r from-[#40A0E0] to-[#89CFF0] drop-shadow-[0_0_20px_rgba(64,160,224,0.5)] [text-shadow:3px_3px_6px_rgba(64,160,224,0.5)]'
+            ? 'bg-gradient-to-r from-[#a78bfa] via-[#c084fc] to-[#e9d5ff] drop-shadow-[0_0_30px_rgba(167,139,250,0.6)] [text-shadow:3px_3px_10px_rgba(167,139,250,0.8)]'
+            : 'bg-gradient-to-r from-[#60a5fa] via-[#93c5fd] to-[#dbeafe] drop-shadow-[0_0_30px_rgba(96,165,250,0.6)] [text-shadow:3px_3px_10px_rgba(96,165,250,0.8)]'
         } tracking-wider backdrop-blur-sm`}>
           Node.js
         </span>
@@ -157,7 +162,7 @@ const BackgroundGradient = () => {
       
       {/* Llaves */}
       <motion.div
-        className="absolute left-[15%] sm:left-[20%] lg:left-[25%] top-[35%] sm:top-[40%] lg:top-[45%] select-none transform-gpu"
+        className="absolute left-[15%] sm:left-[20%] lg:left-[25%] top-[35%] sm:top-[40%] lg:top-[45%] select-none transform-gpu will-change-transform"
         style={{
           y: bracaletsY,
           x: bracaletsX,
@@ -168,8 +173,8 @@ const BackgroundGradient = () => {
       >
         <span className={`text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-mono text-transparent bg-clip-text ${
           theme === 'purple'
-            ? 'bg-gradient-to-r from-purple-300 to-blue-300 drop-shadow-[0_0_20px_rgba(168,85,247,0.5)] [text-shadow:3px_3px_6px_rgba(168,85,247,0.5)]'
-            : 'bg-gradient-to-r from-[#40A0E0] to-[#2980B9] drop-shadow-[0_0_20px_rgba(64,160,224,0.5)] [text-shadow:3px_3px_6px_rgba(64,160,224,0.5)]'
+            ? 'bg-gradient-to-r from-[#c084fc] via-[#e9d5ff] to-[#a78bfa] drop-shadow-[0_0_30px_rgba(192,132,252,0.6)] [text-shadow:3px_3px_10px_rgba(192,132,252,0.8)]'
+            : 'bg-gradient-to-r from-[#93c5fd] via-[#dbeafe] to-[#60a5fa] drop-shadow-[0_0_30px_rgba(147,197,253,0.6)] [text-shadow:3px_3px_10px_rgba(147,197,253,0.8)]'
         } tracking-wider backdrop-blur-sm`}>
           { '{}' }
         </span>
@@ -177,7 +182,7 @@ const BackgroundGradient = () => {
       
       {/* Corchetes - Posición inicial ajustada para ser más visibles */}
       <motion.div
-        className="absolute left-[35%] sm:left-[40%] lg:left-[45%] top-[50%] sm:top-[55%] lg:top-[60%] select-none transform-gpu"
+        className="absolute left-[35%] sm:left-[40%] lg:left-[45%] top-[50%] sm:top-[55%] lg:top-[60%] select-none transform-gpu will-change-transform"
         style={{
           y: bracketsY,
           x: bracketsX,
@@ -188,31 +193,44 @@ const BackgroundGradient = () => {
       >
         <span className={`text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-mono text-transparent bg-clip-text ${
           theme === 'purple'
-            ? 'bg-gradient-to-r from-purple-400 to-blue-400 drop-shadow-[0_0_15px_rgba(168,85,247,0.6)] [text-shadow:2px_2px_4px_rgba(168,85,247,0.6)]'
-            : 'bg-gradient-to-r from-[#40A0E0] to-[#2980B9] drop-shadow-[0_0_15px_rgba(64,160,224,0.6)] [text-shadow:2px_2px_4px_rgba(64,160,224,0.6)]'
+            ? 'bg-gradient-to-r from-[#a78bfa] via-[#c084fc] to-[#e9d5ff] drop-shadow-[0_0_30px_rgba(167,139,250,0.6)] [text-shadow:3px_3px_10px_rgba(167,139,250,0.8)]'
+            : 'bg-gradient-to-r from-[#60a5fa] via-[#93c5fd] to-[#dbeafe] drop-shadow-[0_0_30px_rgba(96,165,250,0.6)] [text-shadow:3px_3px_10px_rgba(96,165,250,0.8)]'
         } tracking-wider backdrop-blur-sm`}>
           {'[]'}
         </span>
       </motion.div>
       
-      {/* Efectos de luz mejorados - Responsive */}
+      {/* Efectos de luz mejorados con colores profesionales */}
       <div className={`absolute top-0 right-0 w-[300px] h-[300px] md:w-[450px] md:h-[450px] lg:w-[600px] lg:h-[600px] ${
         theme === 'purple' 
-          ? 'bg-purple-600/20'
-          : 'bg-[#40A0E0]/20'
-      } rounded-full blur-[100px] md:blur-[120px] lg:blur-[140px] animate-pulse-slow`} />
+          ? 'bg-[#a78bfa]/25'
+          : 'bg-[#60a5fa]/25'
+      } rounded-full blur-[120px] md:blur-[140px] lg:blur-[160px] animate-pulse-slow`} />
       
       <div className={`absolute bottom-0 right-1/3 w-[300px] h-[300px] md:w-[450px] md:h-[450px] lg:w-[600px] lg:h-[600px] ${
         theme === 'purple'
-          ? 'bg-blue-600/20'
-          : 'bg-[#2980B9]/20'
-      } rounded-full blur-[100px] md:blur-[120px] lg:blur-[140px] animate-pulse-slow`} />
+          ? 'bg-[#c084fc]/20'
+          : 'bg-[#93c5fd]/20'
+      } rounded-full blur-[120px] md:blur-[140px] lg:blur-[160px] animate-pulse-slow`} />
       
       <div className={`absolute top-1/2 left-1/3 w-[300px] h-[300px] md:w-[450px] md:h-[450px] lg:w-[600px] lg:h-[600px] ${
         theme === 'purple'
-          ? 'bg-purple-500/20'
-          : 'bg-[#40A0E0]/20'
-      } rounded-full blur-[100px] md:blur-[120px] lg:blur-[140px] animate-pulse-slow`} />
+          ? 'bg-[#e9d5ff]/15'
+          : 'bg-[#dbeafe]/15'
+      } rounded-full blur-[120px] md:blur-[140px] lg:blur-[160px] animate-pulse-slow`} />
+      
+      {/* Luces adicionales para más profundidad */}
+      <div className={`absolute top-1/4 left-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px] ${
+        theme === 'purple'
+          ? 'bg-[#a78bfa]/15'
+          : 'bg-[#60a5fa]/15'
+      } rounded-full blur-[100px] md:blur-[120px] lg:blur-[140px] animate-pulse-slow`} style={{ animationDelay: '2s' }} />
+      
+      <div className={`absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px] ${
+        theme === 'purple'
+          ? 'bg-[#c084fc]/15'
+          : 'bg-[#93c5fd]/15'
+      } rounded-full blur-[100px] md:blur-[120px] lg:blur-[140px] animate-pulse-slow`} style={{ animationDelay: '3s' }} />
       
       {/* Overlay de ruido mejorado */}
       <div className="absolute inset-0 bg-grid-white/[0.04] bg-[size:30px_30px] md:bg-[size:40px_40px] lg:bg-[size:50px_50px] opacity-40" />

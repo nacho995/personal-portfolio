@@ -108,12 +108,12 @@ const Signs = () => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden py-4 my-12 sm:my-16 md:my-20">
+    <div className="relative w-full overflow-hidden py-4 my-12 sm:my-16 md:my-20" role="region" aria-label="Frases destacadas">
       {/* Fondos difuminados para un efecto visual mejorado */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 backdrop-blur-sm z-10 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 backdrop-blur-sm z-10 pointer-events-none" aria-hidden="true"></div>
       
       {/* Capa de ruido sutil */}
-      <div className="absolute inset-0 opacity-20" style={{ 
+      <div className="absolute inset-0 opacity-20" aria-hidden="true" style={{ 
         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` 
       }}></div>
       
@@ -134,6 +134,7 @@ const Signs = () => {
             <div 
               key={index} 
               className="relative overflow-hidden h-10 sm:h-14 md:h-16 flex items-center"
+              aria-label={phrase.text}
             >
               <div
                 className={`whitespace-nowrap font-mono font-bold text-2xl sm:text-3xl md:text-4xl tracking-wider flex items-center absolute ${textStyle.className}`}
@@ -150,8 +151,8 @@ const Signs = () => {
       </div>
       
       {/* Efecto de brillo en los bordes */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" aria-hidden="true"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" aria-hidden="true"></div>
     </div>
   );
 };

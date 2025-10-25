@@ -117,7 +117,7 @@ export const Header = () => {
   ]
 
   return (
-    <header className="fixed top-0 w-full z-[45]">
+    <header className="fixed top-0 w-full z-[45]" role="banner">
       {/* Menú circular */}
       <AnimatePresence>
         {isMenuOpen && (
@@ -127,6 +127,8 @@ export const Header = () => {
               width: `${menuContainerSize.width}px`, 
               height: `${menuContainerSize.height}px` 
             }}
+            role="navigation"
+            aria-label="Menú principal circular"
           >
             {menuItems.map((item, index) => (
               <motion.div
@@ -297,7 +299,8 @@ export const Header = () => {
                 <div className="hidden md:flex items-center relative ml-4">
                   <button
                     onClick={toggleTheme}
-                    className="relative group flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md"
+                    className="relative group flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
+                    aria-label={`Cambiar a modo ${theme === 'purple' ? 'profesional' : 'sincero'}`}
                   >
                     <div 
                       className="absolute inset-0 rounded-xl opacity-30 group-hover:opacity-100 transition-all duration-300 blur-md"
@@ -317,7 +320,7 @@ export const Header = () => {
                         <div className="absolute inset-0 bg-white/25 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300" />
                       </div>
                       <span className="text-xs font-medium text-white/95 group-hover:text-white transition-colors duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                        {theme === 'purple' ? 'Purple' : 'Blue'}
+                        {theme === 'purple' ? '😏 Sincero' : '🤖 Profesional'}
                       </span>
                     </div>
                   </button>
@@ -328,7 +331,8 @@ export const Header = () => {
               <div className="flex md:hidden items-center mt-2 absolute top-full left-0">
                 <button
                   onClick={toggleTheme}
-                  className="relative group flex items-center gap-1 px-2 py-1.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md"
+                  className="relative group flex items-center gap-1 px-2 py-1.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
+                  aria-label={`Cambiar tema a ${theme === 'purple' ? 'azul' : 'morado'}`}
                 >
                   <div 
                     className="absolute inset-0 rounded-xl opacity-30 group-hover:opacity-100 transition-all duration-300 blur-md"
@@ -348,7 +352,7 @@ export const Header = () => {
                       <div className="absolute inset-0 bg-white/25 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300" />
                     </div>
                     <span className="text-xs font-medium text-white/95 group-hover:text-white transition-colors duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                      {theme === 'purple' ? 'Purple' : 'Blue'}
+                      {theme === 'purple' ? '😏 Sincero' : '🤖 Pro'}
                     </span>
                   </div>
                 </button>
@@ -375,8 +379,10 @@ export const Header = () => {
                       ? 'bg-purple-500/20 hover:bg-purple-500/30'
                       : 'bg-[#40A0E0]/20 hover:bg-[#40A0E0]/30'
                     : 'bg-white/[0.07] hover:bg-white/[0.12]'
-                } text-white/90 hover:text-white transition-all duration-300 focus:outline-none backdrop-blur-md z-50`}
-                aria-label="Menu"
+                } text-white/90 hover:text-white transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 backdrop-blur-md z-50`}
+                aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+                aria-expanded={isMenuOpen}
+                aria-controls="main-navigation"
               >
                 <svg
                   className="w-6 h-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"

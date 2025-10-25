@@ -29,11 +29,14 @@ export default function Skills() {
   return (
     <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
       {/* Contenedor principal con efecto de cristal mejorado */}
-      <div className="relative backdrop-blur-2xl bg-black/10 border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(0,0,0,0.3)] overflow-hidden">
+      <div className="relative backdrop-blur-2xl bg-black/10 border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-[0_0_60px_rgba(168,85,247,0.3)] hover:shadow-[0_0_80px_rgba(168,85,247,0.4)] transition-shadow duration-500 overflow-hidden group/container">
         {/* Efectos de fondo mejorados */}
         <div className={`absolute inset-0 bg-gradient-to-br ${styles.gradient}`} />
         <div className={`absolute -top-32 -right-32 w-48 sm:w-64 h-48 sm:h-64 ${styles.blur.primary} rounded-full blur-3xl animate-pulse-slow`} />
         <div className={`absolute -bottom-32 -left-32 w-48 sm:w-64 h-48 sm:h-64 ${styles.blur.secondary} rounded-full blur-3xl animate-pulse-slow`} />
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-96 h-64 sm:h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse-slow`} style={{ animationDelay: '1s' }} />
+        {/* Borde brillante animado */}
+        <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 opacity-0 group-hover/container:opacity-100 transition-opacity duration-700 blur-xl" />
         
         {/* Título principal mejorado */}
         <div className="relative mb-8 sm:mb-16 text-center">
@@ -58,6 +61,7 @@ export default function Skills() {
               </h2>
             </div>
             <div className="flex flex-wrap justify-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/[0.04] border border-white/[0.08] backdrop-blur-md">
+              {/* JavaScript */}
               <span 
                 className={`group px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-br from-[#F7DF1E]/90 via-[#F7DF1E]/80 to-black/40 text-black rounded-lg sm:rounded-xl font-medium flex items-center gap-2 sm:gap-3 hover:scale-105 hover:shadow transition-all duration-300`}
                 onMouseOver={(e) => e.currentTarget.style.boxShadow = `0 0 25px ${styles.shadow}`}
@@ -68,6 +72,20 @@ export default function Skills() {
                        className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform duration-300" alt="JavaScript" />
                 </div>
                 <span className="text-sm sm:text-base font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">JavaScript</span>
+              </span>
+
+              {/* Python */}
+              <span 
+                className={`group px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-br from-[#3776AB]/90 via-[#FFD43B]/60 to-[#3776AB]/70 text-white rounded-lg sm:rounded-xl font-medium flex items-center gap-2 sm:gap-3 hover:scale-105 hover:shadow transition-all duration-300`}
+                onMouseOver={(e) => e.currentTarget.style.boxShadow = `0 0 25px ${styles.shadow}`}
+                onMouseOut={(e) => e.currentTarget.style.boxShadow = 'none'}
+              >
+                <div className="p-1 sm:p-1.5 rounded-lg bg-white/15 backdrop-blur-sm">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" 
+                       className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform duration-300" alt="Python" />
+                </div>
+                <span className="text-sm sm:text-base font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">Python</span>
+                
               </span>
             </div>
           </section>
@@ -231,6 +249,20 @@ export default function Skills() {
                   </svg>
                 </div>
                 <span className="text-sm sm:text-base font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Discord</span>
+              </span>
+
+              {/* Canva */}
+              <span 
+                className={`group px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-br from-[#00C4CC]/90 via-[#7D2AE8]/60 to-[#00C4CC]/70 text-white rounded-lg sm:rounded-xl font-medium flex items-center gap-2 sm:gap-3 hover:scale-105 hover:shadow transition-all duration-300`}
+                onMouseOver={(e) => e.currentTarget.style.boxShadow = `0 0 25px ${styles.shadow}`}
+                onMouseOut={(e) => e.currentTarget.style.boxShadow = 'none'}
+              >
+                <div className="p-1 sm:p-1.5 rounded-lg bg-white/15 backdrop-blur-sm">
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7.494 7.618c1.07 0 1.937.867 1.937 1.937s-.867 1.937-1.937 1.937-1.937-.867-1.937-1.937.867-1.937 1.937-1.937zm8.48 0c1.07 0 1.937.867 1.937 1.937s-.867 1.937-1.937 1.937-1.937-.867-1.937-1.937.867-1.937 1.937-1.937zM12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm0-5.5c-2.033 0-3.71 1.677-3.71 3.71h1.5c0-1.206.994-2.21 2.21-2.21s2.21 1.004 2.21 2.21h1.5c0-2.033-1.677-3.71-3.71-3.71z"/>
+                  </svg>
+                </div>
+                <span className="text-sm sm:text-base font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Canva</span>
               </span>
             </div>
           </section>
