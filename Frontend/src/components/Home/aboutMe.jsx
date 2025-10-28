@@ -73,13 +73,20 @@ export default function AboutMe() {
                 <span className="text-xl sm:text-2xl">🎓</span>
                 Formación Académica
               </h2>
-              <p className="text-sm sm:text-base text-white/80 leading-relaxed relative z-10">
-                He cursado un grado medio en <span className="text-white font-medium">Sistemas Microinformáticos y Redes</span>, 
-                proporcionándome una sólida base técnica. Actualmente, tengo  
-                <span className="text-white font-medium"> máster en Full-Stack Development</span> en Nuclio Digital School y estoy ampliando mis conocimientos
-                 con un <span className="text-white font-medium"> curso práctico donde conseguiré el HND (higher national diploma) y el Bachelor de ingenieria de software e IA</span> en MSMK University, 
-                 donde estoy aprendiendo <span className="text-white font-medium">Python</span> y haciendo unos estudios muy prácticos.
-              </p>
+              <ul className="text-sm sm:text-base text-white/80 leading-relaxed relative z-10 space-y-3">
+                <li className="flex flex-col gap-1">
+                  <span className="text-white font-medium">🔧 Grado Medio en Sistemas Microinformáticos y Redes</span>
+                  <span className="text-white/70 text-sm pl-6">Donde aprendí que reiniciar el router soluciona el 80% de los problemas (y a montar redes que funcionan el otro 20%)</span>
+                </li>
+                <li className="flex flex-col gap-1">
+                  <span className="text-white font-medium">💻 Máster en Full-Stack Development - Nuclio Digital School</span>
+                  <span className="text-white/70 text-sm pl-6">Aquí descubrí que &ldquo;full-stack&rdquo; significa que tienes que saber de todo... literalmente todo. Frontend, backend, bases de datos y café en grandes cantidades</span>
+                </li>
+                <li className="flex flex-col gap-1">
+                  <span className="text-white font-medium">🤖 HND y Bachelor en Ingeniería de Software e IA - MSMK University</span>
+                  <span className="text-white/70 text-sm pl-6">Actualmente aprendiendo Python y cómo hacer que las máquinas piensen (o al menos que lo intenten). Spoiler: la IA no es tan inteligente como parece, pero sí muy útil</span>
+                </li>
+              </ul>
             </motion.div>
 
             {/* Sección de Experiencia mejorada */}
@@ -96,65 +103,73 @@ export default function AboutMe() {
                 Experiencia Profesional
               </h2>
               <p className="text-sm sm:text-base text-white/80 leading-relaxed relative z-10">
-                Me desempeño como <span className="text-white font-medium">programador junior</span> especializado en desarrollo web, 
-                con un gran entusiasmo por aprender y descubrir nuevas tendencias en el mundo del software. 
-                Dispongo de conocimientos en <span className="text-white font-medium">JavaScript</span> y otras tecnologías web modernas.
+                Me especializo en <span className="text-white font-medium">desarrollo web full-stack</span>, creando soluciones digitales 
+                que combinan funcionalidad robusta con experiencias de usuario intuitivas. Mi enfoque se centra en tecnologías modernas como 
+                <span className="text-white font-medium"> JavaScript, React, Node.js y ecosistemas web actuales</span>, 
+                manteniendo siempre una actitud proactiva hacia el aprendizaje continuo y la adopción de nuevas tendencias tecnológicas.
               </p>
             </motion.div>
 
-            {/* CodLet sección mejorada */}
+            {/* Sección de Enfoque de Trabajo */}
             <motion.div 
               variants={itemVariants}
-              className="relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-black/10 border border-white/10 hover:border-purple-500/50 transition-all duration-300 group backdrop-blur-md shadow-lg hover:shadow-purple-500/40 hover:shadow-2xl cursor-default overflow-hidden"
+              className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-black/10 border border-white/10 hover:bg-black/20 hover:border-green-500/30 transition-all duration-300 backdrop-blur-md shadow-lg hover:shadow-green-500/30 hover:shadow-2xl group cursor-default relative overflow-hidden"
               whileHover={{ scale: 1.02, y: -4 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="absolute -inset-[2px] bg-gradient-to-r from-purple-500/40 via-pink-500/40 to-blue-500/40 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" />
+              {/* Efecto de brillo en hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-green-500/0 via-green-500/10 to-green-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
+              <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] relative z-10">
+                <span className="text-xl sm:text-2xl">💡</span>
+                Mi Enfoque de Trabajo
+              </h2>
+              <p className="text-sm sm:text-base text-white/80 leading-relaxed relative z-10">
+                Me gusta pensar que soy de los que <span className="text-white font-medium">no se quedan esperando</span> a que les enseñen todo. 
+                Si hay algo que no sé, lo busco, lo aprendo y lo aplico (a veces incluso funciona a la primera 😄). 
+                Disfruto <span className="text-white font-medium">resolviendo problemas</span> como si fueran puzzles, 
+                y me tomo en serio eso de escribir <span className="text-white font-medium">código que otros puedan entender</span> sin necesitar 
+                un traductor. Trabajo bien en equipo porque, seamos honestos, nadie sabe todo y siempre hay algo nuevo que aprender de los demás.
+              </p>
+            </motion.div>
+
+            {/* Sección de Proyectos Personales */}
+            <motion.div 
+              variants={itemVariants}
+              className="relative p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-black/10 border border-white/10 hover:border-orange-500/50 transition-all duration-300 group backdrop-blur-md shadow-lg hover:shadow-orange-500/40 hover:shadow-2xl cursor-default overflow-hidden"
+              whileHover={{ scale: 1.02, y: -4 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <div className="absolute -inset-[2px] bg-gradient-to-r from-orange-500/40 via-yellow-500/40 to-orange-500/40 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" />
               {/* Efecto de brillo deslizante */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
               <div className="relative">
                 <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                  <span className="text-xl sm:text-2xl">⚡</span>
-                  <h2 className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-purple-300 to-white bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                    CodLet
+                  <span className="text-xl sm:text-2xl">🛠️</span>
+                  <h2 className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-orange-300 to-white bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+                    Cosas que He Construido
                   </h2>
-                  <span className="px-2 py-1 text-xs font-medium bg-black/10 rounded-full text-white/90 ml-auto sm:ml-0 backdrop-blur-sm">
-                    En Desarrollo
-                  </span>
                 </div>
-                <p className="text-sm sm:text-base text-white/80 leading-relaxed">
-                  Actualmente estoy desarrollando <span className="text-white font-medium">CodLet</span>, 
-                  una marca personal enfocada en el desarrollo web integral. Este proyecto combina soluciones 
-                  tanto en <span className="text-white font-medium">WordPress</span> como en desarrollo personalizado 
-                  con <span className="text-white font-medium">programación moderna</span>, ofreciendo 
-                  versatilidad y calidad en cada proyecto.
+                <p className="text-sm sm:text-base text-white/80 leading-relaxed mb-3">
+                  Cuando no estoy estudiando o trabajando, me gusta <span className="text-white font-medium">crear cosas</span>. 
+                  A veces por necesidad, a veces porque &ldquo;¿y si pruebo esto?&rdquo;. Aquí algunas de las que no han explotado:
                 </p>
-                <div className="mt-3 sm:mt-4 flex flex-wrap gap-1.5 sm:gap-2">
-                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm bg-white/10 rounded-full text-white/90 backdrop-blur-sm">WordPress</span>
-                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm bg-white/10 rounded-full text-white/90 backdrop-blur-sm">Desarrollo Web</span>
-                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm bg-white/10 rounded-full text-white/90 backdrop-blur-sm">Marca Personal</span>
+                <div className="space-y-2 text-sm sm:text-base text-white/80">
+                  <p>
+                    • <span className="text-white font-medium">CodLet</span>: Mi intento de hacer una marca de desarrollo web (spoiler: va bien)
+                  </p>
+                  <p>
+                    • <span className="text-white font-medium">Este portfolio</span>: Con chatbot IA incluido porque... ¿por qué no?
+                  </p>
+                  <p>
+                    • <span className="text-white font-medium">Plataformas reales</span>: Inmobiliarias, sitios corporativos y más experimentos que funcionaron
+                  </p>
                 </div>
+                <p className="text-xs sm:text-sm text-white/60 mt-3 italic">
+                  * Sí, aprendo haciendo. Es más divertido que leer documentación... aunque al final siempre vuelvo a ella 📚
+                </p>
               </div>
             </motion.div>
 
-            {/* Sección de Objetivos mejorada */}
-            <motion.div 
-              variants={itemVariants}
-              className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-black/10 border border-white/10 hover:bg-black/20 hover:border-white/20 transition-all duration-300 backdrop-blur-md shadow-lg group cursor-default"
-              whileHover={{ scale: 1.02, y: -4 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                <span className="text-xl sm:text-2xl">🎯</span>
-                Objetivos Profesionales
-              </h2>
-              <p className="text-sm sm:text-base text-white/80 leading-relaxed">
-                Mi meta es encontrar una oportunidad laboral que me permita colaborar con expertos del sector, contribuyendo a proyectos desafiantes. Estoy 
-                comprometido a aportar mis conocimientos y habilidades para impulsar los objetivos 
-                empresariales, manteniendo una actitud proactiva y enfocada en la mejora continua 
-                de los procesos y resultados del equipo.
-              </p>
-            </motion.div>
           </div>
 
           {/* Columna de conexión mejorada */}

@@ -110,34 +110,6 @@ const Name = () => {
             </span>
           </h1>
 
-          {/* Email con mejor contraste */}
-          <motion.a 
-            href="mailto:ignaciodalesio1995@gmail.com"
-            className="group flex items-center justify-center lg:justify-start gap-2 cursor-pointer w-fit mx-auto lg:mx-0 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-lg hover:bg-black/30 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <svg 
-              className="w-4 h-4 sm:w-5 sm:h-5 text-white/90 group-hover:text-white transition-colors" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" 
-              />
-            </svg>
-            <span className="text-sm sm:text-base text-white/90 group-hover:text-white transition-colors truncate drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-              ignaciodalesio1995@gmail.com
-            </span>
-          </motion.a>
-
           {/* Botón de CV mejorado */}
           <motion.div 
             className="flex justify-center lg:justify-start"

@@ -4,8 +4,8 @@ import { useTheme } from '../../context/ThemeContext';
 
 const Chatbot = () => {
   const [isMaximized, setIsMaximized] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const { theme } = useTheme();
+  const [isMinimized, setIsMinimized] = useState(true); // Iniciar minimizado por defecto
+  const { theme, toggleTheme } = useTheme();
   
   const getInitialMessage = () => {
     if (theme === 'blue') {
@@ -24,6 +24,20 @@ const Chatbot = () => {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+
+  // Actualizar mensaje inicial cuando cambia el tema
+  useEffect(() => {
+    const initialMessage = theme === 'blue' 
+      ? '¡Hola! 👋 Soy el asistente PROFESIONAL de Nacho. ¿En qué puedo ayudarte a conocer más sobre su experiencia y habilidades?'
+      : 'Hola... 🙄 Soy el asistente "sincero" de Nacho. Pregunta lo que quieras, te diré la verdad (con un poco de sarcasmo incluido).';
+    
+    setMessages([
+      {
+        type: 'bot',
+        text: initialMessage
+      }
+    ]);
+  }, [theme]);
 
   // Información contextual sobre Nacho para la IA - Cambia según el tema
   const getNachoContext = () => {
@@ -264,6 +278,66 @@ TU PERSONALIDAD (MODO SINCERO):
 
   return (
     <>
+      {/* Botón toggle de cambio de tema cuando está minimizado - MÁS GRANDE */}
+      {isMinimized && (
+        <motion.div
+          initial={{ opacity: 0, x: 400 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+          className="fixed z-50 bottom-[20px] right-[110px] flex flex-col items-center gap-2"
+        >
+          {/* Etiqueta del modo actual */}
+          <span className="text-sm font-semibold text-white drop-shadow-lg">
+            {theme === 'purple' ? '😏 Sincero' : '🤖 Profesional'}
+          </span>
+          
+          {/* Toggle Switch estilo Material UI - MÁS GRANDE */}
+          <button
+            onClick={toggleTheme}
+            className={`relative w-20 h-10 rounded-full transition-all duration-300 hover:shadow-2xl ${
+              theme === 'purple' 
+                ? 'bg-gradient-to-r from-purple-500 to-purple-700' 
+                : 'bg-gradient-to-r from-blue-500 to-blue-700'
+            } border-2 border-white/40 hover:border-white/60 cursor-pointer group backdrop-blur-sm`}
+            aria-label={`Cambiar a modo ${theme === 'purple' ? 'profesional' : 'sincero'}`}
+            title={`Cambiar a modo ${theme === 'purple' ? 'profesional' : 'sincero'}`}
+            style={{ 
+              boxShadow: `0 4px 16px ${colors.glow}`
+            }}
+          >
+            {/* Círculo deslizante */}
+            <motion.div
+              className="absolute top-1 w-8 h-8 bg-white rounded-full shadow-xl flex items-center justify-center ring-2 ring-white/20"
+              animate={{
+                left: theme === 'purple' ? '4px' : '44px'
+              }}
+              transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+            >
+              <span className="text-base">
+                {theme === 'purple' ? '😏' : '🤖'}
+              </span>
+            </motion.div>
+            
+            {/* Indicadores de texto en el fondo */}
+            <div className="absolute inset-0 flex items-center justify-between px-3 pointer-events-none">
+              <span className={`text-xs font-bold transition-opacity duration-300 ${
+                theme === 'purple' ? 'opacity-0' : 'opacity-60 text-white'
+              }`}>
+                S
+              </span>
+              <span className={`text-xs font-bold transition-opacity duration-300 ${
+                theme === 'purple' ? 'opacity-60 text-white' : 'opacity-0'
+              }`}>
+                P
+              </span>
+            </div>
+            
+            {/* Efecto de hover */}
+            <div className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
+          </button>
+        </motion.div>
+      )}
+
       {/* Ventana del chat - Siempre visible */}
       <motion.div
         initial={{ opacity: 0, x: 400 }}
@@ -306,7 +380,59 @@ TU PERSONALIDAD (MODO SINCERO):
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-1 relative z-10">
+              <div className="flex items-center gap-3 relative z-10">
+                {/* Toggle Switch profesional dentro del chat */}
+                <div className="flex flex-col items-end gap-1">
+                  <span className="text-[10px] font-medium text-white/70 uppercase tracking-wider">
+                    Modo
+                  </span>
+                  <button
+                    onClick={toggleTheme}
+                    className={`relative w-16 h-8 rounded-full transition-all duration-300 hover:shadow-xl ${
+                      theme === 'purple' 
+                        ? 'bg-gradient-to-r from-purple-500 to-purple-700' 
+                        : 'bg-gradient-to-r from-blue-500 to-blue-700'
+                    } border-2 border-white/40 hover:border-white/60 cursor-pointer group backdrop-blur-sm`}
+                    aria-label={`Cambiar a modo ${theme === 'purple' ? 'profesional' : 'sincero'}`}
+                    title={`Cambiar a modo ${theme === 'purple' ? 'profesional' : 'sincero'}`}
+                    style={{ 
+                      boxShadow: `0 4px 12px ${colors.glow}`
+                    }}
+                  >
+                    {/* Círculo deslizante */}
+                    <motion.div
+                      className="absolute top-0.5 w-7 h-7 bg-white rounded-full shadow-xl flex items-center justify-center ring-2 ring-white/20"
+                      animate={{
+                        left: theme === 'purple' ? '2px' : '30px'
+                      }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    >
+                      <span className="text-sm">
+                        {theme === 'purple' ? '😏' : '🤖'}
+                      </span>
+                    </motion.div>
+                    
+                    {/* Indicadores de texto en el fondo */}
+                    <div className="absolute inset-0 flex items-center justify-between px-2 pointer-events-none">
+                      <span className={`text-[9px] font-bold transition-opacity duration-300 ${
+                        theme === 'purple' ? 'opacity-0' : 'opacity-60 text-white'
+                      }`}>
+                        S
+                      </span>
+                      <span className={`text-[9px] font-bold transition-opacity duration-300 ${
+                        theme === 'purple' ? 'opacity-60 text-white' : 'opacity-0'
+                      }`}>
+                        P
+                      </span>
+                    </div>
+                    
+                    {/* Efecto de hover */}
+                    <div className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
+                  </button>
+                  <span className="text-[9px] font-medium text-white/60">
+                    {theme === 'purple' ? 'Sincero' : 'Profesional'}
+                  </span>
+                </div>
                 <button
                   onClick={() => setIsMaximized(!isMaximized)}
                   className="p-2.5 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-110 group"
@@ -338,7 +464,7 @@ TU PERSONALIDAD (MODO SINCERO):
           {isMinimized && (
             <button
               onClick={() => setIsMinimized(false)}
-              className="w-full h-full flex items-center justify-center relative z-10"
+              className="w-full h-full flex items-center justify-center relative z-10 hover:scale-110 transition-transform duration-300"
               aria-label="Abrir chat"
             >
               <span className="text-3xl">{theme === 'blue' ? '🤖' : '😏'}</span>

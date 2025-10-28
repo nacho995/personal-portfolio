@@ -73,20 +73,6 @@ export default function Skills() {
                 </div>
                 <span className="text-sm sm:text-base font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">JavaScript</span>
               </span>
-
-              {/* Python */}
-              <span 
-                className={`group px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-br from-[#3776AB]/90 via-[#FFD43B]/60 to-[#3776AB]/70 text-white rounded-lg sm:rounded-xl font-medium flex items-center gap-2 sm:gap-3 hover:scale-105 hover:shadow transition-all duration-300`}
-                onMouseOver={(e) => e.currentTarget.style.boxShadow = `0 0 25px ${styles.shadow}`}
-                onMouseOut={(e) => e.currentTarget.style.boxShadow = 'none'}
-              >
-                <div className="p-1 sm:p-1.5 rounded-lg bg-white/15 backdrop-blur-sm">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" 
-                       className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform duration-300" alt="Python" />
-                </div>
-                <span className="text-sm sm:text-base font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">Python</span>
-                
-              </span>
             </div>
           </section>
 
@@ -195,6 +181,19 @@ export default function Skills() {
                 </div>
                 <span className="text-sm sm:text-base font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Node.js</span>
               </span>
+
+              {/* Python */}
+              <span 
+                className={`group px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-br from-[#3776AB]/90 via-[#FFD43B]/60 to-[#3776AB]/70 text-white rounded-lg sm:rounded-xl font-medium flex items-center gap-2 sm:gap-3 hover:scale-105 hover:shadow transition-all duration-300`}
+                onMouseOver={(e) => e.currentTarget.style.boxShadow = `0 0 25px ${styles.shadow}`}
+                onMouseOut={(e) => e.currentTarget.style.boxShadow = 'none'}
+              >
+                <div className="p-1 sm:p-1.5 rounded-lg bg-white/15 backdrop-blur-sm">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" 
+                       className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform duration-300" alt="Python" />
+                </div>
+                <span className="text-sm sm:text-base font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">Python</span>
+              </span>
             </div>
           </section>
 
@@ -276,9 +275,10 @@ export default function Skills() {
                      className="w-10 h-10 sm:w-12 sm:h-12 object-contain relative drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" alt="Tools icon" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                IDEs
+                IDEs & AI-Powered Editors
               </h2>
             </div>
+            <p className="text-sm text-white/60 text-center mb-4 italic">Visual Studio Code y sus forks mejorados con IA</p>
             <div className="flex flex-wrap justify-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/[0.04] border border-white/[0.08] backdrop-blur-md">
               {/* Visual Studio Code */}
               <span 
@@ -291,6 +291,77 @@ export default function Skills() {
                        className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform duration-300" alt="VS Code" />
                 </div>
                 <span className="text-sm sm:text-base font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Visual Studio Code</span>
+              </span>
+
+              {/* Windsurf */}
+              <span 
+                className={`group px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-br from-[#00D4FF]/90 via-[#0099CC]/80 to-black/40 text-white rounded-lg sm:rounded-xl font-medium flex items-center gap-2 sm:gap-3 hover:scale-105 hover:shadow transition-all duration-300`}
+                onMouseOver={(e) => e.currentTarget.style.boxShadow = `0 0 25px ${styles.shadow}`}
+                onMouseOut={(e) => e.currentTarget.style.boxShadow = 'none'}
+              >
+                <div className="p-1 sm:p-1.5 rounded-lg bg-white/15 backdrop-blur-sm">
+                  <img src="/windsurfai.webp" 
+                       className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform duration-300" alt="Windsurf" />
+                </div>
+                <span className="text-sm sm:text-base font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Windsurf</span>
+              </span>
+
+              {/* Cursor AI */}
+              <span 
+                className={`group px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-br from-[#000000]/90 via-[#333333]/80 to-[#666666]/40 text-white rounded-lg sm:rounded-xl font-medium flex items-center gap-2 sm:gap-3 hover:scale-105 hover:shadow transition-all duration-300`}
+                onMouseOver={(e) => e.currentTarget.style.boxShadow = `0 0 25px ${styles.shadow}`}
+                onMouseOut={(e) => e.currentTarget.style.boxShadow = 'none'}
+              >
+                <div className="p-1 sm:p-1.5 rounded-lg bg-white/15 backdrop-blur-sm">
+                  <img src="/cursorImagen.png" 
+                       className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform duration-300" alt="Cursor AI" />
+                </div>
+                <span className="text-sm sm:text-base font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Cursor AI</span>
+              </span>
+
+            </div>
+          </section>
+
+          {/* TRAE AI - IDE de Nueva Generación */}
+          <section className="transform hover:scale-[1.01] transition-all duration-300">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 sm:mb-8 group">
+              <div className="relative">
+                <div className={`absolute -inset-2 bg-gradient-to-r ${styles.glow} rounded-full blur-sm group-hover:blur-md transition-all duration-500`}></div>
+                <img src="https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/CP_PS.gif?raw=true" 
+                     className="w-10 h-10 sm:w-12 sm:h-12 object-contain relative drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" alt="AI icon" />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+                Next-Gen AI IDE
+              </h2>
+            </div>
+            
+            {/* Descripción de TRAE AI */}
+            <div className="mb-4 p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] backdrop-blur-md">
+              <p className="text-sm text-white/70 leading-relaxed">
+                Estoy explorando <span className="text-white font-semibold">TRAE AI</span>, el nuevo IDE que acaba de lanzar <span className="text-white font-medium">ByteDance</span> (sí, los de TikTok). 
+                Lo interesante es que no es otro fork de VS Code, sino que lo construyeron <span className="text-white font-medium">desde cero pensando en IA</span>. 
+                Viene con <span className="text-white font-medium">agentes de IA integrados</span> que trabajan contigo mientras programas, usando modelos de última generación como 
+                <span className="text-white font-medium"> Claude 3.5, GPT-4o y Llama-3</span>. Lo mejor: es <span className="text-white font-medium">completamente gratuito</span> 
+                y está diseñado para que colabores directamente con la inteligencia artificial, no solo que te autocomplete código.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/[0.04] border border-white/[0.08] backdrop-blur-md">
+              {/* Trae AI */}
+              <span 
+                className={`group px-4 sm:px-6 py-3 sm:py-3.5 bg-gradient-to-br from-[#FF6B6B]/90 via-[#FF8E8E]/80 to-[#FF4757]/70 text-white rounded-lg sm:rounded-xl font-medium flex items-center gap-2 sm:gap-3 hover:scale-105 hover:shadow-2xl transition-all duration-300 border border-white/20`}
+                onMouseOver={(e) => e.currentTarget.style.boxShadow = `0 0 30px rgba(255,107,107,0.5)`}
+                onMouseOut={(e) => e.currentTarget.style.boxShadow = 'none'}
+              >
+                <div className="p-1.5 sm:p-2 rounded-lg bg-white/20 backdrop-blur-sm">
+                  <img src="/traeai_logo.jpeg" 
+                       className="w-7 h-7 sm:w-8 sm:h-8 group-hover:rotate-12 transition-transform duration-300" alt="Trae AI" />
+                </div>
+                <div className="flex flex-col items-start">
+                  <span className="text-base sm:text-lg font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">TRAE AI</span>
+                  <span className="text-xs text-white/80">by ByteDance</span>
+                </div>
+                <span className="ml-2 px-2 py-0.5 text-xs font-bold bg-white/20 rounded-full">NEW</span>
               </span>
             </div>
           </section>

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { theme, toggleTheme } = useTheme()
+  const { theme } = useTheme()
   const [menuContainerSize, setMenuContainerSize] = useState({ width: 900, height: 900 })
 
   useEffect(() => {
@@ -266,107 +266,55 @@ export const Header = () => {
       <nav className={`bg-gradient-to-b from-black/95 via-black/85 to-transparent backdrop-blur-lg border-b border-white/15 transition-all duration-300 ${isMenuOpen ? 'pb-0' : ''} relative z-[60]`}>
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 sm:h-24 lg:h-28">
-            {/* Sección izquierda: Logo, separador, code1.png y botón de tema (este último solo en ≥768px) */}
-            <div className="flex flex-row items-center relative">
-              {/* Logo, separador y code1.png */}
-              <div className="flex flex-row items-center gap-4">
-                {/* Logo */}
-                <div className="relative group">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/80 to-blue-500/80 rounded-full opacity-75 group-hover:opacity-100 blur-lg group-hover:blur-xl transition-all duration-500"></div>
-                  <div className="relative flex items-center justify-center w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] bg-black/60 rounded-full border border-white/15 overflow-hidden group-hover:border-white/30 transition-colors duration-500 backdrop-blur-sm">
-                    <img 
-                      src="/CODLET1SINFONDO.png" 
-                      alt="Dev Logo" 
-                      className="h-[12vh] sm:h-[14vh] w-auto object-contain"
-                    />
-                  </div>
-                </div>
-                
-                {/* Separador vertical */}
-                <div className="h-10 w-px bg-gradient-to-b from-transparent via-white/25 to-transparent"></div>
-                
-                {/* Imagen code1.png */}
-                <div className="relative group overflow-hidden rounded-lg">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/30 to-blue-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm"></div>
+            {/* Sección izquierda: Logo, separador y code1.png */}
+            <Link to="/" className="flex flex-row items-center gap-4 cursor-pointer">
+              {/* Logo */}
+              <div className="relative group">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/80 to-blue-500/80 rounded-full opacity-75 group-hover:opacity-100 blur-lg group-hover:blur-xl transition-all duration-500"></div>
+                <div className="relative flex items-center justify-center w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] bg-black/60 rounded-full border border-white/15 overflow-hidden group-hover:border-white/30 transition-colors duration-500 backdrop-blur-sm">
                   <img 
-                    src="/code1.png" 
-                    alt="Code" 
-                    className="mt-[3vh] animate-float h-11 sm:h-14 w-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
+                    src="/yoia.jpeg" 
+                    alt="Dev Logo" 
+                    className="w-full h-full object-cover"
                   />
-                </div>
-                
-                {/* Botón de tema - visible a partir de 768px, al lado de las imágenes */}
-                <div className="hidden md:flex items-center relative ml-4">
-                  <button
-                    onClick={toggleTheme}
-                    className="relative group flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
-                    aria-label={`Cambiar a modo ${theme === 'purple' ? 'profesional' : 'sincero'}`}
-                  >
-                    <div 
-                      className="absolute inset-0 rounded-xl opacity-30 group-hover:opacity-100 transition-all duration-300 blur-md"
-                      style={{
-                        background: `radial-gradient(circle, ${theme === 'purple' ? '#40A0E0' : '#9333EA'} 0%, transparent 70%)`
-                      }}
-                    />
-                    <div className="relative flex items-center gap-2">
-                      <div className="z-[1000] relative">
-                        <div 
-                          className={`z-[1000] w-5 h-5 rounded-full ${
-                            theme === 'purple' 
-                              ? 'bg-gradient-to-br from-purple-300 to-purple-500' 
-                              : 'bg-gradient-to-br from-[#40A0E0] to-[#2980B9]'
-                          } transition-all duration-300 shadow-lg shadow-black/30`}
-                        />
-                        <div className="absolute inset-0 bg-white/25 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300" />
-                      </div>
-                      <span className="text-xs font-medium text-white/95 group-hover:text-white transition-colors duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                        {theme === 'purple' ? '😏 Sincero' : '🤖 Profesional'}
-                      </span>
-                    </div>
-                  </button>
                 </div>
               </div>
               
-              {/* Botón de tema - solo visible en móvil (<768px) */}
-              <div className="flex md:hidden items-center mt-2 absolute top-full left-0">
-                <button
-                  onClick={toggleTheme}
-                  className="relative group flex items-center gap-1 px-2 py-1.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
-                  aria-label={`Cambiar tema a ${theme === 'purple' ? 'azul' : 'morado'}`}
-                >
-                  <div 
-                    className="absolute inset-0 rounded-xl opacity-30 group-hover:opacity-100 transition-all duration-300 blur-md"
-                    style={{
-                      background: `radial-gradient(circle, ${theme === 'purple' ? '#40A0E0' : '#9333EA'} 0%, transparent 70%)`
-                    }}
-                  />
-                  <div className="relative flex items-center gap-2">
-                    <div className="z-[1000] relative">
-                      <div 
-                        className={`z-[1000] w-5 h-5 rounded-full ${
-                          theme === 'purple' 
-                            ? 'bg-gradient-to-br from-purple-300 to-purple-500' 
-                            : 'bg-gradient-to-br from-[#40A0E0] to-[#2980B9]'
-                        } transition-all duration-300 shadow-lg shadow-black/30`}
-                      />
-                      <div className="absolute inset-0 bg-white/25 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300" />
-                    </div>
-                    <span className="text-xs font-medium text-white/95 group-hover:text-white transition-colors duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                      {theme === 'purple' ? '😏 Sincero' : '🤖 Pro'}
-                    </span>
-                  </div>
-                </button>
+              {/* Separador vertical */}
+              <div className="h-10 w-px bg-gradient-to-b from-transparent via-white/25 to-transparent"></div>
+              
+              {/* Imagen code1.png */}
+              <div className="relative group overflow-hidden rounded-lg">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/30 to-blue-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm"></div>
+                <img 
+                  src="/code1.png" 
+                  alt="Code" 
+                  className="mt-[3vh] animate-float h-11 sm:h-14 w-auto object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
+                />
               </div>
-            </div>
+            </Link>
             
-            {/* Sección central: Texto "Portfolio" */}
-            <div className="md:flex items-center gap-6 hidden">
-              <Link 
-                to="/" 
-                className="text-2xl lg:text-3xl font-bold text-white/95 hover:text-white transition-colors duration-300 tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
-              >
-                Portfolio
+            {/* Sección central: Título y botones de navegación */}
+            <div className="hidden md:flex items-center gap-6">
+              <Link to="/" className="cursor-pointer">
+                <h1 className="text-xl lg:text-2xl font-bold text-white/95 tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] hover:text-white transition-colors duration-300">
+                  Portfolio de Ignacio Dalesio
+                </h1>
               </Link>
+              <div className="flex items-center gap-3">
+                <Link 
+                  to="/proyectos"
+                  className="px-4 py-2 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md text-white/90 hover:text-white text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                >
+                  Proyectos
+                </Link>
+                <a 
+                  href="mailto:ignaciodalesio1995@gmail.com"
+                  className="px-4 py-2 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md text-white/90 hover:text-white text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                >
+                  Contacto
+                </a>
+              </div>
             </div>
 
             {/* Sección derecha: Botón del menú */}
