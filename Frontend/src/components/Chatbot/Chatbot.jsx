@@ -6,6 +6,7 @@ const Chatbot = () => {
   const [isMaximized, setIsMaximized] = useState(false);
   const [isMinimized, setIsMinimized] = useState(true); // Iniciar minimizado por defecto
   const { theme, toggleTheme } = useTheme();
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   
   const getInitialMessage = () => {
     if (theme === 'blue') {
@@ -38,6 +39,16 @@ const Chatbot = () => {
       }
     ]);
   }, [theme]);
+
+  // Actualizar ancho de ventana para responsive
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Información contextual sobre Nacho para la IA - Cambia según el tema
   const getNachoContext = () => {
@@ -284,17 +295,17 @@ TU PERSONALIDAD (MODO SINCERO):
           initial={{ opacity: 0, x: 400 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="fixed z-50 bottom-[20px] right-[110px] flex flex-col items-center gap-2"
+          className="fixed z-50 bottom-[10px] sm:bottom-[20px] right-[90px] sm:right-[110px] flex flex-col items-center gap-1 sm:gap-2 pointer-events-auto"
         >
           {/* Etiqueta del modo actual */}
-          <span className="text-sm font-semibold text-white drop-shadow-lg">
+          <span className="text-xs sm:text-sm font-semibold text-white drop-shadow-lg">
             {theme === 'purple' ? '😏 Sincero' : '🤖 Profesional'}
           </span>
           
-          {/* Toggle Switch estilo Material UI - MÁS GRANDE */}
+          {/* Toggle Switch estilo Material UI - RESPONSIVE */}
           <button
             onClick={toggleTheme}
-            className={`relative w-20 h-10 rounded-full transition-all duration-300 hover:shadow-2xl ${
+            className={`relative w-16 h-8 sm:w-20 sm:h-10 rounded-full transition-all duration-300 hover:shadow-2xl ${
               theme === 'purple' 
                 ? 'bg-gradient-to-r from-purple-500 to-purple-700' 
                 : 'bg-gradient-to-r from-blue-500 to-blue-700'
@@ -307,25 +318,25 @@ TU PERSONALIDAD (MODO SINCERO):
           >
             {/* Círculo deslizante */}
             <motion.div
-              className="absolute top-1 w-8 h-8 bg-white rounded-full shadow-xl flex items-center justify-center ring-2 ring-white/20"
+              className="absolute top-0.5 sm:top-1 w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full shadow-xl flex items-center justify-center ring-2 ring-white/20"
               animate={{
-                left: theme === 'purple' ? '4px' : '44px'
+                left: theme === 'purple' ? '2px' : (windowWidth < 640 ? '34px' : '44px')
               }}
               transition={{ type: 'spring', stiffness: 500, damping: 30 }}
             >
-              <span className="text-base">
+              <span className="text-sm sm:text-base">
                 {theme === 'purple' ? '😏' : '🤖'}
               </span>
             </motion.div>
             
             {/* Indicadores de texto en el fondo */}
-            <div className="absolute inset-0 flex items-center justify-between px-3 pointer-events-none">
-              <span className={`text-xs font-bold transition-opacity duration-300 ${
+            <div className="absolute inset-0 flex items-center justify-between px-2 sm:px-3 pointer-events-none">
+              <span className={`text-[10px] sm:text-xs font-bold transition-opacity duration-300 ${
                 theme === 'purple' ? 'opacity-0' : 'opacity-60 text-white'
               }`}>
                 S
               </span>
-              <span className={`text-xs font-bold transition-opacity duration-300 ${
+              <span className={`text-[10px] sm:text-xs font-bold transition-opacity duration-300 ${
                 theme === 'purple' ? 'opacity-60 text-white' : 'opacity-0'
               }`}>
                 P
@@ -338,23 +349,26 @@ TU PERSONALIDAD (MODO SINCERO):
         </motion.div>
       )}
 
-      {/* Ventana del chat - Siempre visible */}
+      {/* Ventana del chat - Siempre visible y RESPONSIVE */}
       <motion.div
         initial={{ opacity: 0, x: 400 }}
         animate={{ 
           opacity: 1, 
           x: 0,
-          width: isMaximized ? '100vw' : (isMinimized ? '80px' : '420px'),
-          height: isMaximized ? '100vh' : (isMinimized ? '80px' : '85vh'),
-          bottom: isMaximized ? 0 : '20px',
-          right: isMaximized ? 0 : '20px',
-          borderRadius: isMaximized ? '0px' : '24px'
+          width: isMaximized ? '100vw' : (isMinimized ? (windowWidth < 640 ? '60px' : '80px') : (windowWidth < 640 ? '100vw' : windowWidth < 768 ? '90vw' : '420px')),
+          height: isMaximized ? '100vh' : (isMinimized ? (windowWidth < 640 ? '60px' : '80px') : (windowWidth < 640 ? '100vh' : '85vh')),
+          bottom: isMaximized ? 0 : (windowWidth < 640 ? (isMinimized ? '10px' : 0) : '20px'),
+          right: isMaximized ? 0 : (windowWidth < 640 ? (isMinimized ? '10px' : 0) : '20px'),
+          left: isMaximized ? 0 : (windowWidth < 640 && !isMinimized ? 0 : 'auto'),
+          borderRadius: isMaximized ? '0px' : (windowWidth < 640 && !isMinimized ? '0px' : (isMinimized ? '50%' : '24px'))
         }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        className={`fixed z-50 backdrop-blur-2xl bg-black/40 border ${colors.border} shadow-2xl overflow-hidden flex flex-col`}
+        className={`fixed backdrop-blur-2xl bg-black/40 border ${colors.border} shadow-2xl overflow-hidden flex flex-col`}
         style={{ 
           boxShadow: isMaximized ? 'none' : `0 0 60px ${colors.glow}, 0 20px 40px rgba(0,0,0,0.4)`,
-          maxHeight: isMaximized ? '100vh' : '85vh'
+          maxHeight: isMaximized ? '100vh' : '85vh',
+          zIndex: 50,
+          pointerEvents: 'auto'
         }}
       >
         {/* Header */}
