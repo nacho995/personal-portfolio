@@ -33,20 +33,20 @@ const Name = () => {
         >
           <div className="relative group w-full max-w-md aspect-[3/4] sm:aspect-square">
             {/* Efecto de brillo y borde mejorado con múltiples capas - Colores profesionales */}
-            <div className="absolute -inset-2 bg-gradient-to-r from-[#a78bfa] via-[#c084fc] to-[#60a5fa] rounded-[30%_70%_70%_30%/30%_30%_70%_70%] blur-xl opacity-60 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-border-wave will-change-transform"></div>
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#60a5fa] via-[#a78bfa] to-[#c084fc] rounded-[30%_70%_70%_30%/30%_30%_70%_70%] blur-lg opacity-80 group-hover:opacity-100 transition duration-1000 animate-border-wave will-change-transform" style={{ animationDelay: '1s' }}></div>
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#c084fc] to-[#93c5fd] rounded-[30%_70%_70%_30%/30%_30%_70%_70%] blur-md opacity-90 group-hover:opacity-100 transition duration-500 animate-pulse"></div>
+            <div className="absolute -inset-2 bg-gradient-to-r from-[#a78bfa] via-[#c084fc] to-[#60a5fa] rounded-[30%_70%_70%_30%/30%_30%_70%_70%] blur-xl opacity-60 animate-border-wave will-change-transform"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#60a5fa] via-[#a78bfa] to-[#c084fc] rounded-[30%_70%_70%_30%/30%_30%_70%_70%] blur-lg opacity-80 animate-border-wave will-change-transform" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#c084fc] to-[#93c5fd] rounded-[30%_70%_70%_30%/30%_30%_70%_70%] blur-md opacity-90 animate-pulse"></div>
             
             {/* Imagen con mejor contraste y lazy loading */}
             <img 
               src="/yo.jpeg" 
               alt="Retrato profesional de Nacho Dalesio, Full Stack Developer" 
-              className="relative w-full h-full object-cover border-2 border-white/50 transform hover:scale-105 transition-transform duration-500 animate-border-wave shadow-2xl shadow-[#a78bfa]/50 group-hover:shadow-[#c084fc]/80"
+              className="relative w-full h-full object-cover border-2 border-white/50 animate-border-wave shadow-2xl shadow-[#a78bfa]/50"
               loading="eager"
               decoding="async"
             />
-            {/* Overlay de brillo en hover */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#a78bfa]/0 via-white/0 to-[#60a5fa]/0 group-hover:from-[#a78bfa]/10 group-hover:via-white/20 group-hover:to-[#60a5fa]/10 transition-all duration-700 pointer-events-none animate-border-wave"></div>
+            {/* Overlay de brillo */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#a78bfa]/0 via-white/0 to-[#60a5fa]/0 pointer-events-none animate-border-wave"></div>
           </div>
           
           {/* Título profesional mejorado */}

@@ -269,9 +269,9 @@ export const Header = () => {
             {/* Sección izquierda: Logo, separador y code1.png */}
             <Link to="/" className="flex flex-row items-center gap-4 cursor-pointer">
               {/* Logo */}
-              <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/80 to-blue-500/80 rounded-full opacity-75 group-hover:opacity-100 blur-lg group-hover:blur-xl transition-all duration-500"></div>
-                <div className="relative flex items-center justify-center w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] bg-black/60 rounded-full border border-white/15 overflow-hidden group-hover:border-white/30 transition-colors duration-500 backdrop-blur-sm">
+              <div className="relative">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/80 to-blue-500/80 rounded-full opacity-75 blur-lg"></div>
+                <div className="relative flex items-center justify-center w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] bg-black/60 rounded-full border border-white/15 overflow-hidden backdrop-blur-sm">
                   <img 
                     src="/yoia.jpeg" 
                     alt="Dev Logo" 
