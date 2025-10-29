@@ -368,7 +368,7 @@ TU PERSONALIDAD (MODO SINCERO):
           boxShadow: isMaximized ? 'none' : `0 0 60px ${colors.glow}, 0 20px 40px rgba(0,0,0,0.4)`,
           maxHeight: isMaximized ? '100vh' : '85vh',
           zIndex: 50,
-          pointerEvents: 'auto'
+          pointerEvents: isMinimized ? 'none' : 'auto'
         }}
       >
         {/* Header */}
@@ -480,6 +480,7 @@ TU PERSONALIDAD (MODO SINCERO):
               onClick={() => setIsMinimized(false)}
               className="w-full h-full flex items-center justify-center relative z-10 hover:scale-110 transition-transform duration-300"
               aria-label="Abrir chat"
+              style={{ pointerEvents: 'auto' }}
             >
               <span className="text-3xl">{theme === 'blue' ? '🤖' : '😏'}</span>
             </button>
