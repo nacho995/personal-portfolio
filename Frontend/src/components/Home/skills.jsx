@@ -477,9 +477,16 @@ export default TechStack;`}
                   className="mt-4 p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] backdrop-blur-md"
                 >
                   <p className="text-sm text-white/70 leading-relaxed">
-                    Estoy explorando <span className="text-white font-semibold">TRAE AI</span>, el nuevo IDE que acaba de lanzar <span className="text-white font-medium">ByteDance</span> (sí, los de TikTok). 
-                    Lo interesante es que no es otro fork de VS Code, sino que lo construyeron <span className="text-white font-medium">desde cero pensando en IA</span>. 
-                    Viene con <span className="text-white font-medium">agentes de IA integrados</span> que trabajan contigo mientras programas.
+                    {t('skills.traeAI.part1')}{' '}
+                    <span className="text-white font-semibold">TRAE AI</span>,{' '}
+                    {t('skills.traeAI.part2')}{' '}
+                    <span className="text-white font-medium">ByteDance</span>{' '}
+                    {t('skills.traeAI.part3')}{' '}
+                    {t('skills.traeAI.part4')}{' '}
+                    <span className="text-white font-medium">{t('skills.traeAI.part5')}</span>.{' '}
+                    {t('skills.traeAI.part6')}{' '}
+                    <span className="text-white font-medium">{t('skills.traeAI.part7')}</span>{' '}
+                    {t('skills.traeAI.part8')}
                   </p>
                 </motion.div>
               )}

@@ -548,7 +548,7 @@ TU PERSONALIDAD (MODO SINCERO):
                         <div
                           className={`relative group ${
                             message.type === 'user'
-                              ? `bg-gradient-to-br ${colors.gradient} text-white shadow-lg`
+                              ? `bg-gradient-to-br ${colors.gradient} text-black shadow-lg`
                               : 'bg-white/10 backdrop-blur-xl text-white border border-white/20 shadow-xl'
                           } p-4 rounded-2xl ${
                             message.type === 'user' ? 'rounded-br-sm' : 'rounded-bl-sm'
@@ -558,7 +558,9 @@ TU PERSONALIDAD (MODO SINCERO):
                           <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
                             message.type === 'user' ? 'bg-white/10' : 'bg-white/5'
                           }`} />
-                          <p className="text-sm leading-relaxed relative z-10 whitespace-pre-line">
+                          <p className={`text-sm leading-relaxed relative z-10 whitespace-pre-line ${
+                            message.type === 'user' ? 'text-black font-medium' : 'text-white'
+                          }`}>
                             {message.text.split(/(https?:\/\/[^\s]+)/g).map((part, i) => {
                               if (part.match(/^https?:\/\//)) {
                                 return (
@@ -567,7 +569,11 @@ TU PERSONALIDAD (MODO SINCERO):
                                     href={part} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
-                                    className="text-blue-300 hover:text-blue-200 underline font-medium break-all"
+                                    className={`underline font-medium break-all ${
+                                      message.type === 'user' 
+                                        ? 'text-blue-700 hover:text-blue-800' 
+                                        : 'text-blue-300 hover:text-blue-200'
+                                    }`}
                                   >
                                     {part}
                                   </a>
@@ -577,7 +583,9 @@ TU PERSONALIDAD (MODO SINCERO):
                             })}
                           </p>
                           {/* Hora del mensaje */}
-                          <span className="text-[10px] opacity-60 mt-1 block relative z-10">
+                          <span className={`text-[10px] mt-1 block relative z-10 ${
+                            message.type === 'user' ? 'text-black/70' : 'text-white/60'
+                          }`}>
                             {new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
                           </span>
                         </div>

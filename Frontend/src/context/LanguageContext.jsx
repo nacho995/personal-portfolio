@@ -50,6 +50,14 @@ const translations = {
     // Skills
     'skills.title': 'Technical Skills',
     'skills.hover': 'Haz hover sobre cada skill para ver más detalles',
+    'skills.traeAI.part1': 'Estoy explorando',
+    'skills.traeAI.part2': 'el nuevo IDE que acaba de lanzar',
+    'skills.traeAI.part3': '(sí, los de TikTok).',
+    'skills.traeAI.part4': 'Lo interesante es que no es otro fork de VS Code, sino que lo construyeron',
+    'skills.traeAI.part5': 'desde cero pensando en IA',
+    'skills.traeAI.part6': 'Viene con',
+    'skills.traeAI.part7': 'agentes de IA integrados',
+    'skills.traeAI.part8': 'que trabajan contigo mientras programas.',
     
     // Projects
     'projects.title': 'Mis Proyectos',
@@ -140,6 +148,14 @@ const translations = {
     // Skills
     'skills.title': 'Technical Skills',
     'skills.hover': 'Hover over each skill to see more details',
+    'skills.traeAI.part1': 'I\'m exploring',
+    'skills.traeAI.part2': 'the new IDE just launched by',
+    'skills.traeAI.part3': '(yes, the TikTok people).',
+    'skills.traeAI.part4': 'What\'s interesting is that it\'s not another VS Code fork, but they built it',
+    'skills.traeAI.part5': 'from scratch with AI in mind',
+    'skills.traeAI.part6': 'It comes with',
+    'skills.traeAI.part7': 'integrated AI agents',
+    'skills.traeAI.part8': 'that work with you while you code.',
     
     // Projects
     'projects.title': 'My Projects',
