@@ -39,16 +39,37 @@ const TenfeProject = ({
     { name: 'MongoDB', color: '#4DB33D' }
   ];
 
+  const accentColor = theme === 'javascript' ? '#00F5FF' : '#39FF14';
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6 }}
-      className="group relative bg-gradient-to-br from-black/40 via-black/20 to-black/40 border border-white/10 rounded-3xl overflow-hidden hover:border-white/30 transition-all duration-500 shadow-2xl hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+      className="group relative bg-black/40 border-2 rounded-xl overflow-hidden transition-all duration-500 shadow-2xl"
+      style={{
+        borderColor: `${accentColor}30`,
+        boxShadow: `0 0 20px ${accentColor}15, 0 20px 60px rgba(0,0,0,0.6)`,
+        clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%)'
+      }}
     >
-      {/* Efecto de brillo animado en el borde */}
-      <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${themeColors.gradient} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`} />
+      {/* Scan line effect */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div 
+          className="absolute w-full h-px opacity-0 group-hover:opacity-70 group-hover:animate-scan"
+          style={{ 
+            backgroundColor: accentColor,
+            boxShadow: `0 0 20px ${accentColor}`,
+            top: 0,
+          }}
+        />
+      </div>
+      
+      {/* Border glow animado */}
+      <div className={`absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-neon-pulse`}
+        style={{ boxShadow: `inset 0 0 30px ${accentColor}30` }}
+      />
       
       {/* Imagen del proyecto con overlay */}
       <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-emerald-950 via-teal-900 to-cyan-950">
@@ -130,10 +151,22 @@ const TenfeProject = ({
 
       {/* Contenido de la card */}
       <div className="relative p-6 sm:p-8">
-        {/* Título */}
+        {/* File path header tech */}
+        <div className="flex items-center gap-2 mb-4 pb-2 border-b" style={{ borderColor: `${accentColor}30` }}>
+          <span className="font-code text-xs opacity-60" style={{ color: accentColor }}>~/projects/tenfe/</span>
+          <span className="font-code text-xs px-2 py-0.5 rounded border" style={{ borderColor: `${accentColor}40`, color: accentColor }}>main</span>
+          <span className="font-code text-xs px-2 py-0.5 rounded border" style={{ borderColor: `${accentColor}40`, color: accentColor }}>[deployed]</span>
+        </div>
+
+        {/* Título tech */}
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
-            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:to-teal-400 transition-all duration-300">
+            <h3 className="text-2xl sm:text-3xl font-bold font-code mb-2 transition-all duration-300"
+              style={{
+                color: 'white',
+                textShadow: `0 0 20px ${accentColor}60`,
+              }}
+            >
               {t('tenfe.title')}
             </h3>
             <a 
@@ -153,9 +186,13 @@ const TenfeProject = ({
           {t('tenfe.description')}
         </p>
 
-        {/* Tech Stack con Pills/Badges */}
+        {/* Tech Stack con Pills/Badges tech */}
         <div className="mb-6">
-          <p className="text-white/50 text-xs uppercase tracking-wider mb-3 font-semibold">{t('projects.techStack')}</p>
+          <p className="text-white/50 text-xs uppercase tracking-wider mb-3 font-semibold font-code flex items-center gap-2">
+            <span style={{ color: accentColor }}>[</span>
+            {t('projects.techStack')}
+            <span style={{ color: accentColor }}>]</span>
+          </p>
           <div className="flex flex-wrap gap-2">
             {techStack.map((tech, index) => (
               <motion.span 

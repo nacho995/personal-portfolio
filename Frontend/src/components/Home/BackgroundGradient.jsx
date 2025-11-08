@@ -1,13 +1,32 @@
 import { useTheme } from '../../context/ThemeContext';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 const BackgroundGradient = () => {
   const { theme } = useTheme();
   const { scrollYProgress } = useScroll();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Generar secuencias binarias una sola vez (no cambiarán)
+  const binarySequences = useMemo(() => 
+    Array.from({ length: 12 }, () => 
+      Array.from({ length: 50 }, () => Math.random() > 0.5 ? '1' : '0').join(' ')
+    ), []
+  );
+
+  // Símbolos de Matrix rain fijos
+  const matrixSymbols = useMemo(() => {
+    const codeSymbols = ['0', '1', '<', '>', '/', '{', '}', '(', ')', '$', '=>', '//'];
+    return Array.from({ length: 40 }, () => ({
+      symbol: codeSymbols[Math.floor(Math.random() * codeSymbols.length)],
+      opacity: 0.12 + Math.random() * 0.08,
+      fontSize: 12 + Math.random() * 8,
+      duration: 15 + Math.random() * 15,
+      delay: Math.random() * 12
+    }));
+  }, []);
   
-  // Seguimiento del mouse para efectos interactivos
+  // Seguimiento del mouse para efectos sutiles
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({
@@ -23,228 +42,285 @@ const BackgroundGradient = () => {
   // Transformaciones para elementos flotantes
   const smoothProgress = useTransform(scrollYProgress, [0, 1], [0, 0.8]);
   
-  // React - Esquina superior derecha
-  const reactY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -160, -400, -600, -800, -1000]);
-  const reactX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, 100, 200, 300, 400, 500]);
-  const reactRotate = useTransform(smoothProgress, [0, 1], [0, 720]);
-  
-  // JavaScript
-  const jsY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 100, 0, -200, -400, -600]);
-  const jsX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 100, 0, -200, -400, -600]);
-  const jsRotate = useTransform(smoothProgress, [0, 1], [-15, 360]);
-  
-  // Node.js
-  const nodeY = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [200, 100, 0, -200, -400, -600]);
-  const nodeX = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [-200, -150, -100, -50, 100, 250]);
-  const nodeRotate = useTransform(smoothProgress, [0, 1], [-15, 360]);
+  // Símbolos de código con parallax
+  const codeY1 = useTransform(smoothProgress, [0, 1], [0, -600]);
+  const codeY2 = useTransform(smoothProgress, [0, 1], [0, -400]);
+  const codeY3 = useTransform(smoothProgress, [0, 1], [0, -800]);
 
-  // Símbolos de código
-  const bracketY1 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -100, -200, -400, -600, -800]);
-  const bracketX1 = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -160, -320, -480, -640, -800]);
-  
-  // Colores según el tema
+  // Colores según el tema - AMARILLO para JS, VERDE para Node
   const colors = theme === 'javascript' 
     ? {
-        primary: '#F7DF1E',
-        secondary: '#FDB813',
-        shadow: 'rgba(247, 223, 30, 0.3)',
-        glow1: 'bg-[#F7DF1E]/25',
-        glow2: 'bg-[#FDB813]/20',
-        glow3: 'bg-[#FFE55C]/15',
-        gradient: 'from-[#F7DF1E] via-[#FDB813] to-[#FFE55C]',
-        bgBase: 'from-[#1a1a0f]/90 via-[#0a0a0f]/70 to-[#2a2a1a]/90'
+        neon: '#00F5FF', // Cyan para efectos tech
+        accent: '#F7DF1E', // AMARILLO JavaScript
+        neonRgb: '0, 245, 255',
+        accentRgb: '247, 223, 30',
       }
     : {
-        primary: '#83CD29',
-        secondary: '#339933',
-        shadow: 'rgba(131, 205, 41, 0.3)',
-        glow1: 'bg-[#83CD29]/25',
-        glow2: 'bg-[#339933]/20',
-        glow3: 'bg-[#90C53F]/15',
-        gradient: 'from-[#83CD29] via-[#90C53F] to-[#339933]',
-        bgBase: 'from-[#0a1a0a]/90 via-[#0a0a0f]/70 to-[#1a2a1a]/90'
+        neon: '#39FF14', // Verde matrix
+        accent: '#83CD29', // Verde Node.js
+        neonRgb: '57, 255, 20',
+        accentRgb: '131, 205, 41',
       };
 
+
   return (
-    <div className="fixed inset-0 -z-10 h-full w-full bg-[#0a0a0f] overflow-hidden">
-      {/* Fondo base con gradiente */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${colors.bgBase}`} />
+    <div className="fixed inset-0 -z-10 h-full w-full overflow-hidden">
+      {/* Gradiente de fondo base más luminoso */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: `
+            radial-gradient(ellipse at top, rgba(${colors.accentRgb}, 0.15) 0%, rgba(20, 25, 35, 1) 40%, rgba(10, 15, 20, 1) 100%),
+            linear-gradient(135deg, #1a1f2e 0%, #16202e 25%, #0f1419 75%, #0a0e15 100%)
+          `,
+        }}
+      />
+
+      {/* Grid tech con perspectiva isométrica */}
+      <div 
+        className="absolute inset-0 opacity-15"
+        style={{
+          backgroundImage: `
+            linear-gradient(${colors.accent}40 1.5px, transparent 1.5px),
+            linear-gradient(90deg, ${colors.accent}40 1.5px, transparent 1.5px)
+          `,
+          backgroundSize: '80px 80px',
+          transform: 'perspective(500px) rotateX(60deg)',
+          transformOrigin: 'center top',
+        }}
+      />
       
-      {/* Mesh gradient animado profesional */}
+      {/* Dots pattern más visible */}
+      <div 
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage: `radial-gradient(circle, ${colors.accent}90 1.5px, transparent 1.5px)`,
+          backgroundSize: '60px 60px',
+        }}
+      />
+      
+      {/* Scanlines animadas CRT */}
+      <motion.div 
+        className="absolute inset-0 opacity-8 pointer-events-none"
+        style={{
+          backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 2px)',
+        }}
+        animate={{
+          y: [0, 4],
+        }}
+        transition={{
+          duration: 0.1,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      />
+
+      {/* Mesh gradients dinámicos - MÁS LUMINOSOS */}
       <div className="absolute inset-0">
-        {/* Gradientes principales */}
+        {/* Glow superior derecha */}
         <motion.div 
-          className={`absolute top-0 right-0 w-[600px] h-[600px] ${colors.glow1} rounded-full blur-[120px]`}
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
+          className="absolute w-[700px] h-[700px] rounded-full blur-[140px]"
+          style={{ 
+            background: `radial-gradient(circle, rgba(${colors.accentRgb}, 0.18), rgba(${colors.neonRgb}, 0.12), transparent 70%)`,
+            top: '5%',
+            right: '5%',
           }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        
-        <motion.div 
-          className={`absolute bottom-0 left-0 w-[600px] h-[600px] ${colors.glow2} rounded-full blur-[120px]`}
           animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2],
+            scale: [1, 1.3, 1],
+            opacity: [0.4, 0.6, 0.4],
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
         
+        {/* Glow inferior izquierda */}
         <motion.div 
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] ${colors.glow3} rounded-full blur-[140px]`}
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.3, 0.2],
-            rotate: [0, 180, 360],
+          className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
+          style={{ 
+            background: `radial-gradient(circle, rgba(${colors.neonRgb}, 0.15), rgba(${colors.accentRgb}, 0.1), transparent 70%)`,
+            bottom: '10%',
+            left: '5%',
           }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        />
-
-        {/* Gradientes adicionales para más profundidad */}
-        <motion.div 
-          className={`absolute top-1/4 right-1/4 w-[400px] h-[400px] ${colors.glow1} rounded-full blur-[100px]`}
           animate={{
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-            opacity: [0.15, 0.25, 0.15],
+            scale: [1.2, 1, 1.2],
+            opacity: [0.35, 0.5, 0.35],
           }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         />
-        
+
+        {/* Glow central móvil */}
         <motion.div 
-          className={`absolute bottom-1/4 left-1/3 w-[500px] h-[500px] ${colors.glow2} rounded-full blur-[110px]`}
-          animate={{
-            x: [0, -40, 0],
-            y: [0, 40, 0],
-            opacity: [0.15, 0.3, 0.15],
+          className="absolute w-[500px] h-[500px] rounded-full blur-[100px]"
+          style={{ 
+            background: `radial-gradient(circle, rgba(${colors.accentRgb}, 0.12), transparent 70%)`,
+            top: '45%',
+            left: '40%',
           }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          animate={{
+            x: [0, 100, 0],
+            y: [0, -50, 0],
+            scale: [1, 1.15, 1],
+            opacity: [0.25, 0.4, 0.25],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
-      {/* Partículas flotantes */}
-      <div className="absolute inset-0">
-        {[...Array(30)].map((_, i) => (
+      {/* MATRIX RAIN - Código cayendo verticalmente - MEJORADO */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {matrixSymbols.map((item, i) => (
           <motion.div
-            key={i}
-            className={`absolute w-1 h-1 rounded-full ${i % 3 === 0 ? colors.glow1 : i % 3 === 1 ? colors.glow2 : colors.glow3}`}
+            key={`matrix-${i}`}
+            className="absolute font-code font-bold"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${i * 2.5}%`,
+              color: colors.accent,
+              opacity: item.opacity,
+              fontSize: `${item.fontSize}px`,
             }}
             animate={{
-              y: [0, -30, 0],
-              opacity: [0.2, 0.6, 0.2],
-              scale: [1, 1.5, 1],
+              y: ['-10%', '110%'],
             }}
             transition={{
-              duration: 3 + Math.random() * 4,
+              duration: item.duration,
               repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut"
+              delay: item.delay,
+              ease: "linear"
             }}
-          />
+          >
+            {item.symbol}
+          </motion.div>
         ))}
       </div>
 
-      {/* Símbolos de código flotantes */}
+      {/* FLUJO BINARIO HORIZONTAL - 0s y 1s de izquierda a derecha MUY LENTO */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {binarySequences.map((sequence, i) => (
+          <motion.div
+            key={`binary-${i}`}
+            className="absolute font-code font-bold whitespace-nowrap"
+            style={{
+              top: `${i * 8 + 5}%`,
+              color: colors.accent,
+              opacity: 0.06 + (i % 5) * 0.01, // Opacidad fija basada en índice
+              fontSize: `${10 + (i % 7)}px`, // Tamaño fijo basado en índice
+            }}
+            animate={{
+              x: ['-100%', '100%'],
+            }}
+            transition={{
+              duration: 80 + (i * 5), // Duración fija basada en índice: 80-135 segundos
+              repeat: Infinity,
+              delay: i * 1.5, // Delay fijo basado en índice
+              ease: "linear"
+            }}
+          >
+            {sequence}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* CÓDIGO FLOTANTE - Snippets de código con blur */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {['const', 'function', 'return', 'import', 'export', 'async'].map((word, i) => (
+          <motion.div
+            key={`code-${i}`}
+            className="absolute font-code text-lg blur-[2px]"
+            style={{
+              left: `${15 + i * 15}%`,
+              top: `${20 + i * 12}%`,
+              color: colors.accent,
+              opacity: 0.05,
+              transform: `rotate(${-10 + Math.random() * 20}deg)`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              x: [0, 15, 0],
+              rotate: [-5, 5, -5],
+            }}
+            transition={{
+              duration: 15 + i * 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            {word}()
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Símbolos de código grandes con parallax - MÁS VISIBLES */}
       <motion.div 
-        className="absolute right-[10%] sm:right-[15%] lg:right-[20%] top-[15%] sm:top-[20%] lg:top-[25%] select-none transform-gpu will-change-transform"
+        className="absolute right-[15%] top-[20%] select-none font-code text-4xl lg:text-6xl font-bold opacity-10"
         style={{ 
-          y: reactY,
-          x: reactX,
-          rotate: reactRotate,
+          y: codeY1,
+          color: colors.accent,
+          textShadow: `0 0 20px ${colors.accent}80`,
         }}
-        transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-        initial={false}
       >
-        <span className={`text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${colors.gradient} tracking-wider backdrop-blur-sm`}
-          style={{
-            textShadow: `0 0 30px ${colors.shadow}`,
-            filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.1))'
-          }}>
-          React
-        </span>
+        React
       </motion.div>
 
       <motion.div 
-        className="absolute right-[40%] sm:right-[35%] lg:right-[30%] top-[30%] sm:top-[35%] lg:top-[40%] select-none transform-gpu will-change-transform"
+        className="absolute left-[20%] top-[40%] select-none font-code text-5xl lg:text-7xl opacity-10"
         style={{ 
-          y: bracketY1,
-          x: bracketX1,
-          rotate: useTransform(smoothProgress, [0, 1], [10, -360]),
+          y: codeY2,
+          color: colors.accent,
+          textShadow: `0 0 20px ${colors.accent}80`,
         }}
-        transition={{ duration: 0.5 }}
-        initial={false}
       >
-        <span className={`text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-mono text-transparent bg-clip-text bg-gradient-to-r ${colors.gradient} backdrop-blur-sm`}
-          style={{
-            textShadow: `0 0 30px ${colors.shadow}`,
-            filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.1))'
-          }}>
-          &apos;&apos;
-        </span>
+        {'</>'}
       </motion.div>
 
       <motion.div 
-        className="absolute right-[15%] sm:right-[20%] lg:right-[25%] top-[45%] sm:top-[50%] lg:top-[55%] select-none transform-gpu will-change-transform"
+        className="absolute right-[25%] top-[55%] select-none font-code text-3xl lg:text-5xl opacity-10"
         style={{ 
-          y: jsY,
-          x: jsX,
-          rotate: jsRotate,
+          y: codeY3,
+          color: colors.accent,
+          textShadow: `0 0 20px ${colors.accent}80`,
         }}
-        transition={{ duration: 0.5 }}
-        initial={false}
       >
-        <span className={`text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${colors.gradient} tracking-wider backdrop-blur-sm`}
-          style={{
-            textShadow: `0 0 30px ${colors.shadow}`,
-            filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.1))'
-          }}>
-          JavaScript
-        </span>
+        Node.js
       </motion.div>
 
-      <motion.div 
-        className="absolute right-[20%] sm:right-[30%] lg:right-[40%] top-[55%] sm:top-[50%] lg:top-[45%] select-none transform-gpu will-change-transform"
-        style={{ 
-          y: nodeY,
-          x: nodeX,
-          rotate: nodeRotate,
-        }}
-        transition={{ duration: 0.5 }}
-        initial={false}
-      >
-        <span className={`text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${colors.gradient} tracking-wider backdrop-blur-sm`}
-          style={{
-            textShadow: `0 0 30px ${colors.shadow}`,
-            filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.1))'
-          }}>
-          Node.js
-        </span>
-      </motion.div>
-
-      {/* Grid pattern sutil */}
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px] opacity-40" />
-      
-      {/* Overlay de vignette */}
-      <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/40" />
-      
-      {/* Efecto interactivo del mouse */}
+      {/* Efecto del mouse MUY LENTO y suave */}
       <motion.div
-        className={`absolute w-[600px] h-[600px] ${colors.glow1} rounded-full blur-[150px] pointer-events-none`}
+        className="absolute w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none"
+        style={{
+          background: `radial-gradient(circle, rgba(${colors.accentRgb}, 0.12), rgba(${colors.neonRgb}, 0.08), transparent 70%)`,
+        }}
         animate={{
           x: `${mousePosition.x - 50}%`,
           y: `${mousePosition.y - 50}%`,
-          opacity: [0.05, 0.1, 0.05],
         }}
         transition={{
-          x: { type: "spring", stiffness: 50, damping: 30 },
-          y: { type: "spring", stiffness: 50, damping: 30 },
-          opacity: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+          type: "spring",
+          stiffness: 5, // MUCHO más lento (antes 30)
+          damping: 50,  // Mucho más suave (antes 25)
         }}
       />
+
+      {/* Overlay de vignette más suave */}
+      <div 
+        className="absolute inset-0" 
+        style={{
+          background: `radial-gradient(ellipse at center, transparent 0%, transparent 60%, rgba(10, 15, 20, 0.4) 100%)`,
+        }}
+      />
+      
+      {/* Corner decorations tech - USA ACCENT COLOR */}
+      <div className="absolute top-4 left-4 font-code text-xs opacity-30" style={{ color: colors.accent }}>
+        {'<dev>'}
+      </div>
+      <div className="absolute top-4 right-4 font-code text-xs opacity-30" style={{ color: colors.accent }}>
+        {'</portfolio>'}
+      </div>
+      <div className="absolute bottom-4 left-4 font-code text-xs opacity-30" style={{ color: colors.accent }}>
+        v2.0.1
+      </div>
+      <div className="absolute bottom-4 right-4 flex items-center gap-2 font-code text-xs opacity-30">
+        <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: colors.accent }} />
+        <span style={{ color: colors.accent }}>ONLINE</span>
+      </div>
     </div>
   )
 }

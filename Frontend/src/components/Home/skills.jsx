@@ -7,6 +7,8 @@ export default function Skills() {
   const { theme } = useTheme();
   const { t } = useLanguage();
   const [hoveredSkill, setHoveredSkill] = useState(null);
+  
+  const accentColor = theme === 'javascript' ? '#F7DF1E' : '#83CD29'; // Color principal del tema
 
   const getThemeStyles = () => ({
     gradient: theme === 'javascript' 
@@ -242,21 +244,63 @@ export default function Skills() {
   };
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
-      {/* Contenedor principal con efecto de cristal */}
+    <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20 overflow-visible">
+      {/* Corner brackets */}
+      <div className="absolute -top-6 -left-6 font-code text-3xl opacity-40" style={{ color: accentColor }}>⌜</div>
+      <div className="absolute -top-6 -right-6 font-code text-3xl opacity-40" style={{ color: accentColor }}>⌝</div>
+      <div className="absolute -bottom-6 -left-6 font-code text-3xl opacity-40" style={{ color: accentColor }}>⌞</div>
+      <div className="absolute -bottom-6 -right-6 font-code text-3xl opacity-40" style={{ color: accentColor }}>⌟</div>
+
+      {/* Contenedor principal tech */}
       <motion.div 
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8 }}
-        className="relative backdrop-blur-2xl bg-black/10 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-[0_0_60px_rgba(0,0,0,0.3)] hover:shadow-[0_0_80px_rgba(0,0,0,0.4)] transition-shadow duration-500 overflow-hidden group/container"
+        className="relative backdrop-blur-2xl bg-tech-dark/80 border-2 rounded-2xl p-6 sm:p-10 pb-20 shadow-2xl group/container"
+        style={{ 
+          borderColor: `${accentColor}30`,
+          boxShadow: `0 0 20px ${accentColor}20, 0 20px 60px rgba(0,0,0,0.5)`
+        }}
       >
-        {/* Efectos de fondo */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${styles.gradient}`} />
-        <div className={`absolute -top-32 -right-32 w-64 h-64 ${styles.blur.primary} rounded-full blur-3xl animate-pulse-slow`} />
-        <div className={`absolute -bottom-32 -left-32 w-64 h-64 ${styles.blur.secondary} rounded-full blur-3xl animate-pulse-slow`} />
+        {/* Code pattern background - CÓDIGO DE FONDO */}
+        <div className="absolute inset-0 opacity-5 font-code text-xs leading-relaxed p-4 overflow-hidden select-none pointer-events-none whitespace-pre"
+          style={{ color: accentColor }}
+        >
+{`const skills = [
+  { name: 'JavaScript', level: 'Advanced' },
+  { name: 'React', level: 'Advanced' },
+  { name: 'Node.js', level: 'Intermediate' },
+];
+
+function renderSkills() {
+  return skills.map(skill => (
+    <Skill key={skill.name} {...skill} />
+  ));
+}
+
+export default TechStack;`}
+        </div>
         
-        {/* Título */}
+        {/* Scanlines sutiles */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none"
+          style={{
+            backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 0px, rgba(0,0,0,0.3) 1px, transparent 1px, transparent 3px)',
+          }}
+        />
+        
+        {/* Glow effect */}
+        <div className="absolute inset-0 opacity-15 blur-xl" style={{ 
+          background: `radial-gradient(circle at 50% 0%, ${accentColor}60, transparent 70%)`
+        }} />
+        
+        {/* Status indicator */}
+        <div className="absolute top-4 right-4 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: accentColor }} />
+          <span className="font-code text-xs opacity-60" style={{ color: accentColor }}>LOADED</span>
+        </div>
+        
+        {/* Título tech */}
         <motion.div 
           className="relative mb-12 text-center"
           initial={{ opacity: 0, y: -20 }}
@@ -264,13 +308,26 @@ export default function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-white/90 tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] mb-2">
-            {t('skills.title')}
-          </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <span className="font-code text-2xl" style={{ color: accentColor }}>&gt;_</span>
+            <h1 className="text-4xl sm:text-5xl font-bold font-code tracking-tight"
+              style={{
+                color: 'white',
+                textShadow: `
+                  0 0 15px ${accentColor},
+                  0 0 30px ${accentColor}80,
+                  0 0 45px ${accentColor}40
+                `,
+              }}
+            >
+              {t('skills.title')}
+            </h1>
+            <span className="inline-block w-3 h-7 animate-blink" style={{ backgroundColor: accentColor }} />
+          </div>
+          <p className="text-white/60 text-sm sm:text-base font-code">
             {t('skills.hover')}
           </p>
-          <div className="mt-4 h-1 w-32 mx-auto bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+          <div className="h-px w-32 mx-auto mt-4" style={{ backgroundColor: accentColor, boxShadow: `0 0 10px ${accentColor}` }} />
         </motion.div>
 
         {/* Grid de secciones de habilidades */}
@@ -287,23 +344,34 @@ export default function Skills() {
               variants={itemVariants}
               className="transform hover:scale-[1.01] transition-all duration-300"
             >
-              {/* Encabezado de categoría */}
+              {/* Encabezado de categoría tech */}
               <div className="flex flex-wrap items-center gap-4 mb-6 group">
                 <div className="relative">
-                  <div className={`absolute -inset-2 bg-gradient-to-r ${styles.glow} rounded-full blur-sm group-hover:blur-md transition-all duration-500`}></div>
+                  <div className="absolute inset-0 rounded-full animate-neon-pulse" 
+                    style={{ boxShadow: `0 0 20px ${accentColor}` }}
+                  />
                   <img 
                     src={category.icon} 
-                    className="w-12 h-12 object-contain relative drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" 
+                    className="w-12 h-12 object-contain relative" 
+                    style={{ filter: `drop-shadow(0 0 10px ${accentColor})` }}
                     alt={`${category.category} icon`} 
                   />
                 </div>
-                <h2 className="text-2xl font-bold bg-gradient-to-r from-white to-white/90 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                  {category.category}
-                </h2>
+                <div>
+                  <h2 className="text-2xl font-bold font-code"
+                    style={{
+                      color: accentColor,
+                      textShadow: `0 0 20px ${accentColor}80`,
+                    }}
+                  >
+                    {category.category}
+                  </h2>
+                  <div className="h-px w-full mt-1" style={{ backgroundColor: `${accentColor}50` }} />
+                </div>
               </div>
 
               {/* Grid de skills en estilo honeycomb/hexagonal */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-visible">
                 {category.skills.map((skill, skillIndex) => (
                   <motion.div
                     key={skillIndex}
@@ -314,15 +382,18 @@ export default function Skills() {
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
                     <div 
-                      className={`relative px-5 py-3 bg-gradient-to-br ${skill.color} rounded-xl font-medium flex items-center gap-3 transition-all duration-300 cursor-pointer overflow-hidden`}
+                      className={`relative px-5 py-3 bg-gradient-to-br ${skill.color} rounded-lg font-medium flex items-center gap-3 transition-all duration-300 cursor-pointer overflow-hidden border-2`}
                       style={{
+                        borderColor: hoveredSkill === `${catIndex}-${skillIndex}` ? accentColor : 'transparent',
                         boxShadow: hoveredSkill === `${catIndex}-${skillIndex}` 
-                          ? `0 0 25px ${styles.shadow}, 0 10px 25px rgba(0,0,0,0.3)` 
-                          : 'none'
+                          ? `0 0 20px ${accentColor}, 0 0 30px ${accentColor}80, inset 0 0 20px ${accentColor}20` 
+                          : `inset 0 0 10px rgba(0,0,0,0.5)`
                       }}
                     >
-                      {/* Icono */}
-                      <div className="p-1.5 rounded-lg bg-white/15 backdrop-blur-sm flex-shrink-0 group-hover/skill:scale-110 group-hover/skill:rotate-12 transition-transform duration-300">
+                      {/* Icono tech */}
+                      <div className="p-1.5 rounded-lg bg-white/15 backdrop-blur-sm flex-shrink-0 group-hover/skill:scale-110 transition-transform duration-300 border"
+                        style={{ borderColor: hoveredSkill === `${catIndex}-${skillIndex}` ? `${accentColor}60` : 'transparent' }}
+                      >
                         {skill.icon && (
                           <img 
                             src={skill.icon} 
@@ -355,18 +426,41 @@ export default function Skills() {
                       <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover/skill:translate-x-[100%] transition-transform duration-700 ease-in-out" />
                     </div>
 
-                    {/* Tooltip con descripción */}
+                    {/* Tooltip compacto - Posicionado inteligentemente */}
                     {hoveredSkill === `${catIndex}-${skillIndex}` && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        className="absolute z-50 top-full left-0 right-0 mt-2 p-4 bg-black/95 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl"
+                        className="absolute z-[200] left-1/2 -translate-x-1/2 p-3 bg-black/95 backdrop-blur-xl border rounded-lg shadow-xl w-64"
+                        style={{ 
+                          borderColor: `${accentColor}60`,
+                          boxShadow: `0 0 20px ${accentColor}40`,
+                          // TRAE AI (catIndex 4) y Operating Systems (catIndex 5) siempre ARRIBA
+                          [catIndex >= 4 || skillIndex >= 4 ? 'bottom' : 'top']: 'calc(100% + 8px)',
+                          pointerEvents: 'none',
+                        }}
                       >
-                        <p className="text-sm text-white/90 leading-relaxed">
+                        {/* Header mini */}
+                        <div className="flex items-center gap-2 mb-2 pb-2 border-b" style={{ borderColor: `${accentColor}30` }}>
+                          <span className="font-code text-xs" style={{ color: accentColor }}>&gt;</span>
+                          <span className="text-xs font-bold text-white">{skill.name}</span>
+                        </div>
+                        
+                        {/* Descripción */}
+                        <p className="text-xs text-white/90 leading-relaxed">
                           {skill.description}
                         </p>
-                        <div className="absolute -top-2 left-8 w-4 h-4 bg-black/95 border-l border-t border-white/20 transform rotate-45" />
+                        
+                        {/* Flecha apuntando al skill */}
+                        <div 
+                          className="absolute left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border"
+                          style={{ 
+                            [catIndex >= 4 || skillIndex >= 4 ? 'bottom' : 'top']: '-6px',
+                            [catIndex >= 4 || skillIndex >= 4 ? 'borderRight' : 'borderLeft']: `1px solid ${accentColor}60`,
+                            [catIndex >= 4 || skillIndex >= 4 ? 'borderTop' : 'borderBottom']: `1px solid ${accentColor}60`,
+                            backgroundColor: '#0a0a0f',
+                          }}
+                        />
                       </motion.div>
                     )}
                   </motion.div>

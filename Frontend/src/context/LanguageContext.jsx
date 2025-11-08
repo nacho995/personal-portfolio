@@ -95,7 +95,7 @@ const translations = {
     
     // Chatbot
     'chatbot.sincere': 'Hola... 😏 Soy el asistente "sincero" de Nacho. Pregunta lo que quieras, te diré la verdad (con un toque de sarcasmo incluido).',
-    'chatbot.professional': '¡Hola! 🟢 Soy el asistente PROFESIONAL de Nacho. ¿En qué puedo ayudarte a conocer más sobre su experiencia y habilidades?',
+    'chatbot.professional': '¡Hola! ⚡ Soy el asistente PROFESIONAL de Nacho. ¿En qué puedo ayudarte a conocer más sobre su experiencia y habilidades?',
     'chatbot.placeholder': 'Escribe tu pregunta...',
     'chatbot.askAbout': 'Pregúntame sobre experiencia, formación, proyectos...',
   },
@@ -185,7 +185,7 @@ const translations = {
     
     // Chatbot
     'chatbot.sincere': 'Hello... 😏 I\'m Nacho\'s "honest" assistant. Ask me anything, I\'ll tell you the truth (with a touch of sarcasm included).',
-    'chatbot.professional': 'Hello! 🟢 I\'m Nacho\'s PROFESSIONAL assistant. How can I help you learn more about his experience and skills?',
+    'chatbot.professional': 'Hello! ⚡ I\'m Nacho\'s PROFESSIONAL assistant. How can I help you learn more about his experience and skills?',
     'chatbot.placeholder': 'Type your question...',
     'chatbot.askAbout': 'Ask me about experience, education, projects...',
   }

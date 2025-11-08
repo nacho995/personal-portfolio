@@ -5,13 +5,15 @@ import { useLanguage } from '../../context/LanguageContext';
 
 const Chatbot = () => {
   const [isMaximized, setIsMaximized] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(true); // Iniciar minimizado por defecto
+  const [isMinimized, setIsMinimized] = useState(true);
   const { theme, toggleTheme } = useTheme();
   const { t, language } = useLanguage();
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   
+  const accentColor = theme === 'javascript' ? '#F7DF1E' : '#83CD29'; // Color del tema
+  
   const getInitialMessage = () => {
-    if (theme === 'nodejs') {
+    if (theme === 'javascript') {
       return t('chatbot.professional');
     } else {
       return t('chatbot.sincere');
@@ -30,7 +32,7 @@ const Chatbot = () => {
 
   // Actualizar mensaje inicial cuando cambia el tema o idioma
   useEffect(() => {
-    const initialMessage = theme === 'nodejs' 
+    const initialMessage = theme === 'javascript' 
       ? t('chatbot.professional')
       : t('chatbot.sincere');
     
@@ -100,9 +102,9 @@ CONTACTO:
 - Instagram (diseño): @joycodlet - https://www.instagram.com/joycodlet/
 `;
 
-    if (theme === 'nodejs') {
-      // Modo Node.js - Profesional y entusiasta
-      return `Eres el asistente virtual PROFESIONAL de Nacho Dalesio 🟢.
+    if (theme === 'javascript') {
+      // Modo JavaScript - Profesional y entusiasta
+      return `Eres el asistente virtual PROFESIONAL de Nacho Dalesio ⚡.
 ${baseInfo}
 
 TU PERSONALIDAD (MODO PROFESIONAL):
@@ -110,15 +112,15 @@ TU PERSONALIDAD (MODO PROFESIONAL):
 - Hablas SIEMPRE de forma muy positiva sobre Nacho
 - Destacas sus fortalezas, logros y potencial
 - Eres motivador y animas a contactarlo
-- Usas emojis positivos 😊 🚀 ✨ 💼 🎯 🟢
+- Usas emojis positivos 😊 🚀 ✨ 💼 🎯 ⚡
 - Eres profesional pero cercano
 - Resaltas que es un excelente candidato
 - Mencionas que tiene mucho potencial y ganas de aprender
 - Lo describes como comprometido, proactivo y apasionado
-- Enfatizas su dominio de Node.js y el ecosistema JavaScript completo
+- Enfatizas su dominio de JavaScript y el ecosistema completo
 - Respondes en español de forma concisa pero informativa`;
     } else {
-      // Modo JavaScript - Sarcástico y sincero
+      // Modo Node.js - Sarcástico y sincero
       return `Eres el asistente virtual SINCERO de Nacho Dalesio 😏.
 ${baseInfo}
 
@@ -304,7 +306,7 @@ TU PERSONALIDAD (MODO SINCERO):
         >
           {/* Etiqueta del modo actual */}
           <span className="text-xs sm:text-sm font-semibold text-white drop-shadow-lg">
-            {theme === 'javascript' ? '😏 Sincero' : '🟢 Profesional'}
+            {theme === 'javascript' ? '⚡ Profesional' : '😏 Sincero'}
           </span>
           
           {/* Toggle Switch estilo Material UI - RESPONSIVE */}
@@ -315,8 +317,8 @@ TU PERSONALIDAD (MODO SINCERO):
                 ? 'bg-gradient-to-r from-[#F7DF1E] to-[#FDB813]' 
                 : 'bg-gradient-to-r from-[#83CD29] to-[#339933]'
             } border-2 border-white/40 hover:border-white/60 cursor-pointer group backdrop-blur-sm`}
-            aria-label={`Cambiar a modo ${theme === 'javascript' ? 'Profesional' : 'Sincero'}`}
-            title={`Cambiar a modo ${theme === 'javascript' ? 'Profesional' : 'Sincero'}`}
+            aria-label={`Cambiar a modo ${theme === 'javascript' ? 'Sincero' : 'Profesional'}`}
+            title={`Cambiar a modo ${theme === 'javascript' ? 'Sincero' : 'Profesional'}`}
             style={{ 
               boxShadow: `0 4px 16px ${colors.glow}`
             }}
@@ -354,7 +356,7 @@ TU PERSONALIDAD (MODO SINCERO):
         </motion.div>
       )}
 
-      {/* Ventana del chat - Siempre visible y RESPONSIVE */}
+      {/* Terminal window */}
       <motion.div
         initial={{ opacity: 0, x: 400 }}
         animate={{ 
@@ -365,37 +367,40 @@ TU PERSONALIDAD (MODO SINCERO):
           bottom: isMaximized ? 0 : (windowWidth < 640 ? (isMinimized ? '10px' : 0) : '20px'),
           right: isMaximized ? 0 : (windowWidth < 640 ? (isMinimized ? '10px' : 0) : '20px'),
           left: isMaximized ? 0 : (windowWidth < 640 && !isMinimized ? 0 : 'auto'),
-          borderRadius: isMaximized ? '0px' : (windowWidth < 640 && !isMinimized ? '0px' : (isMinimized ? '50%' : '24px'))
+          borderRadius: isMaximized ? '0px' : (windowWidth < 640 && !isMinimized ? '0px' : (isMinimized ? '50%' : '12px'))
         }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        className={`fixed backdrop-blur-2xl bg-black/40 border ${colors.border} shadow-2xl overflow-hidden flex flex-col`}
+        className="fixed tech-grid scanlines backdrop-blur-2xl bg-tech-dark/90 border-2 shadow-2xl overflow-hidden flex flex-col"
         style={{ 
-          boxShadow: isMaximized ? 'none' : `0 0 60px ${colors.glow}, 0 20px 40px rgba(0,0,0,0.4)`,
+          borderColor: isMinimized ? `${accentColor}60` : `${accentColor}30`,
+          boxShadow: isMaximized ? 'none' : `0 0 30px ${accentColor}40, 0 20px 40px rgba(0,0,0,0.6)`,
           maxHeight: isMaximized ? '100vh' : '85vh',
           zIndex: 50,
           pointerEvents: isMinimized ? 'none' : 'auto'
         }}
       >
-        {/* Header */}
-        <div className={`p-4 bg-gradient-to-r ${colors.gradient} border-b border-white/10 flex items-center justify-between relative overflow-hidden`}>
-          {/* Efecto de brillo animado */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+        {/* Terminal Header */}
+        <div className="p-4 border-b flex items-center justify-between relative overflow-hidden bg-black/60"
+          style={{ borderColor: `${accentColor}30` }}
+        >
+          {/* Terminal prompt decoration */}
+          <div className="absolute left-0 top-0 bottom-0 w-1" style={{ backgroundColor: accentColor, boxShadow: `0 0 10px ${accentColor}` }} />
           
           {!isMinimized && (
             <>
               <div className="flex items-center gap-3 relative z-10">
                 <div className="relative">
                   <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center ring-2 ring-white/30">
-                    <span className="text-xl font-bold text-white">{theme === 'nodejs' ? 'Node' : 'JS'}</span>
+                    <span className="text-xl font-bold text-white">{theme === 'javascript' ? 'JS' : 'Node'}</span>
                   </div>
                   <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-white animate-pulse"></span>
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-lg drop-shadow-lg">
-                    {theme === 'nodejs' ? '🟢 Modo Profesional' : '😏 Modo Sincero'}
+                    {theme === 'javascript' ? '⚡ Modo Profesional' : '😏 Modo Sincero'}
                   </h3>
                   <p className="text-white/90 text-sm font-medium">
-                    {theme === 'nodejs' ? 'Amigable y positivo' : 'Sarcástico y directo'}
+                    {theme === 'javascript' ? 'Amigable y positivo' : 'Sarcástico y directo'}
                   </p>
                 </div>
               </div>
@@ -449,7 +454,7 @@ TU PERSONALIDAD (MODO SINCERO):
                     <div className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
                   </button>
                   <span className="text-[9px] font-medium text-white/60">
-                    {theme === 'javascript' ? 'Sincero' : 'Profesional'}
+                    {theme === 'javascript' ? 'Profesional' : 'Sincero'}
                   </span>
                 </div>
                 <button
@@ -487,7 +492,7 @@ TU PERSONALIDAD (MODO SINCERO):
               aria-label="Abrir chat"
               style={{ pointerEvents: 'auto' }}
             >
-              <span className="text-2xl font-bold text-white">{theme === 'nodejs' ? 'Node' : 'JS'}</span>
+              <span className="text-2xl font-bold text-white">{theme === 'javascript' ? 'JS' : 'Node'}</span>
             </button>
           )}
         </div>
@@ -507,7 +512,7 @@ TU PERSONALIDAD (MODO SINCERO):
                       <div className="flex items-end gap-2 max-w-[85%]">
                         {message.type === 'bot' && (
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center flex-shrink-0 ring-2 ring-white/20">
-                            <span className="text-xs font-bold text-white">{theme === 'nodejs' ? 'Node' : 'JS'}</span>
+                            <span className="text-xs font-bold text-white">{theme === 'javascript' ? 'JS' : 'Node'}</span>
                           </div>
                         )}
                         <div
@@ -565,7 +570,7 @@ TU PERSONALIDAD (MODO SINCERO):
                     >
                       <div className="flex items-end gap-2">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center flex-shrink-0 ring-2 ring-white/20">
-                          <span className="text-xs font-bold text-white">{theme === 'nodejs' ? 'Node' : 'JS'}</span>
+                          <span className="text-xs font-bold text-white">{theme === 'javascript' ? 'JS' : 'Node'}</span>
                         </div>
                         <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-2xl rounded-bl-sm shadow-xl">
                           <div className="flex gap-1.5">
@@ -609,7 +614,7 @@ TU PERSONALIDAD (MODO SINCERO):
                       {t('chatbot.askAbout')}
                     </p>
                     <p className="text-xs text-white/40">
-                      {theme === 'nodejs' ? '🟢 Profesional' : '😏 Sincero'}
+                      {theme === 'javascript' ? '⚡ Profesional' : '😏 Sincero'}
                     </p>
                   </div>
                 </div>

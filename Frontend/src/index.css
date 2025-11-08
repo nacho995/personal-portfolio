@@ -2,13 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Variables CSS para consistencia y mantenibilidad */
+/* Fuentes tech */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Variables CSS tech */
 :root {
-  --color-bg-primary: #13111C;
-  --color-purple-primary: #a855f7;
-  --color-purple-secondary: #9333ea;
-  --color-blue-primary: #40A0E0;
-  --color-blue-secondary: #2980B9;
+  --color-bg-primary: #0a0a0f;
+  --color-bg-secondary: #111827;
+  --neon-cyan: #00F5FF;
+  --neon-green: #39FF14;
+  --neon-purple: #B026FF;
+  --neon-orange: #FF6B35;
+  --tech-dark: #0a0a0f;
+  --tech-darker: #050507;
+  --tech-grid: rgba(0, 245, 255, 0.1);
+  --tech-grid-green: rgba(57, 255, 20, 0.1);
   --transition-fast: 150ms;
   --transition-base: 300ms;
   --transition-slow: 500ms;
@@ -29,8 +37,18 @@
   }
 
   body {
-    @apply bg-[#13111C] text-white;
+    @apply bg-[#0a0a0f] text-white;
     overscroll-behavior: none;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  /* Fuentes específicas */
+  .font-code {
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  }
+  
+  .font-tech {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
   }
 
   /* Mejora de rendimiento para animaciones */
@@ -48,38 +66,107 @@
   }
 }
 
-/* Componentes reutilizables */
+/* Componentes reutilizables tech */
 @layer components {
-  /* Glassmorphism mejorado */
-  .glass-effect {
-    @apply backdrop-blur-2xl bg-black/10 border border-white/10;
+  /* Tech grid background */
+  .tech-grid {
+    background-image: 
+      linear-gradient(var(--tech-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--tech-grid) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  
+  .tech-grid-green {
+    background-image: 
+      linear-gradient(var(--tech-grid-green) 1px, transparent 1px),
+      linear-gradient(90deg, var(--tech-grid-green) 1px, transparent 1px);
+    background-size: 50px 50px;
   }
 
-  .glass-effect-hover {
-    @apply hover:bg-black/20 hover:border-white/20 transition-all duration-300;
+  /* Neon glow effects */
+  .neon-glow-cyan {
+    box-shadow: 
+      0 0 5px var(--neon-cyan),
+      0 0 10px var(--neon-cyan),
+      0 0 20px rgba(0, 245, 255, 0.5);
+  }
+  
+  .neon-glow-green {
+    box-shadow: 
+      0 0 5px var(--neon-green),
+      0 0 10px var(--neon-green),
+      0 0 20px rgba(57, 255, 20, 0.5);
+  }
+  
+  .neon-glow-purple {
+    box-shadow: 
+      0 0 5px var(--neon-purple),
+      0 0 10px var(--neon-purple),
+      0 0 20px rgba(176, 38, 255, 0.5);
   }
 
-  /* Botones con estados de focus mejorados */
-  .btn-focus {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50;
+  /* Scanlines effect */
+  .scanlines::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1),
+      rgba(0, 0, 0, 0.1) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    pointer-events: none;
+    z-index: 10;
   }
 
-  /* Text gradients reutilizables */
-  .text-gradient-white {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-white/90;
+  /* Terminal cursor */
+  .terminal-cursor::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
   }
 
-  /* Sombras consistentes */
-  .shadow-glow {
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+  /* Glassmorphism tech */
+  .glass-tech {
+    @apply backdrop-blur-2xl bg-[#0a0a0f]/80 border-2 border-cyan-500/20;
   }
 
-  .shadow-glow-purple {
-    box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+  /* Corner brackets */
+  .corner-brackets::before,
+  .corner-brackets::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: var(--neon-cyan);
+    opacity: 0.6;
+  }
+  
+  .corner-brackets::before {
+    top: 0;
+    left: 0;
+    border-top: 2px solid;
+    border-left: 2px solid;
+  }
+  
+  .corner-brackets::after {
+    bottom: 0;
+    right: 0;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
   }
 
-  .shadow-glow-blue {
-    box-shadow: 0 0 25px rgba(64, 160, 224, 0.3);
+  /* Text gradients tech */
+  .text-gradient-tech {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-green-400;
+  }
+  
+  .text-gradient-cyber {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(90deg, #00F5FF, #B026FF, #39FF14);
+    background-size: 200% auto;
+    animation: holographic-shift 3s linear infinite;
   }
 }
 
@@ -245,18 +332,70 @@
   }
 }
 
+/* Animaciones Tech */
+@keyframes scan {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes glitch {
+  0%, 90%, 100% { transform: translate(0); }
+  92% { transform: translate(-2px, 1px); text-shadow: 2px 0 #00F5FF, -2px 0 #B026FF; }
+  94% { transform: translate(2px, -1px); text-shadow: -2px 0 #00F5FF, 2px 0 #B026FF; }
+  96% { transform: translate(-1px, -1px); }
+}
+
+@keyframes neon-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+  }
+  50% { 
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+@keyframes holographic-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes code-fall {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes scanline-move {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes circuit-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
 /* Loading skeleton */
 .skeleton {
   @apply animate-pulse bg-white/10 rounded;
 }
 
-/* Mejora de selección de texto */
+/* Mejora de selección de texto tech */
 ::selection {
-  background-color: rgba(168, 85, 247, 0.3);
+  background-color: rgba(0, 245, 255, 0.3);
   color: white;
 }
 
 ::-moz-selection {
-  background-color: rgba(168, 85, 247, 0.3);
+  background-color: rgba(0, 245, 255, 0.3);
   color: white;
 }

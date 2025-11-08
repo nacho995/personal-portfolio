@@ -15,6 +15,18 @@ export default {
         'node-green': '#83CD29',
         'node-dark': '#339933',
         'node-light': '#90C53F',
+        'neon-cyan': '#00F5FF',
+        'neon-green': '#39FF14',
+        'neon-purple': '#B026FF',
+        'neon-orange': '#FF6B35',
+        'tech-dark': '#0a0a0f',
+        'tech-darker': '#050507',
+        'tech-gray': '#1a1a1f',
+      },
+      fontFamily: {
+        'code': ['Fira Code', 'JetBrains Mono', 'monospace'],
+        'tech': ['JetBrains Mono', 'Fira Code', 'monospace'],
+        'sans': ['Inter', 'system-ui', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
@@ -30,6 +42,13 @@ export default {
         'shimmer': 'shimmer 2s linear infinite',
         'glow': 'glow 2s ease-in-out infinite alternate',
         'gradient-shift': 'gradient-shift 3s ease-in-out infinite',
+        'scan': 'scan 3s ease-in-out infinite',
+        'glitch': 'glitch 0.3s ease-in-out',
+        'neon-pulse': 'neon-pulse 2s ease-in-out infinite',
+        'holographic': 'holographic-shift 6s ease infinite',
+        'blink': 'blink 1s step-end infinite',
+        'code-fall': 'code-fall 10s linear infinite',
+        'circuit-glow': 'circuit-glow 2s ease-in-out infinite',
       },
       keyframes: {
         float: {

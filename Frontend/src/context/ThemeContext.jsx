@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const ThemeContext = createContext({
-  theme: 'javascript',
+  theme: 'javascript', // Modo profesional por defecto (JavaScript)
   toggleTheme: () => {},
   themeColors: {
     javascript: {
@@ -27,7 +27,7 @@ const ThemeContext = createContext({
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
-    return savedTheme || 'javascript';
+    return savedTheme || 'javascript'; // Modo profesional por defecto (JavaScript)
   });
 
   useEffect(() => {

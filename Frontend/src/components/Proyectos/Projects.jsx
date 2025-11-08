@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { getRatingStars, postStars } from '../../service/api';
 import { useLanguage } from '../../context/LanguageContext';
+import { useTheme } from '../../context/ThemeContext';
 import TenfeProject from './TenfeProject';
 import CodLetProject from './CodLetProject';
 import GozaMadridProject from './GozaMadridProject';
@@ -18,6 +19,7 @@ const TechTag = ({ name, color, children }) => (
 
 export default function Projects() {
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
   
   const [tempRatings, setTempRatings] = useState({
     'tenfe': 0,
@@ -205,20 +207,46 @@ export default function Projects() {
     }
   }, [tempRatings, ratings]);
 
+  const accentColor = theme === 'javascript' ? '#F7DF1E' : '#83CD29'; // Color del tema
+
   return (
     <div className="relative w-full mt-[5vh] max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
-      <div className="relative backdrop-blur-2xl bg-black/10 border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(0,0,0,0.3)] overflow-hidden">
-        {/* Efectos de fondo */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5" />
-        <div className="absolute -top-32 -right-32 w-48 sm:w-64 h-48 sm:h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute -bottom-32 -left-32 w-48 sm:w-64 h-48 sm:h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow" />
+      {/* Corner brackets */}
+      <div className="absolute -top-6 -left-6 font-code text-3xl opacity-40" style={{ color: accentColor }}>⌜</div>
+      <div className="absolute -top-6 -right-6 font-code text-3xl opacity-40" style={{ color: accentColor }}>⌝</div>
+      <div className="absolute -bottom-6 -left-6 font-code text-3xl opacity-40" style={{ color: accentColor }}>⌞</div>
+      <div className="absolute -bottom-6 -right-6 font-code text-3xl opacity-40" style={{ color: accentColor }}>⌟</div>
 
-        {/* Título */}
+      <div className="relative tech-grid scanlines backdrop-blur-2xl bg-tech-dark/80 border-2 rounded-2xl p-6 sm:p-10 shadow-2xl overflow-hidden"
+        style={{ 
+          borderColor: `${accentColor}30`,
+          boxShadow: `0 0 20px ${accentColor}20, 0 20px 60px rgba(0,0,0,0.5)`
+        }}
+      >
+        {/* Glow effect */}
+        <div className="absolute inset-0 opacity-20 blur-xl" style={{ 
+          background: `radial-gradient(circle at 50% 0%, ${accentColor}40, transparent 70%)`
+        }} />
+
+        {/* Título tech */}
         <div className="relative mb-8 sm:mb-16 text-center">
-          <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white/90 to-white/70 tracking-tight">
-            {t('projects.title')}
-          </h1>
-          <div className="mt-2 h-1 w-24 sm:w-32 mx-auto bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <span className="font-code text-2xl" style={{ color: accentColor }}>&gt;_</span>
+            <h1 className="text-3xl sm:text-4xl font-bold font-code tracking-tight"
+              style={{
+                color: 'white',
+                textShadow: `
+                  0 0 15px ${accentColor},
+                  0 0 30px ${accentColor}80,
+                  0 0 45px ${accentColor}40
+                `,
+              }}
+            >
+              {t('projects.title')}
+            </h1>
+            <span className="inline-block w-3 h-7 animate-blink" style={{ backgroundColor: accentColor }} />
+          </div>
+          <div className="h-px w-32 mx-auto" style={{ backgroundColor: accentColor, boxShadow: `0 0 10px ${accentColor}` }} />
         </div>
 
         {/* Contenido */}

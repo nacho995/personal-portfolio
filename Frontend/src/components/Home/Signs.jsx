@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
 
-// Definimos un estilo global para las animaciones
-// Esto se insertará una sola vez en el componente
 const createGlobalStyles = () => {
   const styleElement = document.createElement('style');
   styleElement.textContent = `
@@ -24,6 +22,8 @@ const Signs = () => {
   const { theme } = useTheme();
   const { t, language } = useLanguage();
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1500);
+  
+  const accentColor = theme === 'javascript' ? '#F7DF1E' : '#83CD29'; // Color del tema
   
   // Frases profesionales orientadas a desarrollo de software - Se actualizan con el idioma
   const phrases = React.useMemo(() => [
@@ -47,35 +47,20 @@ const Signs = () => {
     };
   }, []);
 
-  // Usar colores profesionales según el tema
+  // Estilo tech con neón
   const getTextStyle = (index) => {
-    if (theme === 'javascript') {
-      // Gradientes amarillos para JavaScript
-      const jsColors = [
-        'from-[#F7DF1E] to-[#FDB813]', 
-        'from-[#FFE55C] to-[#F7DF1E]', 
-        'from-[#FDB813] to-[#FFE55C]', 
-        'from-[#F7DF1E] via-[#FDB813] to-[#FFE55C]', 
-        'from-[#FFE55C] via-[#F7DF1E] to-[#FDB813]'
-      ];
-      return {
-        className: `bg-gradient-to-r ${jsColors[index]} bg-clip-text text-transparent`,
-        style: { textShadow: '0 0 20px rgba(247,223,30,0.4)' }
-      };
-    } else {
-      // Gradientes verdes para Node.js
-      const nodejsColors = [
-        'from-[#83CD29] to-[#339933]', 
-        'from-[#90C53F] to-[#83CD29]', 
-        'from-[#83CD29] via-[#90C53F] to-[#339933]', 
-        'from-[#339933] to-[#90C53F]', 
-        'from-[#90C53F] to-[#339933]'
-      ];
-      return {
-        className: `bg-gradient-to-r ${nodejsColors[index % nodejsColors.length]} bg-clip-text text-transparent`,
-        style: { textShadow: '0 0 20px rgba(131,205,41,0.4)' }
-      };
-    }
+    return {
+      className: '',
+      style: { 
+        color: accentColor,
+        textShadow: `
+          0 0 10px ${accentColor},
+          0 0 20px ${accentColor},
+          0 0 30px ${accentColor}80
+        `,
+        fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+      }
+    };
   };
 
   // Actualizar el ancho de la ventana cuando cambie
@@ -107,14 +92,19 @@ const Signs = () => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden py-4 my-12 sm:my-16 md:my-20" role="region" aria-label="Frases destacadas">
-      {/* Fondos difuminados para un efecto visual mejorado */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 backdrop-blur-sm z-10 pointer-events-none" aria-hidden="true"></div>
+    <div className="relative w-full overflow-hidden py-4 my-12 sm:my-16 md:my-20 scanlines" role="region" aria-label="Frases destacadas">
+      {/* Fondo tech con grid */}
+      <div 
+        className="absolute inset-0 z-10 pointer-events-none" 
+        style={{
+          background: `linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.9) 100%)`,
+          backdropFilter: 'blur(10px)',
+        }}
+      />
       
-      {/* Capa de ruido sutil */}
-      <div className="absolute inset-0 opacity-20" aria-hidden="true" style={{ 
-        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` 
-      }}></div>
+      {/* Border lines neón */}
+      <div className="absolute top-0 left-0 right-0 h-px opacity-60" style={{ backgroundColor: accentColor, boxShadow: `0 0 10px ${accentColor}` }} />
+      <div className="absolute bottom-0 left-0 right-0 h-px opacity-60" style={{ backgroundColor: accentColor, boxShadow: `0 0 10px ${accentColor}` }} />
       
       {/* Frases con animación */}
       <div className="relative z-20 flex flex-col space-y-4 sm:space-y-6">
@@ -135,8 +125,16 @@ const Signs = () => {
               className="relative overflow-hidden h-10 sm:h-14 md:h-16 flex items-center"
               aria-label={phrase.text}
             >
+              {/* Brackets decorativos */}
+              {index % 2 === 0 && (
+                <>
+                  <span className="absolute left-4 font-code text-xl opacity-40" style={{ color: accentColor }}>{'<'}</span>
+                  <span className="absolute right-4 font-code text-xl opacity-40" style={{ color: accentColor }}>{'/>'}</span>
+                </>
+              )}
+              
               <div
-                className={`whitespace-nowrap font-mono font-bold text-2xl sm:text-3xl md:text-4xl tracking-wider flex items-center absolute ${textStyle.className}`}
+                className={`whitespace-nowrap font-bold text-2xl sm:text-3xl md:text-4xl tracking-wider flex items-center absolute ${textStyle.className}`}
                 style={{ 
                   ...animationStyle,
                   ...textStyle.style
@@ -148,10 +146,6 @@ const Signs = () => {
           );
         })}
       </div>
-      
-      {/* Efecto de brillo en los bordes */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" aria-hidden="true"></div>
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" aria-hidden="true"></div>
     </div>
   );
 };
