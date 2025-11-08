@@ -4,7 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
 
 const Name = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { theme } = useTheme();
   const [particles, setParticles] = useState([]);
 
@@ -180,7 +180,7 @@ const Name = () => {
             transition={{ delay: 0.6 }}
           >
             <motion.a 
-              href="/Ignacio_Dalesio_Full_Stack_CV.pdf" 
+              href={language === 'es' ? '/CV - Ignacio Dalesio - Desarrollador Full Stack.pdf' : '/CV - Ignacio Dalesio - ENG Full Stack Developer.pdf'}
               target="_blank"
               rel="noopener noreferrer" 
               className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-lg font-code text-sm overflow-hidden"

@@ -26,16 +26,29 @@ const BackgroundGradient = () => {
     }));
   }, []);
   
-  // Seguimiento del mouse para efectos sutiles
+  // Seguimiento del mouse para efectos sutiles (solo en desktop)
   useEffect(() => {
+    // Detectar si es móvil
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    
+    if (isMobile) return; // No activar en móvil
+    
+    // Throttle para reducir actualizaciones
+    let lastUpdate = 0;
+    const throttleDelay = 50; // Actualizar máximo cada 50ms
+    
     const handleMouseMove = (e) => {
+      const now = Date.now();
+      if (now - lastUpdate < throttleDelay) return;
+      lastUpdate = now;
+      
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 100,
         y: (e.clientY / window.innerHeight) * 100
       });
     };
     
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
@@ -47,8 +60,8 @@ const BackgroundGradient = () => {
   const codeY2 = useTransform(smoothProgress, [0, 1], [0, -400]);
   const codeY3 = useTransform(smoothProgress, [0, 1], [0, -800]);
 
-  // Colores según el tema - AMARILLO para JS, VERDE para Node
-  const colors = theme === 'javascript' 
+  // Colores según el tema - Memoizados para evitar recalculaciones
+  const colors = useMemo(() => theme === 'javascript' 
     ? {
         neon: '#00F5FF', // Cyan para efectos tech
         accent: '#F7DF1E', // AMARILLO JavaScript
@@ -60,7 +73,7 @@ const BackgroundGradient = () => {
         accent: '#83CD29', // Verde Node.js
         neonRgb: '57, 255, 20',
         accentRgb: '131, 205, 41',
-      };
+      }, [theme]);
 
 
   return (
@@ -99,19 +112,11 @@ const BackgroundGradient = () => {
         }}
       />
       
-      {/* Scanlines animadas CRT */}
-      <motion.div 
-        className="absolute inset-0 opacity-8 pointer-events-none"
+      {/* Scanlines estáticas (sin animación para evitar parpadeo en móvil) */}
+      <div 
+        className="absolute inset-0 opacity-5 pointer-events-none"
         style={{
           backgroundImage: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 2px)',
-        }}
-        animate={{
-          y: [0, 4],
-        }}
-        transition={{
-          duration: 0.1,
-          repeat: Infinity,
-          ease: "linear"
         }}
       />
 
@@ -282,11 +287,12 @@ const BackgroundGradient = () => {
         Node.js
       </motion.div>
 
-      {/* Efecto del mouse MUY LENTO y suave */}
+      {/* Efecto del mouse MUY LENTO y suave (solo desktop) */}
       <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none"
+        className="absolute w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none hidden md:block"
         style={{
           background: `radial-gradient(circle, rgba(${colors.accentRgb}, 0.12), rgba(${colors.neonRgb}, 0.08), transparent 70%)`,
+          willChange: 'transform',
         }}
         animate={{
           x: `${mousePosition.x - 50}%`,
@@ -294,8 +300,8 @@ const BackgroundGradient = () => {
         }}
         transition={{
           type: "spring",
-          stiffness: 5, // MUCHO más lento (antes 30)
-          damping: 50,  // Mucho más suave (antes 25)
+          stiffness: 5,
+          damping: 50,
         }}
       />
 

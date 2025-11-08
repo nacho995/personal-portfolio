@@ -5,7 +5,7 @@ import { useLanguage } from '../../context/LanguageContext';
 
 export default function AboutMe() {
   const { theme } = useTheme();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const accentColor = theme === 'javascript' ? '#F7DF1E' : '#83CD29'; // Color principal del tema
 
@@ -274,7 +274,7 @@ export default function AboutMe() {
                 
                 {/* Botón CV tech */}
                 <motion.a 
-                  href="/Ignacio_Dalesio_Full_Stack_CV.pdf" 
+                  href={language === 'es' ? '/CV - Ignacio Dalesio - Desarrollador Full Stack.pdf' : '/CV - Ignacio Dalesio - ENG Full Stack Developer.pdf'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative flex items-center justify-center gap-3 p-4 rounded-lg font-code font-bold overflow-hidden mb-4"
