@@ -2,20 +2,24 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const ThemeContext = createContext({
-  theme: 'purple',
+  theme: 'javascript',
   toggleTheme: () => {},
   themeColors: {
-    purple: {
-      primary: 'from-purple-500',
-      secondary: 'to-blue-500',
-      accent: 'bg-purple-500',
-      glow: 'rgba(147, 51, 234, 0.1)',
+    javascript: {
+      primary: 'from-[#F7DF1E]',
+      secondary: 'to-[#FDB813]',
+      accent: 'bg-[#F7DF1E]',
+      glow: 'rgba(247, 223, 30, 0.15)',
+      text: 'text-[#F7DF1E]',
+      border: 'border-[#F7DF1E]',
     },
-    blue: {
-      primary: 'from-[#40A0E0]',
-      secondary: 'to-[#2980B9]',
-      accent: 'bg-[#40A0E0]',
-      glow: 'rgba(64, 160, 224, 0.1)',
+    nodejs: {
+      primary: 'from-[#83CD29]',
+      secondary: 'to-[#339933]',
+      accent: 'bg-[#83CD29]',
+      glow: 'rgba(131, 205, 41, 0.15)',
+      text: 'text-[#83CD29]',
+      border: 'border-[#83CD29]',
     },
   }
 });
@@ -23,7 +27,7 @@ const ThemeContext = createContext({
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
-    return savedTheme || 'purple';
+    return savedTheme || 'javascript';
   });
 
   useEffect(() => {
@@ -31,21 +35,25 @@ export function ThemeProvider({ children }) {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(theme === 'purple' ? 'blue' : 'purple');
+    setTheme(theme === 'javascript' ? 'nodejs' : 'javascript');
   };
 
   const themeColors = {
-    purple: {
-      primary: 'from-purple-500',
-      secondary: 'to-blue-500',
-      accent: 'bg-purple-500',
-      glow: 'rgba(147, 51, 234, 0.1)',
+    javascript: {
+      primary: 'from-[#F7DF1E]',
+      secondary: 'to-[#FDB813]',
+      accent: 'bg-[#F7DF1E]',
+      glow: 'rgba(247, 223, 30, 0.15)',
+      text: 'text-[#F7DF1E]',
+      border: 'border-[#F7DF1E]',
     },
-    blue: {
-      primary: 'from-[#40A0E0]',
-      secondary: 'to-[#2980B9]',
-      accent: 'bg-[#40A0E0]',
-      glow: 'rgba(64, 160, 224, 0.1)',
+    nodejs: {
+      primary: 'from-[#83CD29]',
+      secondary: 'to-[#339933]',
+      accent: 'bg-[#83CD29]',
+      glow: 'rgba(131, 205, 41, 0.15)',
+      text: 'text-[#83CD29]',
+      border: 'border-[#83CD29]',
     },
   };
 

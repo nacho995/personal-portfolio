@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useTheme } from '../../context/ThemeContext'
+import { useLanguage } from '../../context/LanguageContext'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { theme } = useTheme()
+  const { language, toggleLanguage, t } = useLanguage()
   const [menuContainerSize, setMenuContainerSize] = useState({ width: 900, height: 900 })
 
   useEffect(() => {
@@ -53,9 +55,9 @@ export const Header = () => {
       { 
         text: 'HOME', 
         path: '/', 
-        color: theme === 'purple' 
-          ? 'from-purple-500/80 via-purple-300/90 to-purple-100/95' 
-          : 'from-[#3590D0]/80 via-[#50B0F0]/90 to-[#80E0F0]/95',
+        color: theme === 'javascript' 
+          ? 'from-[#FFE55C]/95 via-[#FDB813]/90 to-[#F7DF1E]/80' 
+          : 'from-[#90C53F]/95 via-[#83CD29]/90 to-[#339933]/80',
         radius: getResponsiveRadius(300),
         startAngle: 180
       }
@@ -64,9 +66,9 @@ export const Header = () => {
       { 
         text: 'PERFIL', 
         path: '/#about-me',
-        color: theme === 'purple' 
-          ? 'from-purple-600/80 via-purple-400/90 to-purple-200/95' 
-          : 'from-[#2980B9]/80 via-[#40A0E0]/90 to-[#70D0F0]/95',
+        color: theme === 'javascript' 
+          ? 'from-[#F7DF1E]/90 via-[#FDB813]/85 to-[#E5C500]/75' 
+          : 'from-[#83CD29]/90 via-[#70B81F]/85 to-[#5AA315]/75',
         radius: getResponsiveRadius(450),
         startAngle: 180
       }
@@ -75,9 +77,9 @@ export const Header = () => {
       { 
         text: 'PROYECTOS', 
         path: '/proyectos', 
-        color: theme === 'purple' 
-          ? 'from-purple-700/80 via-purple-500/90 to-purple-300/95' 
-          : 'from-[#2575AF]/80 via-[#3085C0]/90 to-[#60C0F0]/95',
+        color: theme === 'javascript' 
+          ? 'from-[#FDB813]/85 via-[#E5C500]/80 to-[#D4A500]/70' 
+          : 'from-[#70B81F]/85 via-[#5AA315]/80 to-[#4A8D12]/70',
         radius: getResponsiveRadius(600),
         startAngle: 180
       }
@@ -86,9 +88,9 @@ export const Header = () => {
       { 
         text: 'GITHUB', 
         path: 'https://github.com/nacho995', 
-        color: theme === 'purple' 
-          ? 'from-purple-700/90 via-purple-600/95 to-purple-400' 
-          : 'from-[#2171A5]/90 via-[#3590D0] to-[#50B0F0]',
+        color: theme === 'javascript' 
+          ? 'from-[#E5C500]/80 via-[#D4A500]/75 to-[#C89500]/65' 
+          : 'from-[#5AA315]/80 via-[#4A8D12]/75 to-[#3A7810]/65',
         radius: getResponsiveRadius(750),
         startAngle: 180
       }
@@ -97,9 +99,9 @@ export const Header = () => {
       { 
         text: 'LINKEDIN', 
         path: 'https://www.linkedin.com/in/ignacio-dalesio-lopez/', 
-        color: theme === 'purple' 
-          ? 'from-purple-800/90 via-purple-700/95 to-purple-500' 
-          : 'from-[#1e5c8d]/90 via-[#2980B9] to-[#40A0E0]',
+        color: theme === 'javascript' 
+          ? 'from-[#D4A500]/75 via-[#C89500]/70 to-[#B88500]/60' 
+          : 'from-[#4A8D12]/75 via-[#3A7810]/70 to-[#2A630E]/60',
         radius: getResponsiveRadius(880),
         startAngle: 190
       }
@@ -298,7 +300,7 @@ export const Header = () => {
             <div className="hidden md:flex items-center gap-6">
               <Link to="/" className="cursor-pointer">
                 <h1 className="text-xl lg:text-2xl font-bold text-white/95 tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] hover:text-white transition-colors duration-300">
-                  Portfolio de Ignacio Dalesio
+                  {t('header.portfolio')}
                 </h1>
               </Link>
               <div className="flex items-center gap-3">
@@ -306,26 +308,37 @@ export const Header = () => {
                   to="/proyectos"
                   className="px-4 py-2 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md text-white/90 hover:text-white text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
                 >
-                  Proyectos
+                  {t('header.projects')}
                 </Link>
                 <a 
                   href="mailto:ignaciodalesio1995@gmail.com"
                   className="px-4 py-2 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md text-white/90 hover:text-white text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
                 >
-                  Contacto
+                  {t('header.contact')}
                 </a>
               </div>
             </div>
 
-            {/* Sección derecha: Botón del menú */}
-            <div className="flex items-center relative z-[75]">
+            {/* Sección derecha: Botón de idioma y menú */}
+            <div className="flex items-center gap-3 relative z-[75]">
+              {/* Botón de cambio de idioma */}
+              <motion.button
+                onClick={toggleLanguage}
+                className="px-3 py-2 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 hover:border-white/25 transition-all duration-300 backdrop-blur-md text-white/90 hover:text-white text-sm font-medium flex items-center gap-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label={`Cambiar idioma a ${language === 'es' ? 'English' : 'Español'}`}
+              >
+                <span className="text-base">{language === 'es' ? '🇬🇧' : '🇪🇸'}</span>
+                <span className="hidden sm:inline">{language === 'es' ? 'EN' : 'ES'}</span>
+              </motion.button>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className={`inline-flex items-center justify-center p-2 rounded-lg ${
                   isMenuOpen 
-                    ? theme === 'purple'
-                      ? 'bg-purple-500/20 hover:bg-purple-500/30'
-                      : 'bg-[#40A0E0]/20 hover:bg-[#40A0E0]/30'
+                    ? theme === 'javascript'
+                      ? 'bg-[#F7DF1E]/20 hover:bg-[#F7DF1E]/30'
+                      : 'bg-[#83CD29]/20 hover:bg-[#83CD29]/30'
                     : 'bg-white/[0.07] hover:bg-white/[0.12]'
                 } text-white/90 hover:text-white transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 backdrop-blur-md z-50`}
                 aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}

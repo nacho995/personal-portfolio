@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 const Name = () => {
+  const { t } = useLanguage();
   const [particles, setParticles] = useState([]);
 
   useEffect(() => {
@@ -31,7 +33,7 @@ const Name = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
-          <div className="relative group w-full max-w-md aspect-[3/4] sm:aspect-square">
+          <div className="relative w-full max-w-md aspect-[3/4] sm:aspect-square">
             {/* Efecto de brillo y borde mejorado con múltiples capas - Colores profesionales */}
             <div className="absolute -inset-2 bg-gradient-to-r from-[#a78bfa] via-[#c084fc] to-[#60a5fa] rounded-[30%_70%_70%_30%/30%_30%_70%_70%] blur-xl opacity-60 animate-border-wave will-change-transform"></div>
             <div className="absolute -inset-1 bg-gradient-to-r from-[#60a5fa] via-[#a78bfa] to-[#c084fc] rounded-[30%_70%_70%_30%/30%_30%_70%_70%] blur-lg opacity-80 animate-border-wave will-change-transform" style={{ animationDelay: '1s' }}></div>
@@ -58,7 +60,7 @@ const Name = () => {
           >
             <div className="relative inline-block">
               <h2 className="text-xl sm:text-2xl font-medium tracking-wider text-white bg-clip-text drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] relative z-10">
-                Full Stack Developer
+                {t('name.title')}
               </h2>
               {/* Efecto de brillo detrás del texto */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#a78bfa]/30 via-[#c084fc]/30 to-[#60a5fa]/30 blur-xl animate-pulse"></div>
@@ -142,7 +144,7 @@ const Name = () => {
                 />
               </svg>
               <span className="text-sm sm:text-base text-white font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                Descargar CV
+                {t('name.downloadCV')}
               </span>
             </motion.a>
           </motion.div>

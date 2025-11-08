@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 // Definimos un estilo global para las animaciones
 // Esto se insertará una sola vez en el componente
@@ -21,16 +22,17 @@ const createGlobalStyles = () => {
 
 const Signs = () => {
   const { theme } = useTheme();
+  const { t, language } = useLanguage();
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1500);
   
-  // Frases profesionales orientadas a desarrollo de software
-  const phrases = [
-    { text: "TRANSFORMANDO IDEAS EN SOLUCIONES ELEGANTES", direction: 'right', speed: 1 },
-    { text: "DESARROLLO ESCALABLE Y CÓDIGO LIMPIO", direction: 'left', speed: 1 },
-    { text: "OPTIMIZACIÓN, RENDIMIENTO, EXPERIENCIA DE USUARIO", direction: 'right', speed: 1.5 },
-    { text: "APRENDIZAJE CONTINUO Y ADAPTABILIDAD", direction: 'left', speed: 0.7 },
-    { text: "COMPROMISO CON LA CALIDAD Y RESULTADOS", direction: 'right', speed: 0.8 }
-  ];
+  // Frases profesionales orientadas a desarrollo de software - Se actualizan con el idioma
+  const phrases = React.useMemo(() => [
+    { text: t('signs.phrase1'), direction: 'right', speed: 1 },
+    { text: t('signs.phrase2'), direction: 'left', speed: 1 },
+    { text: t('signs.phrase3'), direction: 'right', speed: 1.5 },
+    { text: t('signs.phrase4'), direction: 'left', speed: 0.7 },
+    { text: t('signs.phrase5'), direction: 'right', speed: 0.8 }
+  ], [language, t]);
 
   // Agregar las animaciones CSS al documento una sola vez
   useEffect(() => {
@@ -45,36 +47,33 @@ const Signs = () => {
     };
   }, []);
 
-  // Usar colores sólidos y brillantes para el tema azul en lugar de gradientes
+  // Usar colores profesionales según el tema
   const getTextStyle = (index) => {
-    if (theme === 'purple') {
-      // Mantener los gradientes para el tema púrpura
-      const purpleColors = [
-        'from-purple-500 to-pink-400', 
-        'from-indigo-600 to-purple-400', 
-        'from-fuchsia-500 to-purple-600', 
-        'from-violet-600 to-indigo-400', 
-        'from-purple-700 to-pink-500'
+    if (theme === 'javascript') {
+      // Gradientes amarillos para JavaScript
+      const jsColors = [
+        'from-[#F7DF1E] to-[#FDB813]', 
+        'from-[#FFE55C] to-[#F7DF1E]', 
+        'from-[#FDB813] to-[#FFE55C]', 
+        'from-[#F7DF1E] via-[#FDB813] to-[#FFE55C]', 
+        'from-[#FFE55C] via-[#F7DF1E] to-[#FDB813]'
       ];
       return {
-        className: `bg-gradient-to-r ${purpleColors[index ]} bg-clip-text text-transparent`,
-        style: { textShadow: '0 0 20px rgba(255,255,255,0.2)' }
+        className: `bg-gradient-to-r ${jsColors[index]} bg-clip-text text-transparent`,
+        style: { textShadow: '0 0 20px rgba(247,223,30,0.4)' }
       };
     } else {
-      // Usar colores sólidos brillantes para tema azul
-      const blueColors = [
-        '#00E5FF', // Cyan brillante
-        '#4FC3F7', // Azul claro
-        '#2196F3', // Azul primario
-        '#64FFDA', // Turquesa
-        '#00B0FF'  // Azul acento
+      // Gradientes verdes para Node.js
+      const nodejsColors = [
+        'from-[#83CD29] to-[#339933]', 
+        'from-[#90C53F] to-[#83CD29]', 
+        'from-[#83CD29] via-[#90C53F] to-[#339933]', 
+        'from-[#339933] to-[#90C53F]', 
+        'from-[#90C53F] to-[#339933]'
       ];
       return {
-        className: '',
-        style: { 
-          color: blueColors[index % blueColors.length],
-          textShadow: `0 0 15px ${blueColors[index]}80`,
-        }
+        className: `bg-gradient-to-r ${nodejsColors[index % nodejsColors.length]} bg-clip-text text-transparent`,
+        style: { textShadow: '0 0 20px rgba(131,205,41,0.4)' }
       };
     }
   };

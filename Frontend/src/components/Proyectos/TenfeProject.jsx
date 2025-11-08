@@ -1,16 +1,16 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaTrain, FaUsers } from 'react-icons/fa';
 
-const CodLetProject = ({ 
-  project, 
-  tempRating, 
-  rating, 
-  averageRating, 
-  totalRatings, 
-  onTempRatingChange, 
-  onSubmitRating 
+const TenfeProject = ({
+  project,
+  tempRating,
+  rating,
+  averageRating,
+  totalRatings,
+  onTempRatingChange,
+  onSubmitRating
 }) => {
   const { theme } = useTheme();
   const { t } = useLanguage();
@@ -35,8 +35,8 @@ const CodLetProject = ({
 
   const techStack = [
     { name: 'React', color: '#61DAFB' },
-    { name: 'TailwindCSS', color: '#38BDF8' },
-    { name: 'Node.js', color: '#83CD29' }
+    { name: 'Node.js', color: '#83CD29' },
+    { name: 'MongoDB', color: '#4DB33D' }
   ];
 
   return (
@@ -51,7 +51,8 @@ const CodLetProject = ({
       <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${themeColors.gradient} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`} />
       
       {/* Imagen del proyecto con overlay */}
-      <div className="relative aspect-video overflow-hidden bg-black">
+      <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-emerald-950 via-teal-900 to-cyan-950">
+        {/* Imagen real */}
         <motion.img 
           src={project.image}
           alt={`${project.title} Preview`}
@@ -64,7 +65,7 @@ const CodLetProject = ({
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
         
         {/* Enlaces flotantes sobre la imagen */}
-        <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+        <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 flex-wrap px-4">
           <motion.a 
             href={project.url}
             target="_blank"
@@ -78,34 +79,62 @@ const CodLetProject = ({
             <span>{t('projects.viewDemo')}</span>
           </motion.a>
           
-          <motion.a 
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-3 bg-white/10 backdrop-blur-xl text-white font-bold rounded-xl flex items-center gap-2 border border-white/30 hover:bg-white/20 transition-all shadow-2xl"
-            whileHover={{ scale: 1.1, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <FaGithub />
-            <span>{t('projects.viewCode')}</span>
-          </motion.a>
+          {project.githubUrl && (
+            <motion.a 
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-3 bg-white/10 backdrop-blur-xl text-white font-bold rounded-xl flex items-center gap-2 border border-white/30 hover:bg-white/20 transition-all shadow-2xl"
+              whileHover={{ scale: 1.1, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaGithub />
+              <span>Frontend</span>
+            </motion.a>
+          )}
+          
+          {project.githubBackendUrl && (
+            <motion.a 
+              href={project.githubBackendUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-3 bg-white/10 backdrop-blur-xl text-white font-bold rounded-xl flex items-center gap-2 border border-white/30 hover:bg-white/20 transition-all shadow-2xl"
+              whileHover={{ scale: 1.1, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaGithub />
+              <span>Backend</span>
+            </motion.a>
+          )}
         </div>
 
-        {/* Badge de categoría */}
-        <div className="absolute top-4 right-4">
-          <span className={`px-4 py-2 bg-gradient-to-r ${themeColors.gradient} text-black text-sm font-bold rounded-full shadow-lg backdrop-blur-sm`}>
-            Desarrollo Web
+        {/* Badges de categoría y equipo */}
+        <div className="absolute top-4 right-4 flex flex-col gap-2">
+          <span className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-bold rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2">
+            <FaTrain />
+            Sistema de Reservas
+          </span>
+          <span className="px-3 py-1.5 bg-blue-500/90 text-white text-xs font-bold rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2">
+            <FaUsers />
+            {t('tenfe.badge')}
+          </span>
+        </div>
+
+        {/* Badge de primer proyecto */}
+        <div className="absolute top-4 left-4">
+          <span className="px-3 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold rounded-full shadow-lg backdrop-blur-sm">
+            {t('tenfe.badgeFirst')}
           </span>
         </div>
       </div>
 
       {/* Contenido de la card */}
       <div className="relative p-6 sm:p-8">
-        {/* Título y GitHub */}
+        {/* Título */}
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
-            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:${themeColors.gradient} transition-all duration-300">
-              {project.title}
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:to-teal-400 transition-all duration-300">
+              {t('tenfe.title')}
             </h3>
             <a 
               href={project.url}
@@ -121,7 +150,7 @@ const CodLetProject = ({
         
         {/* Descripción */}
         <p className="text-white/70 text-base leading-relaxed mb-6">
-          {project.description}
+          {t('tenfe.description')}
         </p>
 
         {/* Tech Stack con Pills/Badges */}
@@ -218,30 +247,33 @@ const CodLetProject = ({
         </div>
       </div>
 
-      {/* Efecto de partículas en hover */}
+      {/* Efecto de partículas en hover - Temática de trenes */}
       <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-        {[...Array(10)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
-            className={`absolute w-1 h-1 rounded-full ${themeColors.bg}`}
+            className="absolute text-emerald-500/40 text-3xl"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [0, -30, 0],
-              opacity: [0, 1, 0],
+              x: [0, 50, 0],
+              opacity: [0, 0.6, 0],
             }}
             transition={{
               duration: 2 + Math.random() * 2,
               repeat: Infinity,
               delay: Math.random() * 2,
             }}
-          />
+          >
+            🚆
+          </motion.div>
         ))}
       </div>
     </motion.div>
   );
 };
 
-export default CodLetProject;
+export default TenfeProject;
+

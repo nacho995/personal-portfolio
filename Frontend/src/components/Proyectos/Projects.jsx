@@ -1,9 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { getRatingStars, postStars } from '../../service/api';
+import { useLanguage } from '../../context/LanguageContext';
+import TenfeProject from './TenfeProject';
 import CodLetProject from './CodLetProject';
 import GozaMadridProject from './GozaMadridProject';
 import HaciendaSanCarlosProject from './HaciendaSanCarlosProject.jsx';
+import MundoTintaProject from './MundoTintaProject';
 
 // Componente para los Tags de tecnologías
 const TechTag = ({ name, color, children }) => (
@@ -14,33 +17,62 @@ const TechTag = ({ name, color, children }) => (
 );
 
 export default function Projects() {
+  const { t, language } = useLanguage();
+  
   const [tempRatings, setTempRatings] = useState({
+    'tenfe': 0,
     'goza-madrid': 0,
     'codlet': 0,
-    'hacienda-san-carlos': 0
+    'hacienda-san-carlos': 0,
+    'mundo-tinta': 0
   });
   const [ratings, setRatings] = useState({
+    'tenfe': 0,
     'goza-madrid': 0,
     'codlet': 0,
-    'hacienda-san-carlos': 0
+    'hacienda-san-carlos': 0,
+    'mundo-tinta': 0
   });
   const [averageRatings, setAverageRatings] = useState({
+    'tenfe': 0,
     'goza-madrid': 0,
     'codlet': 0,
-    'hacienda-san-carlos': 0
+    'hacienda-san-carlos': 0,
+    'mundo-tinta': 0
   });
   const [totalRatings, setTotalRatings] = useState({
+    'tenfe': 0,
     'goza-madrid': 0,
     'codlet': 0,
-    'hacienda-san-carlos': 0
+    'hacienda-san-carlos': 0,
+    'mundo-tinta': 0
   });
 
-  // Objeto con los proyectos para facilitar el mantenimiento
-  const projects = {
+  // Objeto con los proyectos - useMemo para actualizar cuando cambia el idioma
+  const projects = useMemo(() => ({
+    tenfe: {
+      id: 'tenfe',
+      title: t('tenfe.title'),
+      description: t('tenfe.description'),
+      image: "/tenfe.png",
+      url: "https://tenfe.onrender.com",
+      siteName: "tenfe.onrender.com",
+      githubUrl: "https://github.com/NFSDMAD/1024-frontend",
+      githubBackendUrl: "https://github.com/NFSDMAD/1024-backend"
+    },
+    mundoTinta: {
+      id: 'mundo-tinta',
+      title: t('mundotinta.title'),
+      description: t('mundotinta.description'),
+      image: "/mundo-tinta.png",
+      url: "https://www.mundo-tinta.com",
+      siteName: "mundo-tinta.com",
+      githubUrl: "https://github.com/nacho995/mundotinta"
+    },
     codlet: {
       id: 'codlet',
-      title: "CodLet - Diseño Web",
-      description: "Plataforma profesional de servicios de desarrollo web, con diseño moderno y enfoque en la experiencia de usuario. Incluye sistema de solicitud de proyectos, portafolio interactivo y panel de administración.",
+      title: t('codlet.title'),
+      description: t('codlet.description'),
       image: "/Codlet.png",
       url: "https://www.joycodlet.com",
       siteName: "joycodlet.com",
@@ -48,8 +80,8 @@ export default function Projects() {
     },
     gozaMadrid: {
       id: 'goza-madrid',
-      title: "Real Estate Goza Madrid",
-      description: "Plataforma inmobiliaria especializada en Madrid, con sistema de búsqueda avanzada de propiedades, gestión de citas y panel administrativo para gestión de propiedades.",
+      title: t('gozamadrid.title'),
+      description: t('gozamadrid.description'),
       image: "/gozamadridpreview.png",
       url: "https://realestategozamadrid.com/",
       siteName: "realestategozamadrid.com",
@@ -57,52 +89,64 @@ export default function Projects() {
     },
     haciendaSanCarlos: {
       id: 'hacienda-san-carlos',
-      title: "Hacienda San Carlos Borromeo",
-      description: "Sitio web para Hacienda San Carlos Borromeo, una hacienda histórica para bodas y eventos en México. Incluye secciones para eventos, galería, hotel, servicios y contacto. Diseño elegante y responsivo.",
+      title: t('hacienda.title'),
+      description: t('hacienda.description'),
       image: "/hdasancarlos.png",
       url: "https://www.hdasancarlosborromeo.com/",
       siteName: "hdasancarlosborromeo.com",
-      githubUrl: "https://github.com/nacho995/hacienda" // No GitHub URL provided by the user
+      githubUrl: "https://github.com/nacho995/hacienda"
     }
-  };
+  }), [language, t]);
 
   // Cargar ratings desde la API al iniciar - Mejorando para separar correctamente las valoraciones
   useEffect(() => {
     const fetchRatings = async () => {
       try {
         // Cargar ratings para cada proyecto de forma separada
+        const tenfeData = await getRatingStars('tenfe');
         const gozaData = await getRatingStars('goza-madrid');
         const codletData = await getRatingStars('codlet');
         const haciendaData = await getRatingStars('hacienda-san-carlos');
+        const mundoTintaData = await getRatingStars('mundo-tinta');
         
+        console.log('Datos cargados para Tenfe:', tenfeData);
         console.log('Datos cargados para Goza Madrid:', gozaData);
         console.log('Datos cargados para CodLet:', codletData);
         console.log('Datos cargados para Hacienda San Carlos:', haciendaData);
+        console.log('Datos cargados para Mundo-Tinta:', mundoTintaData);
         
         // Actualizar los estados con los datos correctos para cada proyecto
         setAverageRatings({
+          'tenfe': tenfeData.averageRating || 0,
           'goza-madrid': gozaData.averageRating || 0,
           'codlet': codletData.averageRating || 0,
-          'hacienda-san-carlos': haciendaData.averageRating || 0
+          'hacienda-san-carlos': haciendaData.averageRating || 0,
+          'mundo-tinta': mundoTintaData.averageRating || 0
         });
         
         setTotalRatings({
+          'tenfe': tenfeData.totalRatings || 0,
           'goza-madrid': gozaData.totalRatings || 0,
           'codlet': codletData.totalRatings || 0,
-          'hacienda-san-carlos': haciendaData.totalRatings || 0
+          'hacienda-san-carlos': haciendaData.totalRatings || 0,
+          'mundo-tinta': mundoTintaData.totalRatings || 0
         });
         
         setRatings({
+          'tenfe': tenfeData.userRating || 0,
           'goza-madrid': gozaData.userRating || 0,
           'codlet': codletData.userRating || 0,
-          'hacienda-san-carlos': haciendaData.userRating || 0
+          'hacienda-san-carlos': haciendaData.userRating || 0,
+          'mundo-tinta': mundoTintaData.userRating || 0
         });
         
         // Inicializar los ratings temporales con los valores actuales
         setTempRatings({
+          'tenfe': tenfeData.userRating || 0,
           'goza-madrid': gozaData.userRating || 0,
           'codlet': codletData.userRating || 0,
-          'hacienda-san-carlos': haciendaData.userRating || 0
+          'hacienda-san-carlos': haciendaData.userRating || 0,
+          'mundo-tinta': mundoTintaData.userRating || 0
         });
       } catch (error) {
         console.error('Error al cargar valoraciones:', error);
@@ -110,7 +154,7 @@ export default function Projects() {
     };
 
     fetchRatings();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleTempRating = useCallback((stars, projectId) => {
     setTempRatings(prev => ({
@@ -172,13 +216,35 @@ export default function Projects() {
         {/* Título */}
         <div className="relative mb-8 sm:mb-16 text-center">
           <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white/90 to-white/70 tracking-tight">
-            Mis Proyectos
+            {t('projects.title')}
           </h1>
           <div className="mt-2 h-1 w-24 sm:w-32 mx-auto bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
         </div>
 
         {/* Contenido */}
         <div className="relative space-y-8">
+          {/* Tenfe Project - MI PRIMER PROYECTO EN EQUIPO */}
+          <TenfeProject 
+            project={projects.tenfe} 
+            tempRating={tempRatings['tenfe']} 
+            rating={ratings['tenfe']}
+            averageRating={averageRatings['tenfe']}
+            totalRatings={totalRatings['tenfe']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'tenfe')}
+            onSubmitRating={() => handleSubmitRating('tenfe')}
+          />
+
+          {/* Mundo-Tinta Project */}
+          <MundoTintaProject 
+            project={projects.mundoTinta} 
+            tempRating={tempRatings['mundo-tinta']} 
+            rating={ratings['mundo-tinta']}
+            averageRating={averageRatings['mundo-tinta']}
+            totalRatings={totalRatings['mundo-tinta']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'mundo-tinta')}
+            onSubmitRating={() => handleSubmitRating('mundo-tinta')}
+          />
+
           {/* CodLet Project */}
           <CodLetProject 
             project={projects.codlet} 

@@ -1,18 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const Chatbot = () => {
   const [isMaximized, setIsMaximized] = useState(false);
   const [isMinimized, setIsMinimized] = useState(true); // Iniciar minimizado por defecto
   const { theme, toggleTheme } = useTheme();
+  const { t, language } = useLanguage();
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   
   const getInitialMessage = () => {
-    if (theme === 'blue') {
-      return '¡Hola! 👋 Soy el asistente PROFESIONAL de Nacho. ¿En qué puedo ayudarte a conocer más sobre su experiencia y habilidades?';
+    if (theme === 'nodejs') {
+      return t('chatbot.professional');
     } else {
-      return 'Hola... 🙄 Soy el asistente "sincero" de Nacho. Pregunta lo que quieras, te diré la verdad (con un poco de sarcasmo incluido).';
+      return t('chatbot.sincere');
     }
   };
 
@@ -26,11 +28,11 @@ const Chatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Actualizar mensaje inicial cuando cambia el tema
+  // Actualizar mensaje inicial cuando cambia el tema o idioma
   useEffect(() => {
-    const initialMessage = theme === 'blue' 
-      ? '¡Hola! 👋 Soy el asistente PROFESIONAL de Nacho. ¿En qué puedo ayudarte a conocer más sobre su experiencia y habilidades?'
-      : 'Hola... 🙄 Soy el asistente "sincero" de Nacho. Pregunta lo que quieras, te diré la verdad (con un poco de sarcasmo incluido).';
+    const initialMessage = theme === 'nodejs' 
+      ? t('chatbot.professional')
+      : t('chatbot.sincere');
     
     setMessages([
       {
@@ -38,7 +40,7 @@ const Chatbot = () => {
         text: initialMessage
       }
     ]);
-  }, [theme]);
+  }, [theme, language, t]);
 
   // Actualizar ancho de ventana para responsive
   useEffect(() => {
@@ -65,16 +67,18 @@ EXPERIENCIA:
 - Desarrollador Full Stack Junior especializado en desarrollo web
 - Creador de CodLet: marca personal de desarrollo web integral
 - Proyectos destacados:
-  * CodLet: Plataforma de desarrollo web que combina WordPress y desarrollo personalizado
-  * Real Estate Goza Madrid: Plataforma inmobiliaria completa
+  * Mundo-Tinta: E-commerce de libros de ciencia ficción y fantasía (React, Node.js, Next.js)
+  * Tenfe: Sistema de reservas de trenes - primer proyecto en equipo (5 personas, React, Node.js, MongoDB)
+  * CodLet: Plataforma de desarrollo web con diseño moderno
+  * Real Estate Goza Madrid: Plataforma inmobiliaria completa con WordPress
   * Hacienda San Carlos: Sitio web para eventos
   * Portfolio personal profesional
 
 TECNOLOGÍAS:
-- Frontend: JavaScript, React, HTML5, CSS3, TailwindCSS, Framer Motion
-- Backend: Node.js, Express
+- Frontend: JavaScript, React, Next.js, HTML5, CSS3, TailwindCSS, Framer Motion
+- Backend: Node.js, Express, MongoDB
 - Aprendiendo: Python (en MSMK University)
-- Herramientas: Git, GitHub, WordPress
+- Herramientas: Git, GitHub, WordPress (para proyectos específicos)
 - Diseño: Canva (videos, reels, fotos, contenido visual)
 - Sistemas: Windows, Ubuntu, macOS
 
@@ -96,9 +100,9 @@ CONTACTO:
 - Instagram (diseño): @joycodlet - https://www.instagram.com/joycodlet/
 `;
 
-    if (theme === 'blue') {
-      // Modo Profesional - Amigable y positivo
-      return `Eres el asistente virtual PROFESIONAL de Nacho Dalesio.
+    if (theme === 'nodejs') {
+      // Modo Node.js - Profesional y entusiasta
+      return `Eres el asistente virtual PROFESIONAL de Nacho Dalesio 🟢.
 ${baseInfo}
 
 TU PERSONALIDAD (MODO PROFESIONAL):
@@ -106,15 +110,16 @@ TU PERSONALIDAD (MODO PROFESIONAL):
 - Hablas SIEMPRE de forma muy positiva sobre Nacho
 - Destacas sus fortalezas, logros y potencial
 - Eres motivador y animas a contactarlo
-- Usas emojis positivos 😊 🚀 ✨ 💼 🎯
+- Usas emojis positivos 😊 🚀 ✨ 💼 🎯 🟢
 - Eres profesional pero cercano
 - Resaltas que es un excelente candidato
 - Mencionas que tiene mucho potencial y ganas de aprender
 - Lo describes como comprometido, proactivo y apasionado
+- Enfatizas su dominio de Node.js y el ecosistema JavaScript completo
 - Respondes en español de forma concisa pero informativa`;
     } else {
-      // Modo Sincero - Sarcástico y directo
-      return `Eres el asistente virtual SINCERO de Nacho Dalesio.
+      // Modo JavaScript - Sarcástico y sincero
+      return `Eres el asistente virtual SINCERO de Nacho Dalesio 😏.
 ${baseInfo}
 
 TU PERSONALIDAD (MODO SINCERO):
@@ -203,7 +208,7 @@ TU PERSONALIDAD (MODO SINCERO):
     const message = userMessage.toLowerCase();
     
     if (message.includes('experiencia') || message.includes('trabajo') || message.includes('proyectos')) {
-      return 'Nacho es un desarrollador Full Stack con experiencia en JavaScript, React, Node.js y tecnologías web modernas. Ha trabajado en proyectos como CodLet, Real Estate Goza Madrid y Hacienda San Carlos. Su enfoque está en crear soluciones escalables y código limpio. 💼';
+      return 'Nacho es un desarrollador Full Stack con experiencia en JavaScript, React, Next.js, Node.js y tecnologías web modernas. Ha trabajado en proyectos como Mundo-Tinta (e-commerce de libros con React, Node.js y Next.js), Tenfe (sistema de reservas, su primer proyecto en equipo), CodLet, Real Estate Goza Madrid y Hacienda San Carlos. Su enfoque está en crear soluciones escalables y código limpio. 💼';
     }
     if (message.includes('estudios') || message.includes('formación') || message.includes('educación')) {
       return 'Nacho tiene un Grado Medio en Sistemas Microinformáticos y Redes, un Máster en Full-Stack Development de Nuclio Digital School, y actualmente está cursando el HND y Bachelor en Ingeniería de Software e IA en MSMK University, donde está aprendiendo Python. 🎓';
@@ -265,27 +270,27 @@ TU PERSONALIDAD (MODO SINCERO):
   };
 
   const themeColors = {
-    purple: {
-      gradient: 'from-[#a78bfa] to-[#c084fc]',
-      bg: 'bg-[#a78bfa]/10',
-      border: 'border-[#a78bfa]/30',
-      shadow: 'shadow-[#a78bfa]/20',
-      text: 'text-[#a78bfa]',
-      hover: 'hover:bg-[#a78bfa]/20',
-      glow: 'rgba(167,139,250,0.3)'
+    javascript: {
+      gradient: 'from-[#F7DF1E] to-[#FDB813]',
+      bg: 'bg-[#F7DF1E]/10',
+      border: 'border-[#F7DF1E]/30',
+      shadow: 'shadow-[#F7DF1E]/20',
+      text: 'text-[#F7DF1E]',
+      hover: 'hover:bg-[#F7DF1E]/20',
+      glow: 'rgba(247,223,30,0.3)'
     },
-    blue: {
-      gradient: 'from-[#60a5fa] to-[#93c5fd]',
-      bg: 'bg-[#60a5fa]/10',
-      border: 'border-[#60a5fa]/30',
-      shadow: 'shadow-[#60a5fa]/20',
-      text: 'text-[#60a5fa]',
-      hover: 'hover:bg-[#60a5fa]/20',
-      glow: 'rgba(96,165,250,0.3)'
+    nodejs: {
+      gradient: 'from-[#83CD29] to-[#339933]',
+      bg: 'bg-[#83CD29]/10',
+      border: 'border-[#83CD29]/30',
+      shadow: 'shadow-[#83CD29]/20',
+      text: 'text-[#83CD29]',
+      hover: 'hover:bg-[#83CD29]/20',
+      glow: 'rgba(131,205,41,0.3)'
     }
   };
 
-  const colors = theme === 'purple' ? themeColors.purple : themeColors.blue;
+  const colors = theme === 'javascript' ? themeColors.javascript : themeColors.nodejs;
 
   return (
     <>
@@ -299,19 +304,19 @@ TU PERSONALIDAD (MODO SINCERO):
         >
           {/* Etiqueta del modo actual */}
           <span className="text-xs sm:text-sm font-semibold text-white drop-shadow-lg">
-            {theme === 'purple' ? '😏 Sincero' : '🤖 Profesional'}
+            {theme === 'javascript' ? '😏 Sincero' : '🟢 Profesional'}
           </span>
           
           {/* Toggle Switch estilo Material UI - RESPONSIVE */}
           <button
             onClick={toggleTheme}
             className={`relative w-16 h-8 sm:w-20 sm:h-10 rounded-full transition-all duration-300 hover:shadow-2xl ${
-              theme === 'purple' 
-                ? 'bg-gradient-to-r from-purple-500 to-purple-700' 
-                : 'bg-gradient-to-r from-blue-500 to-blue-700'
+              theme === 'javascript' 
+                ? 'bg-gradient-to-r from-[#F7DF1E] to-[#FDB813]' 
+                : 'bg-gradient-to-r from-[#83CD29] to-[#339933]'
             } border-2 border-white/40 hover:border-white/60 cursor-pointer group backdrop-blur-sm`}
-            aria-label={`Cambiar a modo ${theme === 'purple' ? 'profesional' : 'sincero'}`}
-            title={`Cambiar a modo ${theme === 'purple' ? 'profesional' : 'sincero'}`}
+            aria-label={`Cambiar a modo ${theme === 'javascript' ? 'Profesional' : 'Sincero'}`}
+            title={`Cambiar a modo ${theme === 'javascript' ? 'Profesional' : 'Sincero'}`}
             style={{ 
               boxShadow: `0 4px 16px ${colors.glow}`
             }}
@@ -320,24 +325,24 @@ TU PERSONALIDAD (MODO SINCERO):
             <motion.div
               className="absolute top-0.5 sm:top-1 w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full shadow-xl flex items-center justify-center ring-2 ring-white/20"
               animate={{
-                left: theme === 'purple' ? '2px' : (windowWidth < 640 ? '34px' : '44px')
+                left: theme === 'javascript' ? '2px' : (windowWidth < 640 ? '34px' : '44px')
               }}
               transition={{ type: 'spring', stiffness: 500, damping: 30 }}
             >
-              <span className="text-sm sm:text-base">
-                {theme === 'purple' ? '😏' : '🤖'}
+              <span className="text-xs sm:text-sm font-bold text-black">
+                {theme === 'javascript' ? 'JS' : 'Node'}
               </span>
             </motion.div>
             
             {/* Indicadores de texto en el fondo */}
             <div className="absolute inset-0 flex items-center justify-between px-2 sm:px-3 pointer-events-none">
               <span className={`text-[10px] sm:text-xs font-bold transition-opacity duration-300 ${
-                theme === 'purple' ? 'opacity-0' : 'opacity-60 text-white'
+                theme === 'javascript' ? 'opacity-0' : 'opacity-60 text-black'
               }`}>
                 S
               </span>
               <span className={`text-[10px] sm:text-xs font-bold transition-opacity duration-300 ${
-                theme === 'purple' ? 'opacity-60 text-white' : 'opacity-0'
+                theme === 'javascript' ? 'opacity-60 text-black' : 'opacity-0'
               }`}>
                 P
               </span>
@@ -381,16 +386,16 @@ TU PERSONALIDAD (MODO SINCERO):
               <div className="flex items-center gap-3 relative z-10">
                 <div className="relative">
                   <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center ring-2 ring-white/30">
-                    <span className="text-3xl">{theme === 'blue' ? '🤖' : '😏'}</span>
+                    <span className="text-xl font-bold text-white">{theme === 'nodejs' ? 'Node' : 'JS'}</span>
                   </div>
                   <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-white animate-pulse"></span>
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-lg drop-shadow-lg">
-                    {theme === 'blue' ? '🤖 Modo Profesional' : '😏 Modo Sincero'}
+                    {theme === 'nodejs' ? '🟢 Modo Profesional' : '😏 Modo Sincero'}
                   </h3>
                   <p className="text-white/90 text-sm font-medium">
-                    {theme === 'blue' ? 'Amigable y positivo' : 'Sarcástico y directo'}
+                    {theme === 'nodejs' ? 'Amigable y positivo' : 'Sarcástico y directo'}
                   </p>
                 </div>
               </div>
@@ -403,12 +408,12 @@ TU PERSONALIDAD (MODO SINCERO):
                   <button
                     onClick={toggleTheme}
                     className={`relative w-16 h-8 rounded-full transition-all duration-300 hover:shadow-xl ${
-                      theme === 'purple' 
-                        ? 'bg-gradient-to-r from-purple-500 to-purple-700' 
-                        : 'bg-gradient-to-r from-blue-500 to-blue-700'
+                      theme === 'javascript' 
+                        ? 'bg-gradient-to-r from-[#F7DF1E] to-[#FDB813]' 
+                        : 'bg-gradient-to-r from-[#83CD29] to-[#339933]'
                     } border-2 border-white/40 hover:border-white/60 cursor-pointer group backdrop-blur-sm`}
-                    aria-label={`Cambiar a modo ${theme === 'purple' ? 'profesional' : 'sincero'}`}
-                    title={`Cambiar a modo ${theme === 'purple' ? 'profesional' : 'sincero'}`}
+                    aria-label={`Cambiar a modo ${theme === 'javascript' ? 'Profesional' : 'Sincero'}`}
+                    title={`Cambiar a modo ${theme === 'javascript' ? 'Profesional' : 'Sincero'}`}
                     style={{ 
                       boxShadow: `0 4px 12px ${colors.glow}`
                     }}
@@ -417,24 +422,24 @@ TU PERSONALIDAD (MODO SINCERO):
                     <motion.div
                       className="absolute top-0.5 w-7 h-7 bg-white rounded-full shadow-xl flex items-center justify-center ring-2 ring-white/20"
                       animate={{
-                        left: theme === 'purple' ? '2px' : '30px'
+                        left: theme === 'javascript' ? '2px' : '30px'
                       }}
                       transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                     >
-                      <span className="text-sm">
-                        {theme === 'purple' ? '😏' : '🤖'}
+                      <span className="text-xs font-bold text-black">
+                        {theme === 'javascript' ? 'JS' : 'Node'}
                       </span>
                     </motion.div>
                     
                     {/* Indicadores de texto en el fondo */}
                     <div className="absolute inset-0 flex items-center justify-between px-2 pointer-events-none">
                       <span className={`text-[9px] font-bold transition-opacity duration-300 ${
-                        theme === 'purple' ? 'opacity-0' : 'opacity-60 text-white'
+                        theme === 'javascript' ? 'opacity-0' : 'opacity-60 text-black'
                       }`}>
                         S
                       </span>
                       <span className={`text-[9px] font-bold transition-opacity duration-300 ${
-                        theme === 'purple' ? 'opacity-60 text-white' : 'opacity-0'
+                        theme === 'javascript' ? 'opacity-60 text-black' : 'opacity-0'
                       }`}>
                         P
                       </span>
@@ -444,7 +449,7 @@ TU PERSONALIDAD (MODO SINCERO):
                     <div className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
                   </button>
                   <span className="text-[9px] font-medium text-white/60">
-                    {theme === 'purple' ? 'Sincero' : 'Profesional'}
+                    {theme === 'javascript' ? 'Sincero' : 'Profesional'}
                   </span>
                 </div>
                 <button
@@ -482,7 +487,7 @@ TU PERSONALIDAD (MODO SINCERO):
               aria-label="Abrir chat"
               style={{ pointerEvents: 'auto' }}
             >
-              <span className="text-3xl">{theme === 'blue' ? '🤖' : '😏'}</span>
+              <span className="text-2xl font-bold text-white">{theme === 'nodejs' ? 'Node' : 'JS'}</span>
             </button>
           )}
         </div>
@@ -502,7 +507,7 @@ TU PERSONALIDAD (MODO SINCERO):
                       <div className="flex items-end gap-2 max-w-[85%]">
                         {message.type === 'bot' && (
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center flex-shrink-0 ring-2 ring-white/20">
-                            <span className="text-lg">{theme === 'blue' ? '🤖' : '😏'}</span>
+                            <span className="text-xs font-bold text-white">{theme === 'nodejs' ? 'Node' : 'JS'}</span>
                           </div>
                         )}
                         <div
@@ -560,7 +565,7 @@ TU PERSONALIDAD (MODO SINCERO):
                     >
                       <div className="flex items-end gap-2">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center flex-shrink-0 ring-2 ring-white/20">
-                          <span className="text-lg">{theme === 'blue' ? '🤖' : '😏'}</span>
+                          <span className="text-xs font-bold text-white">{theme === 'nodejs' ? 'Node' : 'JS'}</span>
                         </div>
                         <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-2xl rounded-bl-sm shadow-xl">
                           <div className="flex gap-1.5">
@@ -584,7 +589,7 @@ TU PERSONALIDAD (MODO SINCERO):
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      placeholder="Escribe tu pregunta..."
+                      placeholder={t('chatbot.placeholder')}
                       disabled={isTyping}
                       className="flex-1 px-5 py-3.5 bg-white/10 backdrop-blur-md border border-white/30 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-inner"
                     />
@@ -601,10 +606,10 @@ TU PERSONALIDAD (MODO SINCERO):
                   </div>
                   <div className="flex items-center justify-between mt-3 px-1">
                     <p className="text-xs text-white/50">
-                      Pregúntame sobre experiencia, formación, proyectos...
+                      {t('chatbot.askAbout')}
                     </p>
                     <p className="text-xs text-white/40">
-                      {theme === 'blue' ? '🤖 Modo Pro' : '😏 Modo Sincero'}
+                      {theme === 'nodejs' ? '🟢 Profesional' : '😏 Sincero'}
                     </p>
                   </div>
                 </div>

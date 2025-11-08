@@ -9,6 +9,12 @@ export default {
     extend: {
       colors: {
         blue: "#490848",
+        'js-yellow': '#F7DF1E',
+        'js-gold': '#FDB813',
+        'js-light': '#FFE55C',
+        'node-green': '#83CD29',
+        'node-dark': '#339933',
+        'node-light': '#90C53F',
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
@@ -23,6 +29,7 @@ export default {
         'slide-in-left': 'slideInLeft 0.5s ease-out',
         'shimmer': 'shimmer 2s linear infinite',
         'glow': 'glow 2s ease-in-out infinite alternate',
+        'gradient-shift': 'gradient-shift 3s ease-in-out infinite',
       },
       keyframes: {
         float: {

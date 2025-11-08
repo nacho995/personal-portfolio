@@ -5,6 +5,7 @@ import BackgroundGradient from './components/Home/BackgroundGradient'
 import Name from './components/Home/name'
 import { Header } from './components/Home/header'
 import { ThemeProvider } from './context/ThemeContext'
+import { LanguageProvider } from './context/LanguageContext'
 import Chatbot from './components/Chatbot/Chatbot'
 
 // Lazy loading de componentes para mejor rendimiento
@@ -27,33 +28,35 @@ const LoadingFallback = () => (
 function App() {
   return (
     <ThemeProvider>
-      <Router>
-        <Header />
-        <BackgroundGradient />
-        <div className="relative min-h-screen w-full">
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              <Route path="/" element={
-                <>
-                  <Name />
+      <LanguageProvider>
+        <Router>
+          <Header />
+          <BackgroundGradient />
+          <div className="relative min-h-screen w-full">
+            <Suspense fallback={<LoadingFallback />}>
+              <Routes>
+                <Route path="/" element={
+                  <>
+                    <Name />
+                    <Suspense fallback={<LoadingFallback />}>
+                      <AboutMe />
+                      <Signs />
+                      <Skills />
+                    </Suspense>
+                  </>
+                } />
+                <Route path="/proyectos" element={
                   <Suspense fallback={<LoadingFallback />}>
-                    <AboutMe />
-                    <Signs />
-                    <Skills />
+                    <Projects />
+                    <WordpressProjects />
                   </Suspense>
-                </>
-              } />
-              <Route path="/proyectos" element={
-                <Suspense fallback={<LoadingFallback />}>
-                  <Projects />
-                  <WordpressProjects />
-                </Suspense>
-              } />
-            </Routes>
-          </Suspense>
-        </div>
-        <Chatbot />
-      </Router>
+                } />
+              </Routes>
+            </Suspense>
+          </div>
+          <Chatbot />
+        </Router>
+      </LanguageProvider>
     </ThemeProvider>
   )
 }

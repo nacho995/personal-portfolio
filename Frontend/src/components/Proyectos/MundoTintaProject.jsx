@@ -1,16 +1,16 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaBook } from 'react-icons/fa';
 
-const CodLetProject = ({ 
-  project, 
-  tempRating, 
-  rating, 
-  averageRating, 
-  totalRatings, 
-  onTempRatingChange, 
-  onSubmitRating 
+const MundoTintaProject = ({
+  project,
+  tempRating,
+  rating,
+  averageRating,
+  totalRatings,
+  onTempRatingChange,
+  onSubmitRating
 }) => {
   const { theme } = useTheme();
   const { t } = useLanguage();
@@ -35,8 +35,8 @@ const CodLetProject = ({
 
   const techStack = [
     { name: 'React', color: '#61DAFB' },
-    { name: 'TailwindCSS', color: '#38BDF8' },
-    { name: 'Node.js', color: '#83CD29' }
+    { name: 'Node.js', color: '#83CD29' },
+    { name: 'Next.js', color: '#000000' }
   ];
 
   return (
@@ -44,14 +44,15 @@ const CodLetProject = ({
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.6, delay: 0.1 }}
       className="group relative bg-gradient-to-br from-black/40 via-black/20 to-black/40 border border-white/10 rounded-3xl overflow-hidden hover:border-white/30 transition-all duration-500 shadow-2xl hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
     >
       {/* Efecto de brillo animado en el borde */}
       <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${themeColors.gradient} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`} />
       
       {/* Imagen del proyecto con overlay */}
-      <div className="relative aspect-video overflow-hidden bg-black">
+      <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+        {/* Imagen real */}
         <motion.img 
           src={project.image}
           alt={`${project.title} Preview`}
@@ -78,33 +79,43 @@ const CodLetProject = ({
             <span>{t('projects.viewDemo')}</span>
           </motion.a>
           
-          <motion.a 
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-3 bg-white/10 backdrop-blur-xl text-white font-bold rounded-xl flex items-center gap-2 border border-white/30 hover:bg-white/20 transition-all shadow-2xl"
-            whileHover={{ scale: 1.1, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <FaGithub />
-            <span>{t('projects.viewCode')}</span>
-          </motion.a>
+          {project.githubUrl && (
+            <motion.a 
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-white/10 backdrop-blur-xl text-white font-bold rounded-xl flex items-center gap-2 border border-white/30 hover:bg-white/20 transition-all shadow-2xl"
+              whileHover={{ scale: 1.1, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaGithub />
+              <span>{t('projects.viewCode')}</span>
+            </motion.a>
+          )}
         </div>
 
         {/* Badge de categoría */}
         <div className="absolute top-4 right-4">
-          <span className={`px-4 py-2 bg-gradient-to-r ${themeColors.gradient} text-black text-sm font-bold rounded-full shadow-lg backdrop-blur-sm`}>
-            Desarrollo Web
+          <span className={`px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 text-black text-sm font-bold rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2`}>
+            <FaBook />
+            E-Commerce
+          </span>
+        </div>
+
+        {/* Badge de proyecto didáctico */}
+        <div className="absolute top-4 left-4">
+          <span className="px-3 py-1.5 bg-purple-500/90 text-white text-xs font-bold rounded-full shadow-lg backdrop-blur-sm">
+            📚 Proyecto Autodidacta
           </span>
         </div>
       </div>
 
       {/* Contenido de la card */}
       <div className="relative p-6 sm:p-8">
-        {/* Título y GitHub */}
+        {/* Título */}
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
-            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:${themeColors.gradient} transition-all duration-300">
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-amber-500 group-hover:to-orange-600 transition-all duration-300">
               {project.title}
             </h3>
             <a 
@@ -218,30 +229,34 @@ const CodLetProject = ({
         </div>
       </div>
 
-      {/* Efecto de partículas en hover */}
+      {/* Efecto de partículas en hover - Temática de libros */}
       <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-        {[...Array(10)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className={`absolute w-1 h-1 rounded-full ${themeColors.bg}`}
+            className="absolute text-amber-500/30 text-2xl"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
             animate={{
               y: [0, -30, 0],
-              opacity: [0, 1, 0],
+              opacity: [0, 0.6, 0],
+              rotate: [0, 360],
             }}
             transition={{
-              duration: 2 + Math.random() * 2,
+              duration: 3 + Math.random() * 2,
               repeat: Infinity,
               delay: Math.random() * 2,
             }}
-          />
+          >
+            📚
+          </motion.div>
         ))}
       </div>
     </motion.div>
   );
 };
 
-export default CodLetProject;
+export default MundoTintaProject;
+
