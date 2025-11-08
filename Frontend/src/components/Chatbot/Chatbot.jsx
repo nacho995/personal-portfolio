@@ -375,23 +375,53 @@ TU PERSONALIDAD (MODO SINCERO):
           borderColor: isMinimized ? `${accentColor}60` : `${accentColor}30`,
           boxShadow: isMaximized ? 'none' : `0 0 30px ${accentColor}40, 0 20px 40px rgba(0,0,0,0.6)`,
           maxHeight: isMaximized ? '100vh' : '85vh',
-          zIndex: 50,
-          pointerEvents: isMinimized ? 'none' : 'auto'
+          zIndex: 50
         }}
       >
-        {/* Terminal Header */}
-        <div className="p-4 border-b flex items-center justify-between relative overflow-hidden bg-black/60"
-          style={{ borderColor: `${accentColor}30` }}
-        >
-          {/* Terminal prompt decoration */}
-          <div className="absolute left-0 top-0 bottom-0 w-1" style={{ backgroundColor: accentColor, boxShadow: `0 0 10px ${accentColor}` }} />
-          
-          {!isMinimized && (
-            <>
+        {isMinimized ? (
+          <button
+            onClick={() => setIsMinimized(false)}
+            className="w-full h-full relative hover:scale-110 transition-transform duration-300 overflow-hidden rounded-full cursor-pointer flex items-center justify-center"
+            aria-label="Abrir chat"
+            style={{ minHeight: '100%' }}
+          >
+            <img 
+              src="/chatbotia.avif" 
+              alt="AI Chatbot" 
+              className="w-full h-full object-cover absolute inset-0"
+            />
+            <div className="absolute bottom-0 left-0 right-0 text-[9px] font-bold font-code text-center backdrop-blur-sm py-0.5 z-10" 
+              style={{ 
+                backgroundColor: `${accentColor}90`,
+                color: 'white'
+              }}>
+              {theme === 'javascript' ? 'JS' : 'NODE'}
+            </div>
+          </button>
+        ) : (
+          <>
+            {/* Terminal Header */}
+            <div className="p-4 border-b flex items-center justify-between relative overflow-hidden bg-black/60"
+              style={{ borderColor: `${accentColor}30` }}
+            >
+              {/* Terminal prompt decoration */}
+              <div className="absolute left-0 top-0 bottom-0 w-1" style={{ backgroundColor: accentColor, boxShadow: `0 0 10px ${accentColor}` }} />
+              
               <div className="flex items-center gap-3 relative z-10">
                 <div className="relative">
-                  <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center ring-2 ring-white/30">
-                    <span className="text-xl font-bold text-white">{theme === 'javascript' ? 'JS' : 'Node'}</span>
+                  <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm overflow-hidden ring-2 ring-white/30 relative">
+                    <img 
+                      src="/chatbotia.avif" 
+                      alt="AI Chatbot" 
+                      className="w-full h-full object-cover"
+                    />
+                    <span className="absolute bottom-0 left-0 right-0 text-[8px] font-bold font-code text-center py-0.5 backdrop-blur-sm" 
+                      style={{ 
+                        backgroundColor: `${accentColor}90`,
+                        color: 'white'
+                      }}>
+                      {theme === 'javascript' ? 'JS' : 'NODE'}
+                    </span>
                   </div>
                   <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-white animate-pulse"></span>
                 </div>
@@ -482,20 +512,9 @@ TU PERSONALIDAD (MODO SINCERO):
                   </svg>
                 </button>
               </div>
-            </>
-          )}
-          
-          {isMinimized && (
-            <button
-              onClick={() => setIsMinimized(false)}
-              className="w-full h-full flex items-center justify-center relative z-10 hover:scale-110 transition-transform duration-300"
-              aria-label="Abrir chat"
-              style={{ pointerEvents: 'auto' }}
-            >
-              <span className="text-2xl font-bold text-white">{theme === 'javascript' ? 'JS' : 'Node'}</span>
-            </button>
-          )}
-        </div>
+            </div>
+          </>
+        )}
 
         {/* Messages */}
         {!isMinimized && (
@@ -511,8 +530,19 @@ TU PERSONALIDAD (MODO SINCERO):
                     >
                       <div className="flex items-end gap-2 max-w-[85%]">
                         {message.type === 'bot' && (
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center flex-shrink-0 ring-2 ring-white/20">
-                            <span className="text-xs font-bold text-white">{theme === 'javascript' ? 'JS' : 'Node'}</span>
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm overflow-hidden flex-shrink-0 ring-2 ring-white/20 relative">
+                            <img 
+                              src="/chatbotia.avif" 
+                              alt="AI Chatbot" 
+                              className="w-full h-full object-cover"
+                            />
+                            <span className="absolute bottom-0 left-0 right-0 text-[6px] font-bold font-code text-center leading-none backdrop-blur-sm" 
+                              style={{ 
+                                backgroundColor: `${accentColor}90`,
+                                color: 'white'
+                              }}>
+                              {theme === 'javascript' ? 'JS' : 'ND'}
+                            </span>
                           </div>
                         )}
                         <div
@@ -569,8 +599,19 @@ TU PERSONALIDAD (MODO SINCERO):
                       className="flex justify-start"
                     >
                       <div className="flex items-end gap-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center flex-shrink-0 ring-2 ring-white/20">
-                          <span className="text-xs font-bold text-white">{theme === 'javascript' ? 'JS' : 'Node'}</span>
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm overflow-hidden flex-shrink-0 ring-2 ring-white/20 relative">
+                          <img 
+                            src="/chatbotia.avif" 
+                            alt="AI Chatbot" 
+                            className="w-full h-full object-cover"
+                          />
+                          <span className="absolute bottom-0 left-0 right-0 text-[6px] font-bold font-code text-center leading-none backdrop-blur-sm" 
+                            style={{ 
+                              backgroundColor: `${accentColor}90`,
+                              color: 'white'
+                            }}>
+                            {theme === 'javascript' ? 'JS' : 'ND'}
+                          </span>
                         </div>
                         <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-2xl rounded-bl-sm shadow-xl">
                           <div className="flex gap-1.5">
