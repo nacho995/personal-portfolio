@@ -4,6 +4,7 @@ import './index.css'
 import BackgroundGradient from './components/Home/BackgroundGradient'
 import Name from './components/Home/name'
 import { Header } from './components/Home/header'
+import CustomCursor from './components/UI/CustomCursor'
 import { ThemeProvider } from './context/ThemeContext'
 import { LanguageProvider } from './context/LanguageContext'
 import Chatbot from './components/Chatbot/Chatbot'
@@ -30,6 +31,7 @@ function App() {
     <ThemeProvider>
       <LanguageProvider>
         <Router>
+          <CustomCursor />
           <Header />
           <BackgroundGradient />
           <div className="relative min-h-screen w-full">

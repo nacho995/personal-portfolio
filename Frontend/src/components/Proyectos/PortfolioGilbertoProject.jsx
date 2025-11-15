@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
-import { FaGithub, FaExternalLinkAlt, FaTrain, FaUsers } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaPalette, FaBriefcase } from 'react-icons/fa';
 
-const TenfeProject = ({
+const PortfolioGilbertoProject = ({
   project,
   tempRating,
   rating,
@@ -13,7 +14,7 @@ const TenfeProject = ({
   onSubmitRating
 }) => {
   const { theme } = useTheme();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   
   const themeColors = theme === 'javascript' 
     ? {
@@ -35,14 +36,11 @@ const TenfeProject = ({
 
   const techStack = [
     { name: 'React', color: '#61DAFB' },
-    { name: 'Node.js', color: '#83CD29' },
-    { name: 'MongoDB', color: '#4DB33D' }
+    { name: 'Tailwind CSS', color: '#38BDF8' },
+    { name: 'Framer Motion', color: '#FF0080' }
   ];
 
   const accentColor = theme === 'javascript' ? '#00F5FF' : '#39FF14';
-  const viewDemoCursorLabel = language === 'es'
-    ? 'Abrir demo · React + Node + Mongo'
-    : 'Open demo · React + Node + Mongo';
 
   return (
     <motion.div 
@@ -75,7 +73,7 @@ const TenfeProject = ({
       />
       
       {/* Imagen del proyecto con overlay */}
-      <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-emerald-950 via-teal-900 to-cyan-950">
+      <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-pink-950 via-rose-900 to-orange-950">
         {/* Imagen real */}
         <motion.img 
           src={project.image}
@@ -98,8 +96,6 @@ const TenfeProject = ({
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.95 }}
             style={{ boxShadow: `0 10px 30px ${themeColors.glow}` }}
-            data-cursor-label={viewDemoCursorLabel}
-            data-cursor-intent="cta"
           >
             <FaExternalLinkAlt />
             <span>{t('projects.viewDemo')}</span>
@@ -113,47 +109,26 @@ const TenfeProject = ({
               className="px-4 py-3 bg-white/10 backdrop-blur-xl text-white font-bold rounded-xl flex items-center gap-2 border border-white/30 hover:bg-white/20 transition-all shadow-2xl"
               whileHover={{ scale: 1.1, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              data-cursor-label="Ver código frontend"
-              data-cursor-intent="cta"
             >
               <FaGithub />
-              <span>Frontend</span>
-            </motion.a>
-          )}
-          
-          {project.githubBackendUrl && (
-            <motion.a 
-              href={project.githubBackendUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-3 bg-white/10 backdrop-blur-xl text-white font-bold rounded-xl flex items-center gap-2 border border-white/30 hover:bg-white/20 transition-all shadow-2xl"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              data-cursor-label="Ver código backend"
-              data-cursor-intent="cta"
-            >
-              <FaGithub />
-              <span>Backend</span>
+              <span>GitHub</span>
             </motion.a>
           )}
         </div>
 
-        {/* Badges de categoría y equipo */}
+        {/* Badges de categoría */}
         <div className="absolute top-4 right-4 flex flex-col gap-2">
-          <span className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-bold rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2">
-            <FaTrain />
-            Sistema de Reservas
-          </span>
-          <span className="px-3 py-1.5 bg-blue-500/90 text-white text-xs font-bold rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2">
-            <FaUsers />
-            {t('tenfe.badge')}
+          <span className="px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-600 text-white text-sm font-bold rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2">
+            <FaPalette />
+            {t('portfoliogilberto.badge')}
           </span>
         </div>
 
-        {/* Badge de primer proyecto */}
+        {/* Badge de cliente */}
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold rounded-full shadow-lg backdrop-blur-sm">
-            {t('tenfe.badgeFirst')}
+          <span className="px-3 py-1.5 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs font-bold rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2">
+            <FaBriefcase />
+            Cliente: Gilberto
           </span>
         </div>
       </div>
@@ -162,7 +137,7 @@ const TenfeProject = ({
       <div className="relative p-6 sm:p-8">
         {/* File path header tech */}
         <div className="flex items-center gap-2 mb-4 pb-2 border-b" style={{ borderColor: `${accentColor}30` }}>
-          <span className="font-code text-xs opacity-60" style={{ color: accentColor }}>~/projects/tenfe/</span>
+          <span className="font-code text-xs opacity-60" style={{ color: accentColor }}>~/projects/portfolio-gilberto/</span>
           <span className="font-code text-xs px-2 py-0.5 rounded border" style={{ borderColor: `${accentColor}40`, color: accentColor }}>main</span>
           <span className="font-code text-xs px-2 py-0.5 rounded border" style={{ borderColor: `${accentColor}40`, color: accentColor }}>[deployed]</span>
         </div>
@@ -176,7 +151,7 @@ const TenfeProject = ({
                 textShadow: `0 0 20px ${accentColor}60`,
               }}
             >
-              {t('tenfe.title')}
+              {t('portfoliogilberto.title')}
             </h3>
             <a 
               href={project.url}
@@ -192,7 +167,7 @@ const TenfeProject = ({
         
         {/* Descripción */}
         <p className="text-white/70 text-base leading-relaxed mb-6">
-          {t('tenfe.description')}
+          {t('portfoliogilberto.description')}
         </p>
 
         {/* Tech Stack con Pills/Badges tech */}
@@ -293,12 +268,12 @@ const TenfeProject = ({
         </div>
       </div>
 
-      {/* Efecto de partículas en hover - Temática de trenes */}
+      {/* Efecto de partículas en hover - Temática de diseño */}
       <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute text-emerald-500/40 text-3xl"
+            className="absolute text-pink-500/40 text-3xl"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -313,7 +288,7 @@ const TenfeProject = ({
               delay: Math.random() * 2,
             }}
           >
-            🚆
+            🎨
           </motion.div>
         ))}
       </div>
@@ -321,5 +296,23 @@ const TenfeProject = ({
   );
 };
 
-export default TenfeProject;
+PortfolioGilbertoProject.propTypes = {
+  project: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    siteName: PropTypes.string.isRequired,
+    githubUrl: PropTypes.string
+  }).isRequired,
+  tempRating: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
+  averageRating: PropTypes.number.isRequired,
+  totalRatings: PropTypes.number.isRequired,
+  onTempRatingChange: PropTypes.func.isRequired,
+  onSubmitRating: PropTypes.func.isRequired
+};
+
+export default PortfolioGilbertoProject;
 

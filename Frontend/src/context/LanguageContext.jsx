@@ -94,6 +94,16 @@ const translations = {
     'hacienda.title': 'Hacienda San Carlos Borromeo',
     'hacienda.description': 'Sitio web para Hacienda San Carlos Borromeo, una hacienda histórica para bodas y eventos en México. Incluye secciones para eventos, galería, hotel, servicios y contacto. Diseño elegante y responsivo.',
     
+    // Biologic Analysis Project
+    'biologic.title': 'Biological Analysis Platform',
+    'biologic.description': 'Plataforma avanzada de procesamiento de imágenes biológicas con visualización 3D volumétrica. Desarrollada con React y Node.js, permite cargar imágenes TIFF, aplicar filtros, análisis de composición y vistas interactivas (Dashboard, Slider, Grid View, 3D Volumetric). Proyecto autodidacta enfocado en análisis científico de células.',
+    'biologic.badge': '🔬 Análisis Científico',
+    
+    // Portfolio Gilberto Project
+    'portfoliogilberto.title': 'Portfolio Gilberto - Diseño Web',
+    'portfoliogilberto.description': 'Portfolio profesional desarrollado para mostrar proyectos y servicios de diseño web. Incluye secciones de proyectos, habilidades, experiencia y contacto. Diseño moderno y responsivo con animaciones fluidas.',
+    'portfoliogilberto.badge': '🎨 Diseño Profesional',
+    
     // Signs/Phrases
     'signs.phrase1': 'TRANSFORMANDO IDEAS EN SOLUCIONES ELEGANTES',
     'signs.phrase2': 'DESARROLLO ESCALABLE Y CÓDIGO LIMPIO',
@@ -191,6 +201,16 @@ const translations = {
     // Hacienda San Carlos Project
     'hacienda.title': 'Hacienda San Carlos Borromeo',
     'hacienda.description': 'Website for Hacienda San Carlos Borromeo, a historic hacienda for weddings and events in Mexico. Includes sections for events, gallery, hotel, services, and contact. Elegant and responsive design.',
+    
+    // Biologic Analysis Project
+    'biologic.title': 'Biological Analysis Platform',
+    'biologic.description': 'Advanced biological image processing platform with 3D volumetric visualization. Built with React and Node.js, allows uploading TIFF images, applying filters, composition analysis, and interactive views (Dashboard, Slider, Grid View, 3D Volumetric). Self-taught project focused on scientific cell analysis.',
+    'biologic.badge': '🔬 Scientific Analysis',
+    
+    // Portfolio Gilberto Project
+    'portfoliogilberto.title': 'Portfolio Gilberto - Web Design',
+    'portfoliogilberto.description': 'Professional portfolio developed to showcase web design projects and services. Includes sections for projects, skills, experience, and contact. Modern and responsive design with smooth animations.',
+    'portfoliogilberto.badge': '🎨 Professional Design',
     
     // Signs/Phrases
     'signs.phrase1': 'TRANSFORMING IDEAS INTO ELEGANT SOLUTIONS',

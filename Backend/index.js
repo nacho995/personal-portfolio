@@ -22,13 +22,27 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Conectado a MongoDB'))
   .catch((error) => console.error('Error conectando a MongoDB:', error));
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // Rutas API
 app.use('/ratings', require('./routes/ratingRoutes'));
 
-// Manejar rutas del frontend en producción
-app.get('*', (req, res) => {
-  res.status(404).json({ message: 'API endpoint not found' });
-});
+const staticDir = path.join(__dirname, 'public');
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(staticDir));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(staticDir, 'index.html'));
+  });
+} else {
+  app.get('*', (req, res) => {
+    res.status(404).json({ message: 'API endpoint not found' });
+  });
+}
 
 // Puerto
 const PORT = process.env.PORT || 3000;

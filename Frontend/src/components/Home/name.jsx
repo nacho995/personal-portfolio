@@ -9,6 +9,14 @@ const Name = () => {
   const [particles, setParticles] = useState([]);
 
   const accentColor = theme === 'javascript' ? '#F7DF1E' : '#83CD29'; // Color principal del tema
+  const cursorLabels = {
+    hero: language === 'es'
+      ? 'Ignacio Dalesio · Experto React + Node'
+      : 'Ignacio Dalesio · React + Node specialist',
+    cv: language === 'es'
+      ? 'Descargar CV con casos reales'
+      : 'Download resume with real case studies'
+  };
 
   useEffect(() => {
     // Crear partículas de código
@@ -31,6 +39,8 @@ const Name = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
+      data-cursor-label={cursorLabels.hero}
+      data-cursor-intent="skill"
     >
       <div className="w-full max-w-7xl mx-auto relative">
         {/* Contenedor derecho: Foto y título */}
@@ -191,6 +201,8 @@ const Name = () => {
               }}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
+              data-cursor-label={cursorLabels.cv}
+              data-cursor-intent="cta"
             >
               {/* Hover effect */}
               <div 

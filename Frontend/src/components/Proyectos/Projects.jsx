@@ -1,6 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { getRatingStars, postStars } from '../../service/api';
+import { useMemo } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
 import TenfeProject from './TenfeProject';
@@ -8,97 +6,25 @@ import CodLetProject from './CodLetProject';
 import GozaMadridProject from './GozaMadridProject';
 import HaciendaSanCarlosProject from './HaciendaSanCarlosProject.jsx';
 import MundoTintaProject from './MundoTintaProject';
-
-// Componente para los Tags de tecnologías
-const TechTag = ({ name, color, children }) => (
-  <span className={`px-3 py-1 text-xs sm:text-sm bg-[${color}]/20 text-[${color}] rounded-full flex items-center gap-1.5`}>
-    {children}
-    <span>{name}</span>
-  </span>
-);
+import BiologicProject from './BiologicProject';
+import PortfolioGilbertoProject from './PortfolioGilbertoProject';
+import { buildProjects } from './projectsCatalog';
+import { useProjectRatings } from './useProjectRatings';
 
 export default function Projects() {
   const { t, language } = useLanguage();
   const { theme } = useTheme();
-  
-  const [tempRatings, setTempRatings] = useState({
-    'tenfe': 0,
-    'goza-madrid': 0,
-    'codlet': 0,
-    'hacienda-san-carlos': 0,
-    'mundo-tinta': 0
-  });
-  const [ratings, setRatings] = useState({
-    'tenfe': 0,
-    'goza-madrid': 0,
-    'codlet': 0,
-    'hacienda-san-carlos': 0,
-    'mundo-tinta': 0
-  });
-  const [averageRatings, setAverageRatings] = useState({
-    'tenfe': 0,
-    'goza-madrid': 0,
-    'codlet': 0,
-    'hacienda-san-carlos': 0,
-    'mundo-tinta': 0
-  });
-  const [totalRatings, setTotalRatings] = useState({
-    'tenfe': 0,
-    'goza-madrid': 0,
-    'codlet': 0,
-    'hacienda-san-carlos': 0,
-    'mundo-tinta': 0
-  });
 
-  // Objeto con los proyectos - useMemo para actualizar cuando cambia el idioma
-  const projects = useMemo(() => ({
-    tenfe: {
-      id: 'tenfe',
-      title: t('tenfe.title'),
-      description: t('tenfe.description'),
-      image: "/tenfe.png",
-      url: "https://tenfe.onrender.com",
-      siteName: "tenfe.onrender.com",
-      githubUrl: "https://github.com/NFSDMAD/1024-frontend",
-      githubBackendUrl: "https://github.com/NFSDMAD/1024-backend"
-    },
-    mundoTinta: {
-      id: 'mundo-tinta',
-      title: t('mundotinta.title'),
-      description: t('mundotinta.description'),
-      image: "/mundo-tinta.png",
-      url: "https://www.mundo-tinta.com",
-      siteName: "mundo-tinta.com",
-      githubUrl: "https://github.com/nacho995/mundotinta"
-    },
-    codlet: {
-      id: 'codlet',
-      title: t('codlet.title'),
-      description: t('codlet.description'),
-      image: "/Codlet.png",
-      url: "https://www.joycodlet.com",
-      siteName: "joycodlet.com",
-      githubUrl: "https://github.com/nacho995/DevLet"
-    },
-    gozaMadrid: {
-      id: 'goza-madrid',
-      title: t('gozamadrid.title'),
-      description: t('gozamadrid.description'),
-      image: "/gozamadridpreview.png",
-      url: "https://realestategozamadrid.com/",
-      siteName: "realestategozamadrid.com",
-      githubUrl: "https://github.com/nacho995/nextjs-gozamadrid"
-    },
-    haciendaSanCarlos: {
-      id: 'hacienda-san-carlos',
-      title: t('hacienda.title'),
-      description: t('hacienda.description'),
-      image: "/hdasancarlos.png",
-      url: "https://www.hdasancarlosborromeo.com/",
-      siteName: "hdasancarlosborromeo.com",
-      githubUrl: "https://github.com/nacho995/hacienda"
-    }
-  }), [language, t]);
+  const {
+    tempRatings,
+    ratings,
+    averageRatings,
+    totalRatings,
+    handleTempRating,
+    handleSubmitRating
+  } = useProjectRatings();
+
+  const projects = useMemo(() => buildProjects(t), [language, t]);
 
   // Cargar ratings desde la API al iniciar - Mejorando para separar correctamente las valoraciones
   useEffect(() => {
@@ -110,12 +36,16 @@ export default function Projects() {
         const codletData = await getRatingStars('codlet');
         const haciendaData = await getRatingStars('hacienda-san-carlos');
         const mundoTintaData = await getRatingStars('mundo-tinta');
+        const biologicData = await getRatingStars('biologic-analysis');
+        const portfolioGilbertoData = await getRatingStars('portfolio-gilberto');
         
         console.log('Datos cargados para Tenfe:', tenfeData);
         console.log('Datos cargados para Goza Madrid:', gozaData);
         console.log('Datos cargados para CodLet:', codletData);
         console.log('Datos cargados para Hacienda San Carlos:', haciendaData);
         console.log('Datos cargados para Mundo-Tinta:', mundoTintaData);
+        console.log('Datos cargados para Biologic Analysis:', biologicData);
+        console.log('Datos cargados para Portfolio Gilberto:', portfolioGilbertoData);
         
         // Actualizar los estados con los datos correctos para cada proyecto
         setAverageRatings({
@@ -123,7 +53,9 @@ export default function Projects() {
           'goza-madrid': gozaData.averageRating || 0,
           'codlet': codletData.averageRating || 0,
           'hacienda-san-carlos': haciendaData.averageRating || 0,
-          'mundo-tinta': mundoTintaData.averageRating || 0
+          'mundo-tinta': mundoTintaData.averageRating || 0,
+          'biologic-analysis': biologicData.averageRating || 0,
+          'portfolio-gilberto': portfolioGilbertoData.averageRating || 0
         });
         
         setTotalRatings({
@@ -131,7 +63,9 @@ export default function Projects() {
           'goza-madrid': gozaData.totalRatings || 0,
           'codlet': codletData.totalRatings || 0,
           'hacienda-san-carlos': haciendaData.totalRatings || 0,
-          'mundo-tinta': mundoTintaData.totalRatings || 0
+          'mundo-tinta': mundoTintaData.totalRatings || 0,
+          'biologic-analysis': biologicData.totalRatings || 0,
+          'portfolio-gilberto': portfolioGilbertoData.totalRatings || 0
         });
         
         setRatings({
@@ -139,7 +73,9 @@ export default function Projects() {
           'goza-madrid': gozaData.userRating || 0,
           'codlet': codletData.userRating || 0,
           'hacienda-san-carlos': haciendaData.userRating || 0,
-          'mundo-tinta': mundoTintaData.userRating || 0
+          'mundo-tinta': mundoTintaData.userRating || 0,
+          'biologic-analysis': biologicData.userRating || 0,
+          'portfolio-gilberto': portfolioGilbertoData.userRating || 0
         });
         
         // Inicializar los ratings temporales con los valores actuales
@@ -148,7 +84,9 @@ export default function Projects() {
           'goza-madrid': gozaData.userRating || 0,
           'codlet': codletData.userRating || 0,
           'hacienda-san-carlos': haciendaData.userRating || 0,
-          'mundo-tinta': mundoTintaData.userRating || 0
+          'mundo-tinta': mundoTintaData.userRating || 0,
+          'biologic-analysis': biologicData.userRating || 0,
+          'portfolio-gilberto': portfolioGilbertoData.userRating || 0
         });
       } catch (error) {
         console.error('Error al cargar valoraciones:', error);
@@ -209,8 +147,16 @@ export default function Projects() {
 
   const accentColor = theme === 'javascript' ? '#F7DF1E' : '#83CD29'; // Color del tema
 
+  const cursorLabel = language === 'es'
+    ? 'Stack React + Node aplicado a producto real'
+    : 'React + Node stack applied to real products'
+
   return (
-    <div className="relative w-full mt-[5vh] max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+    <div
+      className="relative w-full mt-[5vh] max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20"
+      data-cursor-label={cursorLabel}
+      data-cursor-intent="skill"
+    >
       {/* Corner brackets */}
       <div className="absolute -top-6 -left-6 font-code text-3xl opacity-40" style={{ color: accentColor }}>⌜</div>
       <div className="absolute -top-6 -right-6 font-code text-3xl opacity-40" style={{ color: accentColor }}>⌝</div>
@@ -304,6 +250,28 @@ export default function Projects() {
             totalRatings={totalRatings['hacienda-san-carlos']}
             onTempRatingChange={(stars) => handleTempRating(stars, 'hacienda-san-carlos')}
             onSubmitRating={() => handleSubmitRating('hacienda-san-carlos')}
+          />
+
+          {/* Biologic Analysis Project */}
+          <BiologicProject 
+            project={projects.biologicAnalysis} 
+            tempRating={tempRatings['biologic-analysis']} 
+            rating={ratings['biologic-analysis']}
+            averageRating={averageRatings['biologic-analysis']}
+            totalRatings={totalRatings['biologic-analysis']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'biologic-analysis')}
+            onSubmitRating={() => handleSubmitRating('biologic-analysis')}
+          />
+
+          {/* Portfolio Gilberto Project */}
+          <PortfolioGilbertoProject 
+            project={projects.portfolioGilberto} 
+            tempRating={tempRatings['portfolio-gilberto']} 
+            rating={ratings['portfolio-gilberto']}
+            averageRating={averageRatings['portfolio-gilberto']}
+            totalRatings={totalRatings['portfolio-gilberto']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'portfolio-gilberto')}
+            onSubmitRating={() => handleSubmitRating('portfolio-gilberto')}
           />
         </div>
       </div>
