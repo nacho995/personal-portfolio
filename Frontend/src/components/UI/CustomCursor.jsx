@@ -46,8 +46,8 @@ export default function CustomCursor() {
       const distance = Math.sqrt(dx * dx + dy * dy)
 
       if (distance > 0.5) {
-        currentPosition.current.x = lerp(currentPosition.current.x, targetPosition.current.x, 0.15)
-        currentPosition.current.y = lerp(currentPosition.current.y, targetPosition.current.y, 0.15)
+        currentPosition.current.x = lerp(currentPosition.current.x, targetPosition.current.x, 0.25)
+        currentPosition.current.y = lerp(currentPosition.current.y, targetPosition.current.y, 0.25)
 
         if (cursorRef.current) {
           cursorRef.current.style.transform = `translate3d(${currentPosition.current.x}px, ${currentPosition.current.y}px, 0)`
@@ -96,6 +96,8 @@ export default function CustomCursor() {
     return null
   }
 
+  const isInteractive = intent === 'cta' || intent === 'skill'
+
   return (
     <div
       ref={cursorRef}
@@ -119,8 +121,12 @@ export default function CustomCursor() {
           </span>
         ))}
       </div>
+      
+      <div className="custom-cursor__binary" data-layer="binary">
+        {isInteractive ? '1' : '0'}
+      </div>
+      
       <span data-testid="cursor-ring" className="custom-cursor__ring" data-layer="ring" />
-      <span data-testid="cursor-core" className="custom-cursor__core" />
       <span data-testid="cursor-label" className="custom-cursor__label">
         {label}
       </span>

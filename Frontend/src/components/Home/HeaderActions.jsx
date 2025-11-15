@@ -24,7 +24,7 @@ export function HeaderActions({
         <span className="text-base">{flag}</span>
         <span className="hidden sm:inline">{languageLabel}</span>
       </motion.button>
-      <button
+      <motion.button
         onClick={onToggleMenu}
         className={`inline-flex items-center justify-center p-2 rounded-lg ${
           isMenuOpen
@@ -38,12 +38,21 @@ export function HeaderActions({
         aria-controls="main-navigation"
         data-cursor-label={isMenuOpen ? 'Cerrar menú radial' : 'Explorar menú radial'}
         data-cursor-intent="cta"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
-        <svg
+        <motion.svg
           className="w-6 h-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
           stroke="currentColor"
           fill="none"
           viewBox="0 0 24 24"
+          animate={{
+            rotate: isMenuOpen ? 360 : 0
+          }}
+          transition={{
+            duration: 0.4,
+            ease: "easeInOut"
+          }}
         >
           {isMenuOpen ? (
             <path
@@ -60,11 +69,10 @@ export function HeaderActions({
               d="M4 6h16M4 12h16M4 18h16"
             />
           )}
-        </svg>
-      </button>
+        </motion.svg>
+      </motion.button>
     </div>
   )
 }
 
 export default HeaderActions
-

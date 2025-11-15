@@ -55,13 +55,15 @@ export const Header = () => {
   const menuItems = [
     [
       { 
-        text: 'HOME', 
-        path: '/', 
+        text: 'CERRAR MENÚ', 
+        path: '#', 
         color: theme === 'javascript' 
           ? 'from-[#FFE55C]/95 via-[#FDB813]/90 to-[#F7DF1E]/80' 
           : 'from-[#90C53F]/95 via-[#83CD29]/90 to-[#339933]/80',
         radius: getResponsiveRadius(300),
-        startAngle: 180
+        startAngle: 180,
+        isCloseButton: true,
+        isBurgerIcon: true
       }
     ],
     [
@@ -104,18 +106,8 @@ export const Header = () => {
         color: theme === 'javascript' 
           ? 'from-[#D4A500]/75 via-[#C89500]/70 to-[#B88500]/60' 
           : 'from-[#4A8D12]/75 via-[#3A7810]/70 to-[#2A630E]/60',
-        radius: getResponsiveRadius(880),
+        radius: getResponsiveRadius(900),
         startAngle: 190
-      }
-    ],
-    [
-      { 
-        text: 'CERRAR MENU', 
-        path: '#', 
-        color: 'from-black/90 via-black/95 to-black',
-        radius: getResponsiveRadius(1050),
-        startAngle: 195,
-        isCloseButton: true
       }
     ]
   ]

@@ -2,12 +2,11 @@ import { AnimatePresence, motion } from 'framer-motion'
 import PropTypes from 'prop-types'
 
 const letterLayoutConfig = {
-  HOME: { arcLength: 55, startAngleOffset: -30 },
   PERFIL: { arcLength: 40, startAngleOffset: -30 },
   PROYECTOS: { arcLength: 40, startAngleOffset: -30 },
   GITHUB: { arcLength: 35, startAngleOffset: -30 },
   LINKEDIN: { arcLength: 40, startAngleOffset: -30 },
-  'CERRAR MENU': { arcLength: 65, startAngleOffset: -30 },
+  'CERRAR MENÚ': { arcLength: 90, startAngleOffset: -1 },
 }
 
 const getLetterRadius = (baseRadius) => {
@@ -69,34 +68,105 @@ export function CircularMenu({
                 <div className="absolute inset-0 border-l border-t border-white/20 rounded-bl-full shadow-inner" />
 
                 <div className="absolute inset-0 w-full h-full z-0">
-                  {item[0].text.split('').map((letter, letterIndex) => {
-                    const totalLetters = item[0].text.length
-                    const config = letterLayoutConfig[item[0].text] ?? letterLayoutConfig.HOME
-                    const angleStep = config.arcLength / totalLetters
-                    const currentAngle = item[0].startAngle + config.startAngleOffset - letterIndex * angleStep
-                    const radius = getLetterRadius(item[0].radius)
-                    const angleInRadians = currentAngle * (Math.PI / 180)
+                  {(() => {
+                    const config = letterLayoutConfig[item[0].text] ?? letterLayoutConfig.PERFIL
+                    
+                    // Si es el ícono de hamburguesa con texto en arco
+                    if (item[0].isBurgerIcon) {
+                      const radius = getLetterRadius(item[0].radius)
+                      
+                      return (
+                        <>
+                          {/* Ícono de hamburguesa más a la izquierda */}
+                          <motion.div
+                            className="absolute text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white/95 group-hover:text-white transition-all duration-500 select-none"
+                            style={{
+                              right: `${radius * 0.3}px`,
+                              top: `${radius * 0.3}px`,
+                              textShadow: '0 0 15px rgba(255,255,255,0.4), 0 2px 5px rgba(0,0,0,0.5)'
+                            }}
+                            animate={{
+                              rotate: 360
+                            }}
+                            transition={{
+                              duration: 0.4,
+                              ease: "easeInOut"
+                            }}
+                          >
+                            ☰
+                          </motion.div>
+                          
+                          {/* Letras en arco con espaciado correcto */}
+                          {item[0].text.split('').map((letter, letterIndex) => {
+                            // Filtrar espacios para el conteo pero mantenerlos en la renderización
+                            const letters = item[0].text.split('')
+                            const nonSpaceLetters = letters.filter(l => l !== ' ')
+                            const totalLetters = nonSpaceLetters.length
+                            
+                            // Si es un espacio, no renderizarlo pero contar su posición
+                            if (letter === ' ') {
+                              return null
+                            }
+                            
+                            // Calcular el índice sin espacios
+                            const lettersUpToNow = item[0].text.substring(0, letterIndex).split('').filter(l => l !== ' ').length
+                            const angleStep = config.arcLength / (totalLetters - 1)
+                            const currentAngle = item[0].startAngle + config.startAngleOffset - lettersUpToNow * angleStep
+                            const angleInRadians = currentAngle * (Math.PI / 180)
 
-                    return (
-                      <div
-                        key={`${letter}-${letterIndex}`}
-                        className="absolute text-[10px] xs:text-[11px] sm:text-sm md:text-[13px] lg:text-base font-bold tracking-normal text-white/95 group-hover:text-white transition-all duration-500 select-none"
-                        style={{
-                          left: 'calc(100% - 20px)',
-                          top: '20px',
-                          transform: `
-                            translate(${radius * Math.cos(angleInRadians)}px, 
-                                    ${radius * Math.sin(angleInRadians)}px)
-                            rotate(${currentAngle - 90}deg)
-                          `,
-                          transformOrigin: 'top right',
-                          textShadow: '0 0 15px rgba(255,255,255,0.4), 0 2px 5px rgba(0,0,0,0.5)'
-                        }}
-                      >
-                        {letter}
-                      </div>
-                    )
-                  })}
+                            return (
+                              <div
+                                key={`${letter}-${letterIndex}`}
+                                className="absolute text-[10px] xs:text-[11px] sm:text-sm md:text-[13px] lg:text-base font-bold tracking-normal text-white/95 group-hover:text-white transition-all duration-500 select-none"
+                                style={{
+                                  left: 'calc(100% - 20px)',
+                                  top: '20px',
+                                  transform: `
+                                    translate(${radius * Math.cos(angleInRadians)}px, 
+                                            ${radius * Math.sin(angleInRadians)}px)
+                                    rotate(${currentAngle - 90}deg)
+                                  `,
+                                  transformOrigin: 'top right',
+                                  textShadow: '0 0 15px rgba(255,255,255,0.4), 0 2px 5px rgba(0,0,0,0.5)'
+                                }}
+                              >
+                                {letter}
+                              </div>
+                            )
+                          })}
+                        </>
+                      )
+                    }
+                    
+                    // Para el resto de items, mantener el comportamiento original
+                    return item[0].text.split('').map((letter, letterIndex) => {
+                      const totalLetters = item[0].text.length
+                      const angleStep = config.arcLength / totalLetters
+                      const currentAngle = item[0].startAngle + config.startAngleOffset - letterIndex * angleStep
+                      const radius = getLetterRadius(item[0].radius)
+                      const angleInRadians = currentAngle * (Math.PI / 180)
+
+                      return (
+                        <div
+                          key={`${letter}-${letterIndex}`}
+                          className="absolute text-[10px] xs:text-[11px] sm:text-sm md:text-[13px] lg:text-base font-bold tracking-normal text-white/95 group-hover:text-white transition-all duration-500 select-none"
+                          style={{
+                            left: 'calc(100% - 20px)',
+                            top: '20px',
+                            transform: `
+                              translate(${radius * Math.cos(angleInRadians)}px, 
+                                      ${radius * Math.sin(angleInRadians)}px)
+                              rotate(${currentAngle - 90}deg)
+                            `,
+                            transformOrigin: 'top right',
+                            textShadow: '0 0 15px rgba(255,255,255,0.4), 0 2px 5px rgba(0,0,0,0.5)'
+                          }}
+                        >
+                          {letter}
+                        </div>
+                      )
+                    })
+                  })()}
                 </div>
               </div>
             </motion.div>

@@ -12,8 +12,8 @@ describe('CustomCursor', () => {
     render(<CustomCursor />)
 
     expect(screen.getByTestId('cursor-ring')).toBeInTheDocument()
-    expect(screen.getByTestId('cursor-core')).toBeInTheDocument()
     expect(screen.getByTestId('cursor-label')).toHaveTextContent(/Ignacio .*Dalesio/i)
+    expect(screen.getByText('0')).toBeInTheDocument()
   })
 
   it('updates the contextual label when hovering annotated elements', async () => {
@@ -31,6 +31,7 @@ describe('CustomCursor', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('cursor-label')).toHaveTextContent('React + Node')
+      expect(screen.getByText('1')).toBeInTheDocument()
     })
     expect(screen.getByTestId('cursor-root')).toHaveAttribute('data-intent', 'cta')
   })
