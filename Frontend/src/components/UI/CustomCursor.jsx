@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-const DEFAULT_LABEL = 'Ignacio “Nacho” Dalesio · React · Node · IA aplicada'
+const DEFAULT_LABEL = 'Ignacio "Nacho" Dalesio · React · Node · IA aplicada'
 
 const KNOWLEDGE_BADGES = [
   { id: 'react', text: 'React 19', accent: 'var(--neon-cyan)' },

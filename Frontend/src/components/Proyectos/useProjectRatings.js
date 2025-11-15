@@ -14,6 +14,14 @@ const buildStateFromResponses = (responses, key) =>
     return acc
   }, {})
 
+const notifyRatingError = (message) => {
+  if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+    window.alert(message)
+  } else {
+    console.warn(message)
+  }
+}
+
 export function useProjectRatings() {
   const [tempRatings, setTempRatings] = useState(createStateMap)
   const [ratings, setRatings] = useState(createStateMap)
@@ -77,11 +85,11 @@ export function useProjectRatings() {
           }))
         } else {
           console.error(`Error en la respuesta al valorar ${projectId}:`, response)
-          alert(`No se pudo guardar la valoración para ${projectId}. Por favor, intenta de nuevo.`)
+          notifyRatingError(`No se pudo guardar la valoración para ${projectId}. Por favor, intenta de nuevo.`)
         }
       } catch (error) {
         console.error(`Error al enviar valoración para ${projectId}:`, error)
-        alert(`Error al guardar la valoración para ${projectId}. Por favor, intenta de nuevo.`)
+        notifyRatingError(`Error al guardar la valoración para ${projectId}. Por favor, intenta de nuevo.`)
       }
     },
     [ratings, tempRatings]
