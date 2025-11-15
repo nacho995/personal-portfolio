@@ -59,7 +59,7 @@ export const buildProjects = (t) => ({
     id: 'biologic-analysis',
     title: t('biologic.title'),
     description: t('biologic.description'),
-    image: '/biologic-dashboard.png',
+    image: '/biologic.png',
     url: 'https://biologic-project-3ob2cyge7-nacho995s-projects.vercel.app',
     siteName: 'biologic-analysis.vercel.app',
     githubUrl: 'https://github.com/nacho995/biologic-project'

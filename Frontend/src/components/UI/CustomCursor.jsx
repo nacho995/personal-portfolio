@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 const DEFAULT_LABEL = 'Ignacio "Nacho" Dalesio · React · Node · IA aplicada'
 
@@ -24,7 +24,11 @@ export default function CustomCursor() {
     return window.matchMedia('(pointer: coarse)').matches
   }, [])
 
-  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const cursorRef = useRef(null)
+  const targetPosition = useRef({ x: 0, y: 0 })
+  const currentPosition = useRef({ x: 0, y: 0 })
+  const rafId = useRef(null)
+
   const [intent, setIntent] = useState('neutral')
   const [label, setLabel] = useState(DEFAULT_LABEL)
   const [isVisible, setIsVisible] = useState(!coarsePointer)
@@ -34,8 +38,28 @@ export default function CustomCursor() {
       return () => {}
     }
 
+    const lerp = (start, end, factor) => start + (end - start) * factor
+
+    const animate = () => {
+      const dx = targetPosition.current.x - currentPosition.current.x
+      const dy = targetPosition.current.y - currentPosition.current.y
+      const distance = Math.sqrt(dx * dx + dy * dy)
+
+      if (distance > 0.5) {
+        currentPosition.current.x = lerp(currentPosition.current.x, targetPosition.current.x, 0.15)
+        currentPosition.current.y = lerp(currentPosition.current.y, targetPosition.current.y, 0.15)
+
+        if (cursorRef.current) {
+          cursorRef.current.style.transform = `translate3d(${currentPosition.current.x}px, ${currentPosition.current.y}px, 0)`
+        }
+      }
+
+      rafId.current = requestAnimationFrame(animate)
+    }
+
     const handlePointerMove = (event) => {
-      setPosition({ x: event.clientX, y: event.clientY })
+      targetPosition.current.x = event.clientX
+      targetPosition.current.y = event.clientY
 
       const annotated = event.target.closest('[data-cursor-label]')
       if (isAnnotatedTarget(annotated)) {
@@ -44,7 +68,6 @@ export default function CustomCursor() {
         setLabel(DEFAULT_LABEL)
       }
       setIntent(findIntent(event.target))
-
       setIsVisible(true)
     }
 
@@ -52,15 +75,20 @@ export default function CustomCursor() {
     const handlePointerEnter = () => setIsVisible(true)
 
     document.body.classList.add('cursor-enhanced')
-    window.addEventListener('pointermove', handlePointerMove)
+    window.addEventListener('pointermove', handlePointerMove, { passive: true })
     window.addEventListener('pointerleave', handlePointerLeave)
     window.addEventListener('pointerenter', handlePointerEnter)
+
+    rafId.current = requestAnimationFrame(animate)
 
     return () => {
       document.body.classList.remove('cursor-enhanced')
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerleave', handlePointerLeave)
       window.removeEventListener('pointerenter', handlePointerEnter)
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current)
+      }
     }
   }, [coarsePointer])
 
@@ -70,10 +98,10 @@ export default function CustomCursor() {
 
   return (
     <div
+      ref={cursorRef}
       data-testid="cursor-root"
       data-intent={intent}
       className="custom-cursor"
-      style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0)` }}
       aria-hidden="true"
     >
       <div className="custom-cursor__halo">
