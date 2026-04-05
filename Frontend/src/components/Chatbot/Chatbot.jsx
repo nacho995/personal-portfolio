@@ -151,8 +151,7 @@ TU PERSONALIDAD (MODO SINCERO):
   // Función para obtener respuesta de la IA
   const getAIResponse = async (userMessage) => {
     try {
-      const apiUrl = import.meta.env.VITE_PUBLIC_API_URL || '';
-      const response = await fetch(`${apiUrl}/chat`, {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
