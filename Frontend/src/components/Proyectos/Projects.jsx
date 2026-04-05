@@ -113,6 +113,39 @@ export default function Projects() {
             onSubmitRating={() => handleSubmitRating('shadowsoc')}
           />
 
+          {/* Lorekeeper - Story Bible Studio */}
+          <GenericProject
+            project={projects.lorekeeper}
+            tempRating={tempRatings['lorekeeper']}
+            rating={ratings['lorekeeper']}
+            averageRating={averageRatings['lorekeeper']}
+            totalRatings={totalRatings['lorekeeper']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'lorekeeper')}
+            onSubmitRating={() => handleSubmitRating('lorekeeper')}
+          />
+
+          {/* VibeLink - Dating App */}
+          <GenericProject
+            project={projects.vibelink}
+            tempRating={tempRatings['vibelink']}
+            rating={ratings['vibelink']}
+            averageRating={averageRatings['vibelink']}
+            totalRatings={totalRatings['vibelink']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'vibelink')}
+            onSubmitRating={() => handleSubmitRating('vibelink')}
+          />
+
+          {/* JobBoard AI - Job Recommendations */}
+          <GenericProject
+            project={projects.jobboardAi}
+            tempRating={tempRatings['jobboard-ai']}
+            rating={ratings['jobboard-ai']}
+            averageRating={averageRatings['jobboard-ai']}
+            totalRatings={totalRatings['jobboard-ai']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'jobboard-ai')}
+            onSubmitRating={() => handleSubmitRating('jobboard-ai')}
+          />
+
           {/* Tenfe Project - MI PRIMER PROYECTO EN EQUIPO */}
           <TenfeProject 
             project={projects.tenfe} 

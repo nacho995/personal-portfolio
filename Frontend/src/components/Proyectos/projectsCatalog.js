@@ -2,6 +2,9 @@ export const PROJECT_IDS = [
   'cortex-id',
   'devpulse',
   'shadowsoc',
+  'lorekeeper',
+  'vibelink',
+  'jobboard-ai',
   'goza-madrid',
   'hacienda-san-carlos',
   'tenfe',
@@ -61,6 +64,57 @@ export const buildProjects = (t) => ({
       { name: "Kafka", color: "from-[#231F20] to-[#444444]" },
       { name: "SignalR", color: "from-[#512BD4] to-[#7B68EE]" },
       { name: "Leaflet", color: "from-[#199900] to-[#0D6600]" }
+    ]
+  },
+  lorekeeper: {
+    id: 'lorekeeper',
+    title: t('lorekeeper.title'),
+    description: t('lorekeeper.description'),
+    image: '/lorekeeper.png',
+    url: 'https://lorekeeper-web.fly.dev',
+    siteName: 'lorekeeper-web.fly.dev',
+    githubUrl: 'https://github.com/nacho995/lorekeeper',
+    techStack: [
+      { name: ".NET 8", color: "from-[#512BD4] to-[#3A1D99]" },
+      { name: "React", color: "from-[#61DAFB] to-[#3A8DB5]" },
+      { name: "FastAPI", color: "from-[#009688] to-[#00695C]" },
+      { name: "PostgreSQL", color: "from-[#336791] to-[#1F4060]" },
+      { name: "YARP Gateway", color: "from-[#512BD4] to-[#7B68EE]" },
+      { name: "Groq AI", color: "from-[#FF6B6B] to-[#CC3333]" }
+    ]
+  },
+  vibelink: {
+    id: 'vibelink',
+    title: t('vibelink.title'),
+    description: t('vibelink.description'),
+    image: '/biologic.png',
+    url: null,
+    siteName: null,
+    githubUrl: 'https://github.com/nacho995/VibeLink',
+    techStack: [
+      { name: "React", color: "from-[#61DAFB] to-[#3A8DB5]" },
+      { name: "FastAPI", color: "from-[#009688] to-[#00695C]" },
+      { name: "PostgreSQL", color: "from-[#336791] to-[#1F4060]" },
+      { name: "TMDB API", color: "from-[#01D277] to-[#019A58]" },
+      { name: "Stripe", color: "from-[#635BFF] to-[#4A42CC]" },
+      { name: "Docker", color: "from-[#2496ED] to-[#1A6DB5]" }
+    ]
+  },
+  jobboardAi: {
+    id: 'jobboard-ai',
+    title: t('jobboardai.title'),
+    description: t('jobboardai.description'),
+    image: '/devpulse.png',
+    url: null,
+    siteName: null,
+    githubUrl: 'https://github.com/nacho995/JOBAI',
+    techStack: [
+      { name: "Java 21", color: "from-[#ED8B00] to-[#B07000]" },
+      { name: "Spring Boot", color: "from-[#6DB33F] to-[#4A7A2A]" },
+      { name: "Angular 21", color: "from-[#DD0031] to-[#A10024]" },
+      { name: "FastAPI", color: "from-[#009688] to-[#00695C]" },
+      { name: "Groq AI", color: "from-[#FF6B6B] to-[#CC3333]" },
+      { name: "PostgreSQL", color: "from-[#336791] to-[#1F4060]" }
     ]
   },
   tenfe: {
