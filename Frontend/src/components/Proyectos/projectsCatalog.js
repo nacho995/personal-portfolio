@@ -1,14 +1,68 @@
 export const PROJECT_IDS = [
-  'tenfe',
+  'cortex-id',
+  'devpulse',
+  'shadowsoc',
   'goza-madrid',
-  'codlet',
   'hacienda-san-carlos',
+  'tenfe',
+  'codlet',
   'mundo-tinta',
   'biologic-analysis',
   'portfolio-gilberto'
 ]
 
 export const buildProjects = (t) => ({
+  cortexId: {
+    id: 'cortex-id',
+    title: t('cortexid.title'),
+    description: t('cortexid.description'),
+    image: '/cortexid.png',
+    url: null,
+    siteName: null,
+    githubUrl: 'https://github.com/nacho995/cortex-ide',
+    techStack: [
+      { name: "Java 21", color: "from-[#ED8B00] to-[#B07000]" },
+      { name: "Spring Boot", color: "from-[#6DB33F] to-[#4A7A2A]" },
+      { name: "Angular 17+", color: "from-[#DD0031] to-[#A10024]" },
+      { name: "Electron", color: "from-[#47848F] to-[#2C6E7A]" },
+      { name: "WebSocket", color: "from-[#FF6B6B] to-[#CC5555]" },
+      { name: "Monaco Editor", color: "from-[#1E1E1E] to-[#333333]" }
+    ]
+  },
+  devpulse: {
+    id: 'devpulse',
+    title: t('devpulse.title'),
+    description: t('devpulse.description'),
+    image: '/devpulse.png',
+    url: 'https://devpulse-frontend.onrender.com',
+    siteName: 'devpulse.onrender.com',
+    githubUrl: 'https://github.com/nacho995/DevPulse',
+    techStack: [
+      { name: "Java 21", color: "from-[#ED8B00] to-[#B07000]" },
+      { name: "Spring Boot", color: "from-[#6DB33F] to-[#4A7A2A]" },
+      { name: "Angular 21", color: "from-[#DD0031] to-[#A10024]" },
+      { name: "Spring Security", color: "from-[#6DB33F] to-[#3A6B1F]" },
+      { name: "JWT", color: "from-[#000000] to-[#333333]" },
+      { name: "PostgreSQL", color: "from-[#336791] to-[#1F4060]" }
+    ]
+  },
+  shadowsoc: {
+    id: 'shadowsoc',
+    title: t('shadowsoc.title'),
+    description: t('shadowsoc.description'),
+    image: '/shadowsoc.png',
+    url: null,
+    siteName: null,
+    githubUrl: 'https://github.com/nacho995/ShadowSOC',
+    techStack: [
+      { name: "C# .NET", color: "from-[#512BD4] to-[#3A1D99]" },
+      { name: "Angular", color: "from-[#DD0031] to-[#A10024]" },
+      { name: "RabbitMQ", color: "from-[#FF6600] to-[#CC5200]" },
+      { name: "Kafka", color: "from-[#231F20] to-[#444444]" },
+      { name: "SignalR", color: "from-[#512BD4] to-[#7B68EE]" },
+      { name: "Leaflet", color: "from-[#199900] to-[#0D6600]" }
+    ]
+  },
   tenfe: {
     id: 'tenfe',
     title: t('tenfe.title'),
@@ -74,4 +128,3 @@ export const buildProjects = (t) => ({
     githubUrl: 'https://github.com/nacho995/portfolio-gilberto'
   }
 })
-

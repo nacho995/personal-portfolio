@@ -72,6 +72,12 @@ const translations = {
     'projects.ratings': 'valoraciones',
     
     // Tenfe Project
+    'cortexid.title': 'Cortex-ID — IDE con IA Open Source',
+    'cortexid.description': 'IDE de escritorio open-source que compite con Cursor. Angular 17+ + Java 21 Spring Boot + Electron. Monaco Editor, terminal xterm.js, IA multi-agente con debate entre agentes, WebSocket en tiempo real, proxy LSP, Tree-sitter AST, JGit para control de versiones, pgvector RAG. Privacidad total con BYOK.',
+    'devpulse.title': 'DevPulse — Observatorio Tech en Tiempo Real',
+    'devpulse.description': 'Monitoriza 50+ tecnologías en GitHub clasificadas por repositorios, estrellas y forks. Java 21 + Spring Boot + Angular 21. Arquitectura hexagonal, Spring Security con JWT, PostgreSQL 17, sincronización automática cada 24h con la API de GitHub, Swagger UI. Desplegado en Render con Docker.',
+    'shadowsoc.title': 'ShadowSOC — Centro de Operaciones de Seguridad',
+    'shadowsoc.description': 'Dashboard SOC con microservicios y visualización de ataques en tiempo real. C# .NET, Angular, RabbitMQ para colas de mensajes, Kafka para streaming de eventos, SignalR para actualizaciones en vivo, y Leaflet para mapa de geolocalización de ataques. Arquitectura event-driven.',
     'tenfe.title': 'Tenfe - Sistema de Reservas de Trenes',
     'tenfe.description': 'Mi primer proyecto en equipo. Aplicación web completa para reservar billetes de tren, desarrollada en colaboración con un equipo de 5 personas. Construida con React, Node.js y MongoDB. Incluye sistema de búsqueda de rutas, gestión de reservas, panel de usuario y administración de viajes.',
     'tenfe.badge': '👥 Proyecto en Equipo (5 personas)',
@@ -180,6 +186,12 @@ const translations = {
     'projects.ratings': 'ratings',
     
     // Tenfe Project
+    'cortexid.title': 'Cortex-ID — Open Source AI-Powered IDE',
+    'cortexid.description': 'Open-source desktop IDE competing with Cursor. Angular 17+ + Java 21 Spring Boot + Electron. Monaco Editor, xterm.js terminal, multi-agent AI with agent debates, real-time WebSocket, LSP proxy, Tree-sitter AST, JGit version control, pgvector RAG. Full privacy with BYOK.',
+    'devpulse.title': 'DevPulse — Real-Time Tech Observatory',
+    'devpulse.description': 'Tracks 50+ technologies across GitHub ranked by repositories, stars, and forks. Java 21 + Spring Boot + Angular 21. Hexagonal architecture, Spring Security with JWT, PostgreSQL 17, automated 24h GitHub API sync, Swagger UI. Deployed on Render with Docker.',
+    'shadowsoc.title': 'ShadowSOC — Security Operations Center',
+    'shadowsoc.description': 'Microservices SOC dashboard with real-time attack visualization. C# .NET, Angular, RabbitMQ for message queuing, Kafka for event streaming, SignalR for live updates, and Leaflet for attack geolocation map. Event-driven architecture.',
     'tenfe.title': 'Tenfe - Train Booking System',
     'tenfe.description': 'My first team project. Complete web application for booking train tickets, developed in collaboration with a team of 5 people. Built with React, Node.js, and MongoDB. Includes route search system, booking management, user panel, and trip administration.',
     'tenfe.badge': '👥 Team Project (5 people)',

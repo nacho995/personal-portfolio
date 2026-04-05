@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
+import GenericProject from './GenericProject';
 import TenfeProject from './TenfeProject';
 import CodLetProject from './CodLetProject';
 import GozaMadridProject from './GozaMadridProject';
@@ -79,6 +80,39 @@ export default function Projects() {
 
         {/* Contenido */}
         <div className="relative space-y-8">
+          {/* Cortex-ID - AI-Powered IDE */}
+          <GenericProject
+            project={projects.cortexId}
+            tempRating={tempRatings['cortex-id']}
+            rating={ratings['cortex-id']}
+            averageRating={averageRatings['cortex-id']}
+            totalRatings={totalRatings['cortex-id']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'cortex-id')}
+            onSubmitRating={() => handleSubmitRating('cortex-id')}
+          />
+
+          {/* DevPulse - Tech Observatory */}
+          <GenericProject
+            project={projects.devpulse}
+            tempRating={tempRatings['devpulse']}
+            rating={ratings['devpulse']}
+            averageRating={averageRatings['devpulse']}
+            totalRatings={totalRatings['devpulse']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'devpulse')}
+            onSubmitRating={() => handleSubmitRating('devpulse')}
+          />
+
+          {/* ShadowSOC - Security Operations Center */}
+          <GenericProject
+            project={projects.shadowsoc}
+            tempRating={tempRatings['shadowsoc']}
+            rating={ratings['shadowsoc']}
+            averageRating={averageRatings['shadowsoc']}
+            totalRatings={totalRatings['shadowsoc']}
+            onTempRatingChange={(stars) => handleTempRating(stars, 'shadowsoc')}
+            onSubmitRating={() => handleSubmitRating('shadowsoc')}
+          />
+
           {/* Tenfe Project - MI PRIMER PROYECTO EN EQUIPO */}
           <TenfeProject 
             project={projects.tenfe} 

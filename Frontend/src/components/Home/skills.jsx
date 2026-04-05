@@ -40,12 +40,40 @@ export default function Skills() {
       category: "Programming Languages",
       icon: "https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/Programming_Languages.gif?raw=true",
       skills: [
-        { 
-          name: "JavaScript", 
+        {
+          name: "JavaScript",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
           color: "from-[#F7DF1E]/90 via-[#F7DF1E]/80 to-black/40",
           textColor: "text-black",
           description: "3+ años de experiencia. Desarrollo de aplicaciones web modernas, ES6+, async/await, manipulación del DOM."
+        },
+        {
+          name: "Java",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+          color: "from-[#ED8B00]/90 via-[#ED8B00]/80 to-black/40",
+          textColor: "text-white",
+          description: "Java 21. Spring Boot, JPA/Hibernate, arquitectura hexagonal, APIs REST, microservicios."
+        },
+        {
+          name: "C#",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg",
+          color: "from-[#239120]/90 via-[#239120]/80 to-black/40",
+          textColor: "text-white",
+          description: "ASP.NET Core, Entity Framework, APIs REST, SignalR, arquitectura limpia."
+        },
+        {
+          name: "TypeScript",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+          color: "from-[#3178C6]/90 via-[#3178C6]/80 to-black/40",
+          textColor: "text-white",
+          description: "Tipado estricto, interfaces, generics. Uso principal con Angular y React."
+        },
+        {
+          name: "Python",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+          color: "from-[#3776AB]/90 via-[#FFD43B]/60 to-[#3776AB]/70",
+          textColor: "text-white",
+          description: "FastAPI, scripts, automatización, pipelines AI/ML, análisis de datos."
         }
       ]
     },
@@ -53,29 +81,36 @@ export default function Skills() {
       category: "Frontend Development",
       icon: "https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/Front_End.gif?raw=true",
       skills: [
-        { 
-          name: "React", 
+        {
+          name: "Angular",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+          color: "from-[#DD0031]/90 via-[#DD0031]/80 to-black/40",
+          textColor: "text-white",
+          description: "Angular 17+, standalone components, signals, RxJS, NgRx, zoneless change detection."
+        },
+        {
+          name: "React",
           icon: "/react.png",
           color: "from-gray-500/90 to-black/40",
           textColor: "text-white",
           description: "Hooks, Context API, componentes funcionales, React Router, optimización de rendimiento."
         },
-        { 
-          name: "HTML5", 
+        {
+          name: "HTML5",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
           color: "from-[#E34F26]/90 via-[#E34F26]/80 to-black/40",
           textColor: "text-white",
           description: "Semántica moderna, accesibilidad (a11y), SEO, estructura web profesional."
         },
-        { 
-          name: "CSS3", 
+        {
+          name: "CSS3",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
           color: "from-[#1572B6]/90 via-[#1572B6]/80 to-black/40",
           textColor: "text-white",
           description: "Flexbox, Grid, animaciones, responsive design, metodologías BEM y arquitectura escalable."
         },
-        { 
-          name: "TailwindCSS", 
+        {
+          name: "TailwindCSS",
           icon: "/tailwind.png",
           color: "from-[#38BDF8]/90 via-[#38BDF8]/80 to-black/40",
           textColor: "text-white",
@@ -87,55 +122,87 @@ export default function Skills() {
       category: "Backend Development",
       icon: "/letscode.gif",
       skills: [
-        { 
-          name: "Node.js", 
+        {
+          name: "Spring Boot",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg",
+          color: "from-[#6DB33F]/90 via-[#6DB33F]/80 to-black/40",
+          textColor: "text-white",
+          description: "Spring Boot 4, Spring Security, JWT, Spring Data JPA, WebSocket, arquitectura hexagonal."
+        },
+        {
+          name: ".NET",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg",
+          color: "from-[#512BD4]/90 via-[#512BD4]/80 to-black/40",
+          textColor: "text-white",
+          description: "ASP.NET Core, Entity Framework Core, SignalR, Minimal APIs, Clean Architecture."
+        },
+        {
+          name: "Node.js",
           icon: "/nodejs.png",
           color: "from-[#83CD29]/90 via-[#83CD29]/80 to-black/40",
           textColor: "text-white",
           description: "APIs RESTful, Express.js, middleware, autenticación JWT, manejo de bases de datos."
         },
-        { 
-          name: "Python", 
-          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-          color: "from-[#3776AB]/90 via-[#FFD43B]/60 to-[#3776AB]/70",
+        {
+          name: "FastAPI",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
+          color: "from-[#009688]/90 via-[#009688]/80 to-black/40",
           textColor: "text-white",
-          description: "Estudiando en MSMK University para expandir habilidades. Scripts, automatización, fundamentos de IA y ML."
+          description: "APIs asíncronas con Python, integración con modelos AI, Pydantic, despliegue en Fly.io."
         }
       ]
     },
     {
-      category: "Software & Tools",
+      category: "Databases",
       icon: "https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/Software_Tools.gif?raw=true",
       skills: [
-        { 
-          name: "Git", 
+        {
+          name: "PostgreSQL",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+          color: "from-[#336791]/90 via-[#336791]/80 to-black/40",
+          textColor: "text-white",
+          description: "Base de datos principal. Migraciones, indexación, transacciones, optimización de queries, pgvector."
+        },
+        {
+          name: "MongoDB",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+          color: "from-[#47A248]/90 via-[#47A248]/80 to-black/40",
+          textColor: "text-white",
+          description: "Base de datos NoSQL. Mongoose, agregaciones, esquemas flexibles."
+        },
+        {
+          name: "MySQL",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+          color: "from-[#4479A1]/90 via-[#4479A1]/80 to-black/40",
+          textColor: "text-white",
+          description: "Stored procedures, RBAC, diseño relacional, optimización."
+        }
+      ]
+    },
+    {
+      category: "DevOps & Tools",
+      icon: "https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/Software_Tools.gif?raw=true",
+      skills: [
+        {
+          name: "Docker",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+          color: "from-[#2496ED]/90 via-[#2496ED]/80 to-black/40",
+          textColor: "text-white",
+          description: "Docker Compose, multi-stage builds, despliegue de microservicios, contenedores de desarrollo."
+        },
+        {
+          name: "Git",
           icon: "/git.png",
           color: "from-[#F05033]/90 via-[#F05033]/80 to-black/40",
           textColor: "text-white",
           description: "Control de versiones, branching, merge, pull requests, colaboración en equipo, workflows."
         },
-        { 
-          name: "GitHub", 
+        {
+          name: "GitHub",
           icon: "/github.png",
           color: "from-gray-400/90 via-[#181717]/80 to-black/40",
           textColor: "text-white",
           description: "Repositorios, issues, projects, GitHub Actions, documentación, colaboración open source."
-        },
-        { 
-          name: "Discord", 
-          icon: null,
-          color: "from-[#738ADB]/90 via-[#738ADB]/80 to-black/40",
-          textColor: "text-white",
-          svg: "M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z",
-          description: "Comunicación en equipos de desarrollo, bots, comunidades técnicas."
-        },
-        { 
-          name: "Canva", 
-          icon: null,
-          color: "from-[#00C4CC]/90 via-[#7D2AE8]/60 to-[#00C4CC]/70",
-          textColor: "text-white",
-          svg: "M7.494 7.618c1.07 0 1.937.867 1.937 1.937s-.867 1.937-1.937 1.937-1.937-.867-1.937-1.937.867-1.937 1.937-1.937zm8.48 0c1.07 0 1.937.867 1.937 1.937s-.867 1.937-1.937 1.937-1.937-.867-1.937-1.937.867-1.937 1.937-1.937zM12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm0-5.5c-2.033 0-3.71 1.677-3.71 3.71h1.5c0-1.206.994-2.21 2.21-2.21s2.21 1.004 2.21 2.21h1.5c0-2.033-1.677-3.71-3.71-3.71z",
-          description: "Diseño gráfico profesional: videos, reels, contenido para redes sociales, branding visual."
         }
       ]
     },
@@ -143,47 +210,26 @@ export default function Skills() {
       category: "IDEs & AI-Powered Editors",
       icon: "https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/IDEs.gif?raw=true",
       skills: [
-        { 
-          name: "VS Code", 
+        {
+          name: "JetBrains",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jetbrains/jetbrains-original.svg",
+          color: "from-[#FF318C]/90 via-[#7B68EE]/80 to-black/40",
+          textColor: "text-white",
+          description: "IntelliJ IDEA, Rider, WebStorm. IDEs profesionales para Java, C#/.NET y web development."
+        },
+        {
+          name: "VS Code",
           icon: "/vscode.png",
           color: "from-[#007ACC]/90 via-[#007ACC]/40 to-black/60",
           textColor: "text-white",
           description: "Editor principal. Extensions, debugging, Git integration, snippets personalizados."
         },
-        { 
-          name: "Windsurf", 
-          icon: "/windsurfai.webp",
-          color: "from-[#00D4FF]/90 via-[#0099CC]/80 to-black/40",
-          textColor: "text-white",
-          description: "Editor potenciado con IA para desarrollo colaborativo y asistencia inteligente."
-        },
-        { 
-          name: "Cursor AI", 
+        {
+          name: "Cursor AI",
           icon: "/cursorImagen.png",
           color: "from-[#000000]/90 via-[#333333]/80 to-[#666666]/40",
           textColor: "text-white",
           description: "IDE con IA integrada. Autocompletado inteligente, refactoring asistido."
-        },
-        { 
-          name: "PyCharm", 
-          icon: "/pycharm.png",
-          color: "from-[#21D789]/90 via-[#21D789]/80 to-black/40",
-          textColor: "text-white",
-          description: "IDE especializado en Python de JetBrains. Debugging avanzado, testing, virtualenvs."
-        }
-      ]
-    },
-    {
-      category: "Next-Gen AI IDE",
-      icon: "https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/CP_PS.gif?raw=true",
-      skills: [
-        { 
-          name: "TRAE AI", 
-          icon: "/traeai_logo.jpeg",
-          color: "from-[#FF6B6B]/90 via-[#FF8E8E]/80 to-[#FF4757]/70",
-          textColor: "text-white",
-          description: "Nuevo IDE de ByteDance (TikTok). Construido desde cero para IA. Agentes integrados con Claude 3.5, GPT-4o, Llama-3. Colaboración directa con IA en tiempo real.",
-          isNew: true
         }
       ]
     },
@@ -191,24 +237,23 @@ export default function Skills() {
       category: "Operating Systems",
       icon: "https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/OS.gif?raw=true",
       skills: [
-        { 
-          name: "Windows", 
+        {
+          name: "Fedora Linux",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fedora/fedora-original.svg",
+          color: "from-[#294172]/90 via-[#294172]/80 to-black/40",
+          textColor: "text-white",
+          description: "Fedora Asahi en Apple Silicon. Desarrollo nativo en Linux, terminal avanzada."
+        },
+        {
+          name: "Windows",
           icon: null,
           color: "from-[#0078D6]/90 via-[#0078D6]/80 to-black/40",
           textColor: "text-white",
           svg: "M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801",
           description: "Sistema operativo principal para desarrollo. WSL2 para entornos Linux."
         },
-        { 
-          name: "Ubuntu", 
-          icon: null,
-          color: "from-[#E95420]/90 via-[#E95420]/80 to-black/40",
-          textColor: "text-white",
-          svg: "M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 3a7 7 0 100 14 7 7 0 000-14z",
-          description: "Distro Linux para desarrollo. Terminal avanzada, scripting, deployment."
-        },
-        { 
-          name: "macOS", 
+        {
+          name: "macOS",
           icon: null,
           color: "from-[#555555]/90 via-[#333333]/80 to-black/40",
           textColor: "text-white",
@@ -436,7 +481,7 @@ export default TechStack;`}
                           borderColor: `${accentColor}60`,
                           boxShadow: `0 0 20px ${accentColor}40`,
                           // TRAE AI (catIndex 4) y Operating Systems (catIndex 5) siempre ARRIBA
-                          [catIndex >= 4 || skillIndex >= 4 ? 'bottom' : 'top']: 'calc(100% + 8px)',
+                          [catIndex >= 5 || skillIndex >= 4 ? 'bottom' : 'top']: 'calc(100% + 8px)',
                           pointerEvents: 'none',
                         }}
                       >
@@ -455,9 +500,9 @@ export default TechStack;`}
                         <div 
                           className="absolute left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border"
                           style={{ 
-                            [catIndex >= 4 || skillIndex >= 4 ? 'bottom' : 'top']: '-6px',
-                            [catIndex >= 4 || skillIndex >= 4 ? 'borderRight' : 'borderLeft']: `1px solid ${accentColor}60`,
-                            [catIndex >= 4 || skillIndex >= 4 ? 'borderTop' : 'borderBottom']: `1px solid ${accentColor}60`,
+                            [catIndex >= 5 || skillIndex >= 4 ? 'bottom' : 'top']: '-6px',
+                            [catIndex >= 5 || skillIndex >= 4 ? 'borderRight' : 'borderLeft']: `1px solid ${accentColor}60`,
+                            [catIndex >= 5 || skillIndex >= 4 ? 'borderTop' : 'borderBottom']: `1px solid ${accentColor}60`,
                             backgroundColor: '#0a0a0f',
                           }}
                         />
@@ -467,29 +512,6 @@ export default TechStack;`}
                 ))}
               </div>
 
-              {/* Nota especial para TRAE AI */}
-              {category.category === "Next-Gen AI IDE" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                  className="mt-4 p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] backdrop-blur-md"
-                >
-                  <p className="text-sm text-white/70 leading-relaxed">
-                    {t('skills.traeAI.part1')}{' '}
-                    <span className="text-white font-semibold">TRAE AI</span>,{' '}
-                    {t('skills.traeAI.part2')}{' '}
-                    <span className="text-white font-medium">ByteDance</span>{' '}
-                    {t('skills.traeAI.part3')}{' '}
-                    {t('skills.traeAI.part4')}{' '}
-                    <span className="text-white font-medium">{t('skills.traeAI.part5')}</span>.{' '}
-                    {t('skills.traeAI.part6')}{' '}
-                    <span className="text-white font-medium">{t('skills.traeAI.part7')}</span>{' '}
-                    {t('skills.traeAI.part8')}
-                  </p>
-                </motion.div>
-              )}
             </motion.section>
           ))}
         </motion.div>
