@@ -150,37 +150,20 @@ TU PERSONALIDAD (MODO SINCERO):
 
   // Función para obtener respuesta de la IA
   const getAIResponse = async (userMessage) => {
-    const apiKey = import.meta.env.VITE_GROQ_API_KEY;
-
-    if (!apiKey) {
-      return getFallbackResponse(userMessage);
-    }
-
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const apiUrl = import.meta.env.VITE_PUBLIC_API_URL || '';
+      const response = await fetch(`${apiUrl}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          model: 'llama-3.1-8b-instant',
-          messages: [
-            {
-              role: 'system',
-              content: getNachoContext()
-            },
-            ...messages.filter(m => m.type !== 'bot' || messages.indexOf(m) === 0).map(m => ({
-              role: m.type === 'user' ? 'user' : 'assistant',
-              content: m.text
-            })),
-            {
-              role: 'user',
-              content: userMessage
-            }
-          ],
-          max_tokens: 300,
-          temperature: 0.7
+          message: userMessage,
+          context: getNachoContext(),
+          history: messages.filter(m => m.type !== 'bot' || messages.indexOf(m) === 0).map(m => ({
+            role: m.type === 'user' ? 'user' : 'assistant',
+            content: m.text
+          }))
         })
       });
 
