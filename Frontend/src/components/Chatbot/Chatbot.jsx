@@ -150,25 +150,21 @@ TU PERSONALIDAD (MODO SINCERO):
 
   // Función para obtener respuesta de la IA
   const getAIResponse = async (userMessage) => {
-    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    
-    console.log('🔑 API Key:', apiKey ? `Configurada (${apiKey.substring(0, 20)}...)` : 'NO CONFIGURADA');
-    
-    if (!apiKey || apiKey === 'tu-api-key-aqui') {
-      console.error('❌ API Key no válida, usando fallback');
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+
+    if (!apiKey) {
       return getFallbackResponse(userMessage);
     }
-    
+
     try {
-      console.log('🤖 Enviando petición a OpenAI...');
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: 'llama-3.1-8b-instant',
           messages: [
             {
               role: 'system',
@@ -190,7 +186,6 @@ TU PERSONALIDAD (MODO SINCERO):
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('❌ Error de OpenAI:', response.status, errorData);
         throw new Error(`Error ${response.status}: ${errorData.error?.message || 'Error desconocido'}`);
       }
 
