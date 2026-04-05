@@ -7,3 +7,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Mobile performance: reduce heavy GPU effects without changing design */
+@media (max-width: 768px) {
+  /* Reduce backdrop-blur intensity on mobile */
+  .backdrop-blur-2xl {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  /* Disable continuous animations that cause GPU thrashing */
+  .animate-neon-pulse,
+  .animate-scan {
+    animation: none !important;
+  }
+
+  /* Reduce box-shadow complexity on mobile */
+  .neon-glow-cyan,
+  .neon-glow-green,
+  .neon-glow-purple {
+    box-shadow: none !important;
+  }
+
+  /* Disable scanlines pseudo-element on mobile */
+  .scanlines::before {
+    display: none !important;
+  }
+
+  /* Reduce text-shadow glow effects */
+  .text-gradient-cyber {
+    animation: none !important;
+  }
+
+  /* Force GPU compositing for smoother scrolling */
+  * {
+    -webkit-transform: translateZ(0);
+  }
+}
