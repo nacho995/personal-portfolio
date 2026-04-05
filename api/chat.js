@@ -9,7 +9,7 @@ function callGroq(payload, apiKey) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + apiKey,
+        'Authorization': 'Bearer ' + apiKey.trim(),
         'Content-Length': Buffer.byteLength(data)
       }
     }, (res) => {
