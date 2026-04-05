@@ -1,14 +1,8 @@
 {
   "buildCommand": "cd Frontend && npm install && npm run build",
   "outputDirectory": "Frontend/dist",
-  "functions": {
-    "Backend/index.js": {
-      "runtime": "@vercel/node@3"
-    }
-  },
   "rewrites": [
-    { "source": "/ratings/:path*", "destination": "/Backend/index.js" },
-    { "source": "/health", "destination": "/Backend/index.js" },
+    { "source": "/api/:path*", "destination": "/api/index.js" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
