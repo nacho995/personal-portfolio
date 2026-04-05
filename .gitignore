@@ -51,3 +51,4 @@ Thumbs.db
 *.tar.gz
 *.zip
 
+.vercel
